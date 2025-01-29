@@ -275,229 +275,226 @@ const AiResume = () => {
 
   return (
     <>
-    <Header/>
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold text-center mb-8">Resume Builder</h1>
-
-      <div className="mb-6">
-        <h2 className="text-xl font-bold">Personal Information</h2>
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={personalInfo.fullName}
-          onChange={(e) =>
-            setPersonalInfo({ ...personalInfo, fullName: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={personalInfo.email}
-          onChange={(e) =>
-            setPersonalInfo({ ...personalInfo, email: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Phone"
-          value={personalInfo.phone}
-          onChange={(e) =>
-            setPersonalInfo({ ...personalInfo, phone: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Location"
-          value={personalInfo.location}
-          onChange={(e) =>
-            setPersonalInfo({ ...personalInfo, location: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <textarea
-          placeholder="Professional Summary"
-          value={personalInfo.summary}
-          onChange={(e) =>
-            setPersonalInfo({ ...personalInfo, summary: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        ></textarea>
+    <Header />
+    
+    {/* Hero Section */}
+    <div className="w-auto h-60 bg-gray-900 text-white flex justify-center items-center">
+      <h1 className="text-5xl font-semibold">Resume Builder</h1>
+    </div>
+  
+    {/* Main Content */}
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Personal Information Section */}
+      <div className="bg-gray-50 rounded-lg shadow-lg p-6 mb-12 hover:shadow-xl transition-shadow">
+        <h2 className="text-3xl font-bold mb-6">Personal Information</h2>
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={personalInfo.fullName}
+            onChange={(e) =>
+              setPersonalInfo({ ...personalInfo, fullName: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={personalInfo.email}
+            onChange={(e) =>
+              setPersonalInfo({ ...personalInfo, email: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <input
+            type="text"
+            placeholder="Phone"
+            value={personalInfo.phone}
+            onChange={(e) =>
+              setPersonalInfo({ ...personalInfo, phone: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <input
+            type="text"
+            placeholder="Location"
+            value={personalInfo.location}
+            onChange={(e) =>
+              setPersonalInfo({ ...personalInfo, location: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <textarea
+            placeholder="Professional Summary"
+            value={personalInfo.summary}
+            onChange={(e) =>
+              setPersonalInfo({ ...personalInfo, summary: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          ></textarea>
+        </div>
       </div>
-
-     
-
+  
       {/* Education Section */}
-      <div className="mb-6">
-        <h2 className="text-xl font-bold">Education</h2>
-        <input
-          type="text"
-          placeholder="School"
-          value={currentEducation.school}
-          onChange={(e) =>
-            setCurrentEducation({ ...currentEducation, school: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Degree"
-          value={currentEducation.degree}
-          onChange={(e) =>
-            setCurrentEducation({ ...currentEducation, degree: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Major"
-          value={currentEducation.major}
-          onChange={(e) =>
-            setCurrentEducation({ ...currentEducation, major: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Graduation Year"
-          value={currentEducation.graduationYear}
-          onChange={(e) =>
-            setCurrentEducation({
-              ...currentEducation,
-              graduationYear: e.target.value,
-            })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <button
-          onClick={addEducation}
-          className="bg-blue-500 text-white p-2 rounded mt-2"
-        >
-          Add Education
-        </button>
-
-        {/* Display Added Education */}
+      <div className="bg-gray-50 rounded-lg shadow-lg p-6 mb-12 hover:shadow-xl transition-shadow">
+        <h2 className="text-3xl font-bold mb-6">Education</h2>
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="School"
+            value={currentEducation.school}
+            onChange={(e) =>
+              setCurrentEducation({ ...currentEducation, school: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <input
+            type="text"
+            placeholder="Degree"
+            value={currentEducation.degree}
+            onChange={(e) =>
+              setCurrentEducation({ ...currentEducation, degree: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <input
+            type="text"
+            placeholder="Major"
+            value={currentEducation.major}
+            onChange={(e) =>
+              setCurrentEducation({ ...currentEducation, major: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <input
+            type="text"
+            placeholder="Graduation Year"
+            value={currentEducation.graduationYear}
+            onChange={(e) =>
+              setCurrentEducation({
+                ...currentEducation,
+                graduationYear: e.target.value,
+              })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <button
+            onClick={addEducation}
+            className="bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition-colors"
+          >
+            Add Education
+          </button>
+        </div>
+  
         {education.length > 0 && (
-          <div className="mt-4">
-            <h3 className="font-bold">Added Education:</h3>
+          <div className="mt-6">
+            <h3 className="font-bold text-lg mb-4">Added Education:</h3>
             {education.map((edu, index) => (
-              <div key={index} className="bg-gray-100 p-2 mb-2 rounded">
+              <div
+                key={index}
+                className="bg-gray-100 p-4 rounded-md shadow-sm mb-2"
+              >
                 {edu.school} - {edu.degree} in {edu.major} ({edu.graduationYear})
               </div>
             ))}
           </div>
         )}
       </div>
-
+  
       {/* Work Experience Section */}
-      <div className="mb-6">
-        <h2 className="text-xl font-bold">Work Experience</h2>
-        <input
-          type="text"
-          placeholder="Company"
-          value={currentWork.company}
-          onChange={(e) =>
-            setCurrentWork({ ...currentWork, company: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Position"
-          value={currentWork.position}
-          onChange={(e) =>
-            setCurrentWork({ ...currentWork, position: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        />
-        <label className="block mt-2">Start Date</label>
-        <input
-          type="date"
-          value={currentWork.startDate}
-          onChange={(e) =>
-            setCurrentWork({ ...currentWork, startDate: e.target.value })
-          }
-          className="border p-2 w-full"
-        />
-        <label className="block mt-2">End Date</label>
-        <input
-          type="date"
-          value={currentWork.endDate}
-          onChange={(e) =>
-            setCurrentWork({ ...currentWork, endDate: e.target.value })
-          }
-          className="border p-2 w-full"
-        />
-        <textarea
-          placeholder="Description"
-          value={currentWork.description}
-          onChange={(e) =>
-            setCurrentWork({ ...currentWork, description: e.target.value })
-          }
-          className="border p-2 w-full mt-2"
-        ></textarea>
-        <button
-          onClick={addWorkExperience}
-          className="bg-blue-500 text-white p-2 rounded mt-2"
-        >
-          Add Work Experience
-        </button>
-
-        {/* Display Added Work Experiences */}
+      <div className="bg-gray-50 rounded-lg shadow-lg p-6 mb-12 hover:shadow-xl transition-shadow">
+        <h2 className="text-3xl font-bold mb-6">Work Experience</h2>
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Company"
+            value={currentWork.company}
+            onChange={(e) =>
+              setCurrentWork({ ...currentWork, company: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <input
+            type="text"
+            placeholder="Position"
+            value={currentWork.position}
+            onChange={(e) =>
+              setCurrentWork({ ...currentWork, position: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <textarea
+            placeholder="Description"
+            value={currentWork.description}
+            onChange={(e) =>
+              setCurrentWork({ ...currentWork, description: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          ></textarea>
+          <button
+            onClick={addWorkExperience}
+            className="bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition-colors"
+          >
+            Add Work Experience
+          </button>
+        </div>
+  
         {workExperience.length > 0 && (
-          <div className="mt-4">
-            <h3 className="font-bold">Added Work Experiences:</h3>
+          <div className="mt-6">
+            <h3 className="font-bold text-lg mb-4">Added Work Experiences:</h3>
             {workExperience.map((work, index) => (
-              <div key={index} className="bg-gray-100 p-2 mb-2 rounded">
-                {work.company} - {work.position} 
-                ({work.startDate} - {work.endDate})
+              <div
+                key={index}
+                className="bg-gray-100 p-4 rounded-md shadow-sm mb-2"
+              >
+                {work.company} - {work.position} ({work.startDate} - {work.endDate})
               </div>
             ))}
           </div>
         )}
       </div>
-
+  
       {/* Skills Section */}
-      <div className="mb-6">
-        <h2 className="text-xl font-bold">Skills</h2>
-        <input
-          type="text"
-          placeholder="Skill"
-          value={currentSkill}
-          onChange={(e) => setCurrentSkill(e.target.value)}
-          className="border p-2 w-full mt-2"
-        />
-        <button
-          onClick={addSkill}
-          className="bg-blue-500 text-white p-2 rounded mt-2"
-        >
-          Add Skill
-        </button>
-
-        {/* Display Added Skills */}
+      <div className="bg-gray-50 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+        <h2 className="text-3xl font-bold mb-6">Skills</h2>
+        <div className="flex items-center space-x-4">
+          <input
+            type="text"
+            placeholder="Skill"
+            value={currentSkill}
+            onChange={(e) => setCurrentSkill(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+          <button
+            onClick={addSkill}
+            className="bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition-colors"
+          >
+            Add Skill
+          </button>
+        </div>
+  
         {skills.length > 0 && (
-          <div className="mt-4">
-            <h3 className="font-bold">Added Skills:</h3>
-            <div className="bg-gray-100 p-2 rounded">
+          <div className="mt-6">
+            <h3 className="font-bold text-lg">Added Skills:</h3>
+            <div className="bg-gray-100 p-4 rounded-md shadow-sm">
               {skills.join(", ")}
             </div>
           </div>
         )}
       </div>
-
-      <div className="text-center mt-6">
+  
+      <div className="text-center mt-8">
         <button
           onClick={generatePDF}
-          className="bg-green-500 text-white p-3 rounded"
+          className="bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-colors"
         >
           Generate Resume
         </button>
       </div>
     </div>
-    <Footer/>
-    </>
+    <Footer />
+  </>
+  
   );
 };
 

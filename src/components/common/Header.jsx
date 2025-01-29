@@ -1,80 +1,178 @@
-import React, { useState, useEffect, useRef } from 'react'; 
-import { BriefcaseBusiness, ChevronDown } from 'lucide-react'; 
-import { Link } from 'react-router-dom'; 
- 
-const Header = () => { 
+import React, { useState, useEffect, useRef } from "react";
+import { BriefcaseBusiness, ChevronDown, CircleUserRound, Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+
+const Header = () => {
   const [isAIToolsOpen, setIsAIToolsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setIsMobileMenuOpen(false);
+    navigate("/");
+  };
 
   const toggleAIToolsDropdown = () => {
     setIsAIToolsOpen(!isAIToolsOpen);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    if (isAIToolsOpen) setIsAIToolsOpen(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Close dropdown if clicked outside of dropdown element
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsAIToolsOpen(false);
       }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+        setIsMobileMenuOpen(false);
+      }
     };
 
-    // Add event listener when dropdown is open
-    if (isAIToolsOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    // Cleanup event listener
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isAIToolsOpen]);
+  const NavLinks = ({ isMobile = false }) => (
+    <>
+      <Link to="/" className={isMobile ? "w-full" : ""}>
+        <li className="hover:text-teal-400 transition-colors">Home</li>
+      </Link>
+      <Link to="/jobs" className={isMobile ? "w-full" : ""}>
+        <li className="hover:text-teal-400 transition-colors">Jobs</li>
+      </Link>
+      <Link to="/salaries" className={isMobile ? "w-full" : ""}>
+        <li className="hover:text-teal-400 transition-colors">Salaries</li>
+      </Link>
+      <li className={`relative ${isMobile ? "w-full" : ""}`} ref={dropdownRef}>
+        <div
+          className="flex items-center cursor-pointer hover:text-teal-400 transition-colors"
+          onClick={toggleAIToolsDropdown}
+        >
+          AI Tools <ChevronDown className="ml-1" size={16} />
+        </div>
+        {isAIToolsOpen && (
+          <ul className={`${
+            isMobile 
+              ? "relative bg-gray-900 w-full mt-2" 
+              : "absolute top-full left-0 bg-gray-800 w-48 mt-2 rounded shadow-lg"
+          } py-2 z-10`}>
+            <Link to="/ats-score-checker">
+              <li className="px-4 py-2 hover:bg-gray-700">ATS Score Checker</li>
+            </Link>
+            <Link to="/ai-resume-builder">
+              <li className="px-4 py-2 hover:bg-gray-700">AI Resume Builder</li>
+            </Link>
+          </ul>
+        )}
+      </li>
+      <Link to="/about" className={isMobile ? "w-full" : ""}>
+        <li className="hover:text-teal-400 transition-colors">About Us</li>
+      </Link>
+      <Link to="/contact" className={isMobile ? "w-full" : ""}>
+        <li className="hover:text-teal-400 transition-colors">Contact Us</li>
+      </Link>
+    </>
+  );
 
-  return ( 
-    <header className="w-full bg-black text-white p-4 flex justify-between items-center relative"> 
-      <div className='flex space-x-2 items-center'> 
-        <BriefcaseBusiness /> 
-        <h1 className="text-2xl">Job Quick</h1> 
-      </div> 
-      
-      <nav> 
-        <ul className="flex space-x-4 items-center"> 
-          <Link to="/"><li>Home</li></Link> 
-          <Link to="/jobs"><li>Jobs</li></Link> 
-        <Link to="/about"><li>About Us</li>  </Link>  
-          <Link to="/contact"><li>Contact Us</li></Link>
+  const AuthButtons = ({ isMobile = false }) => (
+    <div className={`flex ${isMobile ? "flex-col w-full space-y-2" : "items-center space-x-2"}`}>
+      {isLoggedIn ? (
+        <>
           
-          {/* AI Tools Dropdown */}
-          <li 
-            className="relative" 
-            ref={dropdownRef}
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded transition-colors w-full"
           >
-            <div 
-              className="flex items-center cursor-pointer"
-              onClick={toggleAIToolsDropdown}
-            >
-              AI Tools <ChevronDown className="ml-1" size={16} />
-            </div>
-            
-            {isAIToolsOpen && (
-              <ul className="absolute top-full left-0 bg-gray-800 w-48 mt-2 py-2 rounded shadow-lg z-10">
-                <Link to="/ats-score-checker">
-                  <li className="px-4 py-2 hover:bg-gray-700">ATS Score Checker</li>
-                </Link>
-                <Link to="/ai-resume-builder">
-                  <li className="px-4 py-2 hover:bg-gray-700">AI Resume Builder</li>
-                </Link>
+            Logout
+          </button>
+          <Link to="/profile" className={isMobile ? "w-full" : ""}>
+            <button className="hover:text-teal-400 transition-colors w-full flex justify-center">
+              <CircleUserRound className="w-7 h-7" />
+            </button>
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link to="/login" className={isMobile ? "w-full" : ""}>
+            <button className="hover:text-teal-400 transition-colors w-full px-4 py-2">
+              Login
+            </button>
+          </Link>
+          <Link to="/job-login" className={isMobile ? "w-full" : ""}>
+            <button className="bg-teal-500 hover:bg-teal-600 px-4 py-2 rounded transition-colors w-full">
+              Job Hosting
+            </button>
+          </Link>
+        </>
+      )}
+    </div>
+  );
+
+  return (
+    <header className="w-full bg-black text-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
+            <BriefcaseBusiness className="text-teal-500" />
+            <h1 className="text-2xl font-bold">Job Quick</h1>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:block">
+            <ul className="flex space-x-8 items-center">
+              <NavLinks />
+            </ul>
+          </nav>
+
+          {/* Desktop Auth Buttons */}
+          <div className="hidden md:block">
+            <AuthButtons />
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 hover:bg-gray-800 rounded transition-colors"
+            onClick={toggleMobileMenu}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div 
+            ref={mobileMenuRef}
+            className="md:hidden mt-4 py-4 border-t border-gray-800"
+          >
+            <nav className="flex flex-col space-y-4">
+              <ul className="flex flex-col space-y-4">
+                <NavLinks isMobile />
               </ul>
-            )}
-          </li>
-        </ul> 
-      </nav>
-      
-      <div> 
-        <button className="px-4 py-2 rounded">Login</button> 
-        <button className="bg-teal-500 hover:bg-teal-600 px-4 py-2 rounded ml-2">Register</button> 
-      </div> 
-    </header> 
-  ); 
-}; 
- 
+              <div className="pt-4 border-t border-gray-800">
+                <AuthButtons isMobile />
+              </div>
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
 export default Header;

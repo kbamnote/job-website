@@ -3,30 +3,30 @@ import React from "react";
 const WorkingWithTheBest = () => (
   <section className="container mx-auto py-12 px-6 lg:px-8 flex flex-col md:flex-row items-center">
     {/* Left Section - Image Grid */}
-    <div className="grid grid-cols-2 gap-4 w-full md:w-1/2">
-      <div className="bg-gray-300 rounded-lg h-48">
+    <div className="grid grid-cols-2 gap-8 w-full md:w-1/2 space-y-6">
+      <div className=" rounded-lg h-48 ">
         <img
           src="/assets/about2.avif"
-          className="w-full h-auto object-cover"
+          className="  "
         />
       </div>
-      <div className="bg-gray-300 rounded-lg h-48">
-        {" "}
+      <div className=" rounded-lg h-48 ">
+        
         <img
           src="/assets/about3.avif"
           className="w-full h-auto object-cover"
         />
       </div>
-      <div className="bg-gray-300 rounded-lg h-48">
+      <div className=" rounded-lg h-48">
         <img
           src="/assets/about4.avif"
           className="w-full h-auto object-cover"
         />
       </div>
-      <div className="bg-gray-300 rounded-lg h-48">
+      <div className=" rounded-lg h-48 ">
         {" "}
         <img
-          src="/assets/about5.avif"
+          src="/assets/about6.avif"
           className="w-full h-auto object-cover"
         />
       </div>

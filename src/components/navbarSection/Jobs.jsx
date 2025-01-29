@@ -1,19 +1,16 @@
-import React from "react";
-import { Search } from "lucide-react";
-import { BriefcaseBusiness } from "lucide-react";
-import { MapPin } from "lucide-react";
-import { Clock } from "lucide-react";
-import { Wallet } from "lucide-react";
+import React, { useState } from 'react';
+import { Search, BriefcaseBusiness, MapPin, Clock, Wallet, Menu, X } from "lucide-react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 
-
 const Jobs = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const jobListings = [
     {
       title: "Forward Security Director",
       company: "Bauch, Schuppe and Schulist Co",
-      category: " Hotels & Tourism",
+      category: "Hotels & Tourism",
       type: "Full time",
       salary: "$40000-$42000",
       location: "New-York, USA",
@@ -71,186 +68,152 @@ const Jobs = () => {
       logo: "/assets/6logo.png",
     },
   ];
+
+  const Sidebar = () => (
+    <div className="bg-slate-50 rounded-lg p-4">
+      {/* Search */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Search by Job Title</h2>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Job title or company"
+            className="w-full p-2 pr-8 border rounded-md text-sm"
+          />
+          <Search className="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
+        </div>
+      </div>
+
+      {/* Location */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Location</h2>
+        <select className="w-full p-2 border rounded-md text-sm text-gray-500">
+          <option>Choose city</option>
+          <option>Nagpur</option>
+          <option>Banglore</option>
+          <option>Pune</option>
+          <option>Noida</option>
+        </select>
+      </div>
+
+      {/* Category */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Category</h2>
+        {["Commerce", "Telecomunications", "Hotels & Tourism", "Education", "Financial Services"].map((category) => (
+          <div key={category} className="flex justify-between items-center mb-2">
+            <label className="flex items-center text-sm">
+              <input type="checkbox" className="mr-2" />
+              {category}
+            </label>
+            <span className="text-gray-400 text-sm">10</span>
+          </div>
+        ))}
+        <button className="bg-teal-600 w-full text-white p-1 rounded text-sm mt-2">
+          Show More
+        </button>
+      </div>
+
+      {/* Job Type */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Job Type</h2>
+        {["Full Time", "Part Time", "Freelance", "Seasonal", "Fixed-Price"].map((type) => (
+          <div key={type} className="flex justify-between items-center mb-2">
+            <label className="flex items-center text-sm">
+              <input type="checkbox" className="mr-2" />
+              {type}
+            </label>
+            <span className="text-gray-400 text-sm">10</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Experience Level */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Experience Level</h2>
+        {["No-experience", "Fresher", "Intermediate", "Expert"].map((level) => (
+          <div key={level} className="flex justify-between items-center mb-2">
+            <label className="flex items-center text-sm">
+              <input type="checkbox" className="mr-2" />
+              {level}
+            </label>
+            <span className="text-gray-400 text-sm">10</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Date Posted */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Date Posted</h2>
+        {["All", "Last Hour", "Last 24 Hours", "Last 7 Days", "Last 30 Days"].map((date) => (
+          <div key={date} className="flex justify-between items-center mb-2">
+            <label className="flex items-center text-sm">
+              <input type="checkbox" className="mr-2" />
+              {date}
+            </label>
+            <span className="text-gray-400 text-sm">10</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Salary Range */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Salary</h2>
+        <div className="mb-4">
+          <div className="h-1 bg-teal-600 rounded-full"></div>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="text-sm">Salary: $0 - $9999</span>
+          <button className="bg-teal-600 text-white px-4 py-1 rounded-md text-sm">
+            Apply
+          </button>
+        </div>
+      </div>
+
+      {/* Tags */}
+      <div className="mb-6">
+        <h2 className="text-sm font-semibold mb-3">Tags</h2>
+        <div className="flex flex-wrap gap-2">
+          {["engineering", "design", "office", "marketing", "management", "soft", "construction"].map((tag) => (
+            <span key={tag} className="bg-slate-100 px-3 py-1 rounded-full text-sm">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <>
-     <Header/>
+      <Header />
 
-      <div className=" w-auto h-60 bg-gray-900 text-white flex justify-center items-center">
-        <h1 className="text-5xl font-semibold">Jobs</h1>
+      <div className="w-auto h-60 bg-gray-900 text-white flex justify-center items-center">
+        <h1 className="text-3xl md:text-5xl font-semibold">Jobs</h1>
       </div>
-   
+
       <div className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col space-y-8">
+            {/* Mobile Filter Button */}
+            <div className="lg:hidden">
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="flex items-center gap-2 bg-teal-600 text-white px-4 py-2 rounded-md"
+              >
+                {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+                Filters
+              </button>
+            </div>
+
             {/* Main Section with Filters and Jobs */}
-            <div className="flex gap-6">
+            <div className="flex flex-col lg:flex-row gap-6">
               {/* Left Sidebar */}
-              <div className="w-64 flex-shrink-0">
-                <div className="bg-slate-50 rounded-lg p-4">
-                  {/* Search */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">
-                      Search by Job Title
-                    </h2>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Job title or company"
-                        className="w-full p-2 pr-8 border rounded-md text-sm"
-                      />
-                      <Search className="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
-                    </div>
-                  </div>
-
-                  {/* Location */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">Location</h2>
-                    <select className="w-full p-2 border rounded-md text-sm text-gray-500">
-                      <option>Choose city</option>
-                      <option>Nagpur</option>
-                      <option>Banglore</option>
-                      <option> Pune</option>
-                      <option>Noida </option>
-                    </select>
-                  </div>
-
-                  {/* Category */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">Category</h2>
-
-                    {[
-                      "Commerce",
-                      "Telecomunications",
-                      "Hotels & Tourism",
-                      "Education",
-                      "Financial Services",
-                    ].map((category) => (
-                      <div
-                        key={category}
-                        className="flex justify-between items-center mb-2"
-                      >
-                        <label className="flex items-center text-sm">
-                          <input type="checkbox" className="mr-2" />
-                          {category}
-                        </label>
-                        <span className="text-gray-400 text-sm">10</span>
-                      </div>
-                    ))}
-                    <button className="bg-teal-600 w-[100%] text-white p-1 rounded text-sm mt-2">
-                      Show More
-                    </button>
-                  </div>
-
-                  {/* Job Type */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">Job Type</h2>
-                    {[
-                      "Full Time",
-                      "Part Time",
-                      "Freelance",
-                      "Seasonal",
-                      "Fixed-Price",
-                    ].map((type) => (
-                      <div
-                        key={type}
-                        className="flex justify-between items-center mb-2"
-                      >
-                        <label className="flex items-center text-sm">
-                          <input type="checkbox" className="mr-2" />
-                          {type}
-                        </label>
-                        <span className="text-gray-400 text-sm">10</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Experience Level */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">
-                      Experience Level
-                    </h2>
-                    {["No-experience", "Fresher", "Intermediate", "Expert"].map(
-                      (level) => (
-                        <div
-                          key={level}
-                          className="flex justify-between items-center mb-2"
-                        >
-                          <label className="flex items-center text-sm">
-                            <input type="checkbox" className="mr-2" />
-                            {level}
-                          </label>
-                          <span className="text-gray-400 text-sm">10</span>
-                        </div>
-                      )
-                    )}
-                  </div>
-
-                  {/* Date Posted */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">Date Posted</h2>
-                    {[
-                      "All",
-                      "Last Hour",
-                      "Last 24 Hours",
-                      "Last 7 Days",
-                      "Last 30 Days",
-                    ].map((date) => (
-                      <div
-                        key={date}
-                        className="flex justify-between items-center mb-2"
-                      >
-                        <label className="flex items-center text-sm">
-                          <input type="checkbox" className="mr-2" />
-                          {date}
-                        </label>
-                        <span className="text-gray-400 text-sm">10</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Salary Range */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">Salary</h2>
-                    <div className="mb-4">
-                      <div className="h-1 bg-teal-600 rounded-full"></div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Salary: $0 - $9999</span>
-                      <button className="bg-teal-600 text-white px-4 py-1 rounded-md text-sm">
-                        Apply
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="mb-6">
-                    <h2 className="text-sm font-semibold mb-3">Tags</h2>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        "engineering",
-                        "design",
-                        "office",
-                        "marketing",
-                        "management",
-                        "soft",
-                        "construction",
-                      ].map((tag) => (
-                        <span
-                          key={tag}
-                          className="bg-slate-100 px-3 py-1 rounded-full text-sm"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
+              <div className={`lg:w-64 flex-shrink-0 ${isSidebarOpen ? 'block' : 'hidden'} lg:block`}>
+                <Sidebar />
+                
                 {/* We are hiring banner */}
                 <div className="mt-6 bg-gray-700 rounded-lg p-6 text-white">
-                  <h2 className="text-xl font-bold uppercase mb-2">
-                    WE ARE HIRING
-                  </h2>
+                  <h2 className="text-xl font-bold uppercase mb-2">WE ARE HIRING</h2>
                   <p>Apply Today!</p>
                 </div>
               </div>
@@ -258,11 +221,9 @@ const Jobs = () => {
               {/* Main Content - Job Listings */}
               <div className="flex-1">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-gray-500 text-sm">
-                    Showing 6-6 of 10 results
-                  </span>
-                  <select className="border rounded-md p-2 text-sm">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                  <span className="text-gray-500 text-sm">Showing 6-6 of 10 results</span>
+                  <select className="border rounded-md p-2 text-sm w-full sm:w-auto">
                     <option>Sort by latest</option>
                   </select>
                 </div>
@@ -272,50 +233,41 @@ const Jobs = () => {
                   {jobListings.map((job, index) => (
                     <div
                       key={index}
-                      className="border rounded-lg p-4 flex justify-between items-start hover:shadow-md transition-shadow"
+                      className="border rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start gap-4 hover:shadow-md transition-shadow"
                     >
-                      <div className="flex gap-4">
+                      <div className="flex flex-col sm:flex-row gap-4 w-full">
                         <img
                           src={job.logo}
                           alt={`${job.company} logo`}
                           className="w-12 h-12 rounded-lg"
                         />
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h3 className="font-semibold text-sm">
-                              {job.title}
-                            </h3>
-                            <span className="text-gray-400 text-xs">
-                              {job.postedTime}
-                            </span>
+                        <div className="flex-1">
+                          <div className="flex items-start sm:items-center flex-col sm:flex-row gap-2">
+                            <h3 className="font-semibold text-sm">{job.title}</h3>
+                            <span className="text-gray-400 text-xs">{job.postedTime}</span>
                           </div>
-                          <p className="text-gray-500 text-sm mb-2">
-                            {job.company}
-                          </p>
-                          <div className="flex gap-4 text-sm text-gray-600">
+                          <p className="text-gray-500 text-sm mb-2">{job.company}</p>
+                          <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                             <span className="flex items-center gap-1">
-                              <BriefcaseBusiness className="w-4 h-4 text-teal-500 mr-1" />
+                              <BriefcaseBusiness className="w-4 h-4 text-teal-500" />
                               {job.category}
                             </span>
-
                             <span className="flex items-center gap-1">
-                              {" "}
-                              <Clock className="w-4 h-4 text-teal-600 mr-1" />
+                              <Clock className="w-4 h-4 text-teal-600" />
                               {job.type}
                             </span>
-
                             <span className="flex items-center gap-1">
-                              <Wallet className="w-4 h-4 text-teal-600 mr-1" />
+                              <Wallet className="w-4 h-4 text-teal-600" />
                               {job.salary}
                             </span>
                             <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4 text-teal-600 mr-1" />
+                              <MapPin className="w-4 h-4 text-teal-600" />
                               {job.location}
                             </span>
                           </div>
                         </div>
                       </div>
-                      <button className="bg-teal-600 text-white px-4 py-2 rounded-md text-sm hover:bg-teal-700 transition-colors">
+                      <button className="bg-teal-600 text-white px-4 py-2 rounded-md text-sm hover:bg-teal-700 transition-colors w-full sm:w-auto">
                         Job Details
                       </button>
                     </div>
@@ -325,12 +277,8 @@ const Jobs = () => {
                 {/* Pagination */}
                 <div className="flex justify-between items-center mt-6">
                   <div className="flex gap-2">
-                    <button className="w-8 h-8 bg-teal-600 text-white rounded-md text-sm">
-                      1
-                    </button>
-                    <button className="w-8 h-8 border rounded-md text-sm">
-                      2
-                    </button>
+                    <button className="w-8 h-8 bg-teal-600 text-white rounded-md text-sm">1</button>
+                    <button className="w-8 h-8 border rounded-md text-sm">2</button>
                   </div>
                   <button className="flex items-center gap-2 text-sm">
                     Next
@@ -343,43 +291,36 @@ const Jobs = () => {
             {/* Top Companies Section */}
             <div className="mt-16 bg-slate-50 py-16">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Top Company</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  At eu lobortis pretium tincidunt amet lacus et senean
-                  aliqueat. Blandit a massa elementum
+                <h2 className="text-2xl md:text-3xl font-bold mb-4">Top Company</h2>
+                <p className="text-gray-600 max-w-2xl mx-auto px-4">
+                  At eu lobortis pretium tincidunt amet lacus et senean aliqueat. Blandit a massa elementum
                 </p>
               </div>
 
-              <div className="grid grid-cols-4 gap-6">
-                {["Instagram", "Tesla", "McDonald's", "Apple"].map(
-                  (company, index) => (
-                    <div
-                      key={company}
-                      className="bg-white p-6 rounded-lg text-center"
-                    >
-                      <img
-                        src="/assets/image1.png"
-                        alt={`${company} logo`}
-                        className="w-12 h-12 mx-auto mb-4"
-                      />
-                      <h3 className="font-semibold mb-3">{company}</h3>
-                      <p className="text-gray-600 text-sm mb-4">
-                        Et velit mauris aliquam est diam. Leo sagittis
-                        consectetur diam morbi erat
-                      </p>
-                      <button className="bg-slate-50 text-teal-600 bg-teal-50 px-4 py-2 rounded-full text-sm">
-                        {[8, 18, 12, 9][index]} open jobs
-                      </button>
-                    </div>
-                  )
-                )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+                {["Instagram", "Tesla", "McDonald's", "Apple"].map((company, index) => (
+                  <div key={company} className="bg-white p-6 rounded-lg text-center">
+                    <img
+                      src="/assets/image1.png"
+                      alt={`${company} logo`}
+                      className="w-12 h-12 mx-auto mb-4"
+                    />
+                    <h3 className="font-semibold mb-3">{company}</h3>
+                    <p className="text-gray-600 text-sm mb-4">
+                      Et velit mauris aliquam est diam. Leo sagittis consectetur diam morbi erat
+                    </p>
+                    <button className="bg-slate-50 text-teal-600 bg-teal-50 px-4 py-2 rounded-full text-sm">
+                      {[8, 18, 12, 9][index]} open jobs
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-     <Footer/>
+      <Footer />
     </>
   );
 };
