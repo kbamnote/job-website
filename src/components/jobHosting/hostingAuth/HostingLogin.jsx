@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import {
   BriefcaseBusiness,
   CalendarDays,
@@ -40,10 +41,17 @@ const HostingLogin = () => {
       })
       .then((data) => {
         console.log("Login Response:", data);
-        setSuccess("Login successful!");
-        setError(null);
-        localStorage.setItem("token", data.token);
-        navigate("/hostingDashboard");
+
+        if (data.token && data._id) {
+          Cookies.set("token", data.token, { expires: 1 });
+          Cookies.set("user", data._id, { expires: 1 });
+
+          setSuccess("Login successful!");
+          setError(null);
+          navigate("/hostingDashboard");
+        } else {
+          throw new Error("Token or ID not received");
+        }
       })
       .catch((error) => {
         console.error("Login Error:", error);
@@ -51,7 +59,6 @@ const HostingLogin = () => {
         setSuccess(null);
       });
   };
-
   return (
     <div className="h-screen w-full flex items-center justify-center overflow-hidden">
       <div className="flex w-full max-w-6xl mx-auto h-full md:h-auto items-center justify-center px-4 md:px-8">
@@ -68,6 +75,7 @@ const HostingLogin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                required
               />
             </div>
             <div>
@@ -80,6 +88,7 @@ const HostingLogin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                required
               />
             </div>
             <button
@@ -109,7 +118,7 @@ const HostingLogin = () => {
         </div>
         <div className="hidden lg:block lg:w-1/2 lg:ml-8">
           <img 
-            src="http://knowledgemission.kerala.gov.in/img/official-login.jpg" 
+            src="/api/placeholder/800/600"
             alt="Login illustration" 
             className="w-full h-auto rounded-lg"
           />

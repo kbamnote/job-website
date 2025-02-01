@@ -9,6 +9,7 @@ import {
   FileText,
   MoreVertical,
 } from "lucide-react";
+import { Link } from "react-router";
 
 const chartData = [
   { name: "Sun", views: 70 },
@@ -48,9 +49,11 @@ const JobHostingDashboard = () => {
                     <Bell className="w-6 h-6 text-gray-600" />
                     <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
                   </button>
+                  <Link to="/post-job">
                   <button className="bg-teal-700 text-white px-4 py-2 rounded-lg hover:bg-teal-800 transition-colors w-full sm:w-auto">
                     Post a Job
                   </button>
+                  </Link>
                 </div>
               </div>
             </div>

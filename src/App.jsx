@@ -1,10 +1,6 @@
 import "./App.css";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
-import HireForm from "./components/jobHiring/HireForm";
-import HireFour from "./components/jobHiring/HireFour";
-import HireThree from "./components/jobHiring/HireThree";
-import HiringSecond from "./components/jobHiring/HiringSecond";
 import AboutUs from "./components/navbarSection/about/AboutUs";
 import AiResume from "./components/navbarSection/AiResume";
 import AtsScore from "./components/navbarSection/AtsScore";
@@ -19,6 +15,10 @@ import Profile from "./components/profile/Profile";
 import HostingLogin from "./components/jobHosting/hostingAuth/HostingLogin";
 import HostingSignup from "./components/jobHosting/hostingAuth/HostingSignup";
 import JobHostingDashboard from "./components/jobHosting/HostingDashboard/JobHostingDashboard";
+import PostJob from "./components/jobHosting/HostingDashboard/PostJob";
+import HostingProfileDetail from "./components/jobHosting/HostingDashboard/hostingProfile/HostingProfileDetail";
+import HostingProfileForm from "./components/jobHosting/HostingDashboard/hostingProfile/hostingProfileForm";
+import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -35,15 +35,15 @@ function App() {
           <Route path="/register" element = {<Signup/>}/>
           <Route path="/salaries" element = {<Salaries/>}/>
           <Route path="/job-login" element={<HostingLogin/>}/>
-          <Route path="/hire-second" element = {<HiringSecond/>}/>
-          <Route path="/hiring-three" element={<HireThree/>}/>
-          <Route path="/hiring-four" element={<HireFour/>}/>
-          <Route path="hire-form" element={<HireForm/>}/>
+        
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/host-signup" element={<HostingSignup/>}/>
           <Route path="/host-login" element={<HostingLogin/>}/>
           <Route path="/hostingDashboard" element={<JobHostingDashboard/>}/>
-          
+          <Route path="/post-job" element={<PostJob/>}/>
+          <Route path="/profile-hoster" element={<HostingProfileDetail/>}/>
+          <Route path="/hosting-profile-form" element={<HostingProfileForm/>}/>
+          <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>
         
       </BrowserRouter>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BriefcaseBusiness, ChevronDown, CircleUserRound, Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const [isAIToolsOpen, setIsAIToolsOpen] = useState(false);
@@ -11,18 +12,19 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
+    const token = Cookies.get("JwtToken"); // Check for token in cookies
+    setIsLoggedIn(!!token); // Set login state based on token presence
   }, []);
+  
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    Cookies.remove("JwtToken");
+    Cookies.remove("userID");
     setIsLoggedIn(false);
     setIsMobileMenuOpen(false);
     navigate("/");
   };
+  
 
   const toggleAIToolsDropdown = () => {
     setIsAIToolsOpen(!isAIToolsOpen);
@@ -93,7 +95,6 @@ const Header = () => {
     <div className={`flex ${isMobile ? "flex-col w-full space-y-2" : "items-center space-x-2"}`}>
       {isLoggedIn ? (
         <>
-          
           <button
             onClick={handleLogout}
             className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded transition-colors w-full"
@@ -122,6 +123,7 @@ const Header = () => {
       )}
     </div>
   );
+  
 
   return (
     <header className="w-full bg-black text-white shadow-lg">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import {
   BriefcaseBusiness,
   CalendarDays,
@@ -19,38 +20,38 @@ const Login = () => {
     e.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
-
-    const person = {
-      email: email,
-      password: password,
-    };
-
-    fetch(loginApi, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(person),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Login Response:", data);
+  
+    const person = { email, password };
+  
+    try {
+      const response = await fetch(loginApi, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(person),
+      });
+  
+      if (!response.ok) throw new Error("Network response was not ok");
+  
+      const data = await response.json();
+      console.log("Login Response:", data);
+  
+      if (data.token && data._id) {
+        Cookies.set("JwtToken", data.token, { expires: 1 });
+        Cookies.set("userID", data._id, { expires: 1 });
+  
         setSuccess("Login successful!");
         setError(null);
-        localStorage.setItem("token", data.token); // Save the token to localStorage
-        navigate("/"); // Redirect to the home page
-      })
-      .catch((error) => {
-        console.error("Login Error:", error);
-        setError("Login failed. Please try again.");
-        setSuccess(null);
-      });
+        navigate("/");
+      } else {
+        throw new Error("Token or ID not received");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      setError("Login failed. Please try again.");
+      setSuccess(null);
+    }
   };
+  
 
   return (
     <div

@@ -11,48 +11,79 @@ const HostingSignup = () => {
   const navigate = useNavigate();
   const signupApi = "https://jobquick.onrender.com/hostuser/signup";
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-
-    const person = {
-      email: email,
-      password: password,
-    };
-
-    fetch(signupApi, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(person),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const parseResponse = (data) => {
+    try {
+      // If data is already an object, return it
+      if (typeof data === 'object' && data !== null) {
+        return data;
+      }
+      
+      // If data is a string, try to decode it first in case it's URL encoded
+      if (typeof data === 'string') {
+        try {
+          data = decodeURIComponent(data);
+        } catch (e) {
+          // If decoding fails, use the original string
+          console.log("URL decoding failed, using original string");
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Signup Response:", data);
-        setSuccess("Signup successful!");
-        setError(null);
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
-      })
-      .catch((error) => {
-        console.error("Signup Error:", error);
-        setError("Signup failed. Please try again.");
-        setSuccess(null);
+        
+        // Parse the JSON string
+        return JSON.parse(data);
+      }
+      
+      throw new Error("Invalid response format");
+    } catch (e) {
+      console.error("Response parsing error:", e);
+      throw new Error("Failed to parse server response");
+    }
+  };
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const person = {
+        email: email,
+        password: password,
+      };
+
+      const response = await fetch(signupApi, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(person),
       });
+
+      const rawData = await response.text(); // Get response as text first
+      console.log("Raw response:", rawData);
+
+      if (!response.ok) {
+        throw new Error("Signup failed");
+      }
+
+      const data = parseResponse(rawData);
+      console.log("Parsed response:", data);
+
+      // Set success message from response or default
+      setSuccess(data.message || "Signup successful!");
+      setError(null);
+
+      // Navigate to login page after delay
+      setTimeout(() => {
+        navigate("/host-login");
+      }, 1000);
+    } catch (error) {
+      console.error("Signup Error:", error);
+      setError(error.message || "Signup failed. Please try again.");
+      setSuccess(null);
+    }
   };
 
   return (
-    <div
-      className="min-h-screen flex justify-center items-center p-8"
-    >
+    <div className="min-h-screen flex justify-center items-center p-8">
       <div className="flex flex-col lg:flex-row items-center lg:space-x-16">
         <div className="bg-white p-12 rounded-lg shadow-lg max-w-lg w-full relative">
           <h2 className="text-2xl font-semibold mb-6 text-center">Create Account</h2>
@@ -70,6 +101,7 @@ const HostingSignup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                required
               />
             </div>
             <div>
@@ -85,6 +117,7 @@ const HostingSignup = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                required
               />
             </div>
             <div className="flex justify-between items-center">
@@ -135,11 +168,11 @@ const HostingSignup = () => {
         </div>
 
         <div className="hidden lg:block w-1/2">
-          <div className="  w-158 h-158">
+          <div className="w-158 h-158">
             <img
-              src="http://knowledgemission.kerala.gov.in/img/official-login.jpg"
+              src="/api/placeholder/800/600"
               alt="Signup Illustration"
-              className=""
+              className="w-full h-auto rounded-lg"
             />
           </div>
         </div>
