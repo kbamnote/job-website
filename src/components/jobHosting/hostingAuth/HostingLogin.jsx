@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import {
-  BriefcaseBusiness,
-  CalendarDays,
-  Trophy,
-} from "lucide-react";
 
 const HostingLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -18,8 +14,6 @@ const HostingLogin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
 
     const person = {
       email: email,
@@ -40,8 +34,6 @@ const HostingLogin = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Login Response:", data);
-
         if (data.token && data._id) {
           Cookies.set("token", data.token, { expires: 1 });
           Cookies.set("user", data._id, { expires: 1 });
@@ -53,20 +45,33 @@ const HostingLogin = () => {
           throw new Error("Token or ID not received");
         }
       })
-      .catch((error) => {
-        console.error("Login Error:", error);
+      .catch(() => {
         setError("Login failed. Please try again.");
         setSuccess(null);
       });
   };
+
   return (
-    <div className="h-screen w-full flex items-center justify-center overflow-hidden">
-      <div className="flex w-full max-w-6xl mx-auto h-full md:h-auto items-center justify-center px-4 md:px-8">
-        <div className="bg-white rounded-lg shadow-lg w-full md:max-w-md p-6 md:p-8">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Sign In</h2>
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg flex w-full max-h-max h max-w-5xl">
+        {/* left section */}
+        <div className="hidden md:flex w-1/2 bg-gradient-to-r from-teal-700 via-teal-700 to-teal-700 text-white flex-col justify-center items-center p-8">
+          <h2 className="text-3xl font-bold mb-4">Welcome back!</h2>
+          <p className="text-center text-lg">
+            Welcome back! We are so happy to have you here. It's great to see
+            you again. We hope you had a safe and enjoyable time away.
+          </p>
+        </div>
+
+        {/* right section */}
+        <div className="w-1/2 p-12 flex flex-col justify-center">
+          <h2 className="text-3xl font-bold text-center mb-6">Sign In</h2>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-1">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 text-sm font-medium mb-2"
+              >
                 Email
               </label>
               <input
@@ -74,16 +79,19 @@ const HostingLogin = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                 required
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-gray-700 text-sm font-medium mb-1">
+              <label
+                htmlFor="password"
+                className="block text-gray-700 text-sm font-medium mb-2"
+              >
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -91,37 +99,43 @@ const HostingLogin = () => {
                 required
               />
             </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="showPassword"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+                className="mr-2"
+              />
+              <label htmlFor="showPassword" className="text-gray-700 text-sm">
+                Show Password
+              </label>
+            </div>
+            <br />
+
             <button
               type="submit"
-              className="w-full bg-teal-700 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300"
+              className="w-full bg-teal-700 hover:bg-teal-600 text-white py-2 rounded  focus:outline-none focus:ring-2 focus:ring-teal-300"
             >
-              LOG IN
+              Sign in
             </button>
-            {error && <div className="text-red-500 text-sm">{error}</div>}
-            {success && <div className="text-green-500 text-sm">{success}</div>}
+            {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+            {success && (
+              <div className="text-teal-800 text-sm mt-2">{success}</div>
+            )}
           </form>
-          <div className="mt-6 text-center text-gray-500">OR</div>
-          <div className="flex space-x-4 mt-4">
-            <button className="w-1/2 bg-teal-950 text-white py-2 rounded hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-300">
-              FACEBOOK
-            </button>
-            <button className="w-1/2 bg-teal-500 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300">
-              TWITTER
-            </button>
+          <div className="text-center text-sm text-gray-500 mt-4">
+            or sign in with
           </div>
           <div className="mt-6 text-center">
-            Don't have an account?{" "}
-            <a href="/host-signup" className="text-teal-500">
-              Sign Up
+            No account yet?{" "}
+            <a
+              href="/host-signup"
+              className="text-teal-600 hover:text-teal-500"
+            >
+              Signup.
             </a>
           </div>
-        </div>
-        <div className="hidden lg:block lg:w-1/2 lg:ml-8">
-          <img 
-            src="/api/placeholder/800/600"
-            alt="Login illustration" 
-            className="w-full h-auto rounded-lg"
-          />
         </div>
       </div>
     </div>

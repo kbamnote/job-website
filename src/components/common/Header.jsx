@@ -20,6 +20,8 @@ const Header = () => {
   const handleLogout = () => {
     Cookies.remove("JwtToken");
     Cookies.remove("userID");
+    console.log("JwtToken:", Cookies.get("JwtToken")); // Should be undefined
+    console.log("userID:", Cookies.get("userID")); // Should be undefined
     setIsLoggedIn(false);
     setIsMobileMenuOpen(false);
     navigate("/");
@@ -92,18 +94,18 @@ const Header = () => {
   );
 
   const AuthButtons = ({ isMobile = false }) => (
-    <div className={`flex ${isMobile ? "flex-col w-full space-y-2" : "items-center space-x-2"}`}>
+    <div className={`flex ${isMobile ? "flex-col w-full space-y-2" : "items-center space-x-4"}`}>
       {isLoggedIn ? (
         <>
           <button
             onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded transition-colors w-full"
+            className="bg-teal-500 hover:bg-teal-600 px-4 py-2 rounded transition-colors w-full cursor-pointer"
           >
             Logout
           </button>
-          <Link to="/profile" className={isMobile ? "w-full" : ""}>
-            <button className="hover:text-teal-400 transition-colors w-full flex justify-center">
-              <CircleUserRound className="w-7 h-7" />
+          <Link to="/user-profile" className={isMobile ? "w-full" : ""}>
+            <button className="hover:text-teal-400 transition-colors w-full flex justify-center cursor-pointer">
+         <div className="items-center flex space-x-1"><span>User</span>     <CircleUserRound className="w-6 h-6" /></div> 
             </button>
           </Link>
         </>
@@ -114,7 +116,7 @@ const Header = () => {
               Login
             </button>
           </Link>
-          <Link to="/job-login" className={isMobile ? "w-full" : ""}>
+          <Link to="/host-login" className={isMobile ? "w-full" : ""}>
             <button className="bg-teal-500 hover:bg-teal-600 px-4 py-2 rounded transition-colors w-full">
               Job Hosting
             </button>

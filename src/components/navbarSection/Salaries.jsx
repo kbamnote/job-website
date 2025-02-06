@@ -13,7 +13,7 @@ const Salaries = () => {
     if (company && designation && previousCTC && experience) {
       const ctc = parseFloat(previousCTC);
       const exp = parseInt(experience);
-      const multiplier = exp > 5 ? 1.3 : exp > 2 ? 1.2 : 1.1;
+      const multiplier = exp > 5 ? 2 : exp > 2 ? 2 : 1.3;
       const calculatedSalary = (ctc * multiplier).toFixed(2);
       setExpectedSalary(`₹${calculatedSalary}`);
     } else {

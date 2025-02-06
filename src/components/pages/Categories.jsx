@@ -1,25 +1,29 @@
 import React from "react";
+
 import {
-  Sprout,
-  Hammer,
+  MonitorCheck ,
+  
+  DatabaseZap,
   ShoppingBag,
-  HardHat,
+  UserSearch,
+  WalletCards,
+  
   Building2,
   GraduationCap,
   Wallet,
-  Bus,
+ 
 } from "lucide-react";
 
 const JobCategories = () => {
   const categories = [
-    { icon: Sprout, title: "Agriculture", jobs: 1254 },
-    { icon: Hammer, title: "Metal Production", jobs: 816 },
-    { icon: ShoppingBag, title: "Commerce", jobs: 2082 },
-    { icon: HardHat, title: "Construction", jobs: 1520 },
-    { icon: Building2, title: "Hotels & Tourism", jobs: 1022 },
-    { icon: GraduationCap, title: "Education", jobs: 1496 },
-    { icon: Wallet, title: "Financial Services", jobs: 1529 },
-    { icon: Bus, title: "Transport", jobs: 1244 },
+    { icon: MonitorCheck, title: "IT & Networking", jobs: 1254 },
+    { icon: ShoppingBag, title: "Sales & Marketing", jobs: 816 },
+    { icon: DatabaseZap, title: "Data Science", jobs: 2082 },
+    { icon: UserSearch, title: "Customer Service", jobs: 1520 },
+    { icon: Building2, title: "Digital Marketing", jobs: 1022 },
+    { icon: GraduationCap, title: "Human Resource", jobs: 1496 },
+    { icon: Wallet, title: "Project Manager", jobs: 1529 },
+    { icon: WalletCards, title: "Accounting", jobs: 1244 },
   ];
 
   return (

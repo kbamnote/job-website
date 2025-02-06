@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../../common/Header";
+import Footer from "../../common/Footer";
+import JobHostingSidebar from "./jobHostingSidebar";
 
 const PostJob = () => {
   const JobId = Cookies.get("user");
@@ -82,9 +85,9 @@ const PostJob = () => {
   const addSkill = (skill) => {
     const trimmedSkill = skill.trim();
     if (trimmedSkill && !formData.skills.includes(trimmedSkill)) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        skills: [...prev.skills, trimmedSkill]
+        skills: [...prev.skills, trimmedSkill],
       }));
     }
   };
@@ -112,38 +115,35 @@ const PostJob = () => {
         setFormData((prev) => ({ ...prev, [name]: file }));
       }
       return;
-    }
-
-    else if (name === "skills") {
+    } else if (name === "skills") {
       setSkillInput(value);
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleSkillInputKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault(); // Prevent form submission
       if (skillInput.trim()) {
         addSkill(skillInput);
-        setSkillInput(''); // Clear input after adding
+        setSkillInput(""); // Clear input after adding
       }
-    } else if (e.key === ',' || e.key === ' ') {
+    } else if (e.key === "," || e.key === " ") {
       e.preventDefault();
       if (skillInput.trim()) {
         addSkill(skillInput);
-        setSkillInput('');
+        setSkillInput("");
       }
     }
   };
 
   const handleRemoveSkill = (indexToRemove) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      skills: prev.skills.filter((_, index) => index !== indexToRemove)
+      skills: prev.skills.filter((_, index) => index !== indexToRemove),
     }));
   };
-
 
   const handlePostJob = async (e) => {
     e.preventDefault();
@@ -154,13 +154,13 @@ const PostJob = () => {
       const submitFormData = new FormData();
 
       // Append all form fields to FormData
-      Object.keys(formData).forEach(key => {
+      Object.keys(formData).forEach((key) => {
         if (formData[key] !== null && formData[key] !== undefined) {
-          if (key === 'skills') {
+          if (key === "skills") {
             // Convert skills array to a simple comma-separated string when sending to server
             const skillsString = formData[key].join(", ");
             submitFormData.append(key, skillsString);
-          } else if (key === 'profileImg') {
+          } else if (key === "profileImg") {
             if (formData[key] instanceof File) {
               submitFormData.append(key, formData[key]);
             }
@@ -200,7 +200,7 @@ const PostJob = () => {
 
   const renderCompanyForm = () => (
     <>
-      <div>
+      {/* <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Upload Company Logo
         </label>
@@ -210,7 +210,7 @@ const PostJob = () => {
             name="profileImg"
             accept="image/*"
             onChange={handleInputChange}
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
           {imagePreview && (
             <img
@@ -221,7 +221,7 @@ const PostJob = () => {
           )}
         </div>
         {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
-      </div>
+      </div> */}
 
       <div className="flex gap-4">
         <div className="flex-1">
@@ -327,7 +327,7 @@ const PostJob = () => {
       <button
         type="button"
         onClick={handleNext}
-        className="w-full bg-gradient-to-r from-pink-500 to-blue-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+        className="w-28 bg-gradient-to-r from-teal-500 to-teal-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
       >
         Next
       </button>
@@ -428,14 +428,14 @@ const PostJob = () => {
         <button
           type="button"
           onClick={handlePrevious}
-          className="w-1/3 bg-gradient-to-r from-pink-700 to-blue-700 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+          className="w-1/3 bg-gradient-to-r from-teal-700 to-teal-700 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
         >
           Previous
         </button>
         <button
           type="button"
           onClick={handleNext}
-          className="w-1/2 bg-gradient-to-r from-pink-500 to-blue-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+          className="w-1/2 bg-gradient-to-r from-teal-500 to-teal-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
         >
           Next
         </button>
@@ -455,7 +455,7 @@ const PostJob = () => {
             name="minPackage"
             value={formData.minPackage}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter minimum package eg: 3LPA"
           />
         </div>
@@ -468,7 +468,7 @@ const PostJob = () => {
             name="maxPackage"
             value={formData.maxPackage}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter maximum package eg: 5LPA"
           />
         </div>
@@ -564,13 +564,13 @@ const PostJob = () => {
             {formData.skills.map((skill, index) => (
               <span
                 key={index}
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800"
               >
                 {skill}
                 <button
                   type="button"
                   onClick={() => handleRemoveSkill(index)}
-                  className="ml-1 inline-flex items-center p-0.5 rounded-full text-blue-400 hover:bg-blue-200 hover:text-blue-900"
+                  className="ml-1 inline-flex items-center p-0.5 rounded-full text-teal-400 hover:bg-teal-200 hover:text-teal-900"
                 >
                   ×
                 </button>
@@ -598,13 +598,13 @@ const PostJob = () => {
         <button
           type="button"
           onClick={handlePrevious}
-          className="w-1/3 bg-gradient-to-r from-pink-700 to-blue-700 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+          className="w-1/3 bg-gradient-to-r from-teal-700 to-teal-700 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
         >
           Previous
         </button>
         <button
           type="submit"
-          className="w-1/2 bg-gradient-to-r from-pink-500 to-blue-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+          className="w-1/2 bg-gradient-to-r from-teal-500 to-teal-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
         >
           Submit
         </button>
@@ -613,23 +613,51 @@ const PostJob = () => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-      <h2 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">
-        Post Job
-      </h2>
+    <>
+      {/* <Header /> */}
+      <div className="min-h-screen flex">
+      {/* Sidebar */}
+      <div className="w-1/4 fixed left-0 top-0 h-screen">
+        <JobHostingSidebar />
+      </div>
 
-      {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      {/* Main Content */}
+      <div className="flex-1 ml-[22%] flex  items-center justify-center flex-col md:flex-row">
+        {/* Left Section - Image */}
+        {/* <div className="w-full md:w-1/2 p-8 flex items-center justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1605169935945-4b54e1373e6a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Job Posting"
+            className="rounded-lg shadow-lg w-full h-[600px] object-cover object-top"
+          />
+        </div> */}
+
+        {/* Right Section - Form */}
+        <div className="w-full md:w-1/2 p-8 flex items-center justify-center">
+          <div className="w-full max-w-xl bg-white rounded-lg shadow-2xl p-8">
+            <h2 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text text-transparent">
+              Post Job
+            </h2>
+
+            {/* Loading Overlay */}
+            {isLoading && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+              </div>
+            )}
+
+            {/* Form Content */}
+            <form className="space-y-6" onSubmit={handlePostJob}>
+              {step === 1 && renderCompanyForm()}
+              {step === 2 && renderJobDetailsForm()}
+              {step === 3 && renderRequirementsForm()}
+            </form>
+          </div>
         </div>
-      )}
-
-      <form className="space-y-6 p-4" onSubmit={handlePostJob}>
-        {step === 1 && renderCompanyForm()}
-        {step === 2 && renderJobDetailsForm()}
-        {step === 3 && renderRequirementsForm()}
-      </form>
+      </div>
     </div>
+      {/* <Footer /> */}
+    </>
   );
 };
 

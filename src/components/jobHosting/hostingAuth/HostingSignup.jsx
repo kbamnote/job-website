@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const HostingSignup = () => {
   const [email, setEmail] = useState("");
@@ -11,82 +12,58 @@ const HostingSignup = () => {
   const navigate = useNavigate();
   const signupApi = "https://jobquick.onrender.com/hostuser/signup";
 
-  const parseResponse = (data) => {
-    try {
-      // If data is already an object, return it
-      if (typeof data === 'object' && data !== null) {
-        return data;
-      }
-      
-      // If data is a string, try to decode it first in case it's URL encoded
-      if (typeof data === 'string') {
-        try {
-          data = decodeURIComponent(data);
-        } catch (e) {
-          // If decoding fails, use the original string
-          console.log("URL decoding failed, using original string");
-        }
-        
-        // Parse the JSON string
-        return JSON.parse(data);
-      }
-      
-      throw new Error("Invalid response format");
-    } catch (e) {
-      console.error("Response parsing error:", e);
-      throw new Error("Failed to parse server response");
-    }
-  };
-
-  const handleSignup = async (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
 
-    try {
-      const person = {
-        email: email,
-        password: password,
-      };
+    const person = {
+      email: email,
+      password: password,
+    };
 
-      const response = await fetch(signupApi, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(person),
+    fetch(signupApi, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(person),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        Cookies.set("user", JSON.stringify(data), { expires: 7, secure: true });
+        setSuccess("Signup successful!");
+        setError(null);
+        setTimeout(() => {
+          navigate("/host-login");
+        }, 1000);
+      })
+      .catch((error) => {
+        setError("Signup failed. Please try again.");
+        setSuccess(null);
       });
-
-      const rawData = await response.text(); // Get response as text first
-      console.log("Raw response:", rawData);
-
-      if (!response.ok) {
-        throw new Error("Signup failed");
-      }
-
-      const data = parseResponse(rawData);
-      console.log("Parsed response:", data);
-
-      // Set success message from response or default
-      setSuccess(data.message || "Signup successful!");
-      setError(null);
-
-      // Navigate to login page after delay
-      setTimeout(() => {
-        navigate("/host-login");
-      }, 1000);
-    } catch (error) {
-      console.error("Signup Error:", error);
-      setError(error.message || "Signup failed. Please try again.");
-      setSuccess(null);
-    }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center p-8">
-      <div className="flex flex-col lg:flex-row items-center lg:space-x-16">
-        <div className="bg-white p-12 rounded-lg shadow-lg max-w-lg w-full relative">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Create Account</h2>
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg flex w-full max-h-max h max-w-5xl">
+        {/* Left Section */}
+        <div className="hidden md:flex w-1/2 bg-gradient-to-r from-teal-700 via-teal-700 to-teal-700 text-white flex-col justify-center items-center p-8">
+          <h2 className="text-3xl font-bold mb-4">Welcome back!</h2>
+          <p className="text-center text-lg">
+            Welcome back! We are so happy to have you here. It's great to see
+            you again. We hope you had a safe and enjoyable time away.
+          </p>
+        </div>
+
+        {/* Right Section */}
+        <div className="w-1/2 p-12 flex flex-col justify-center">
+          <h2 className="text-3xl font-bold text-center mb-6">
+            Create Account
+          </h2>
           <form onSubmit={handleSignup} className="space-y-4">
             <div>
               <label
@@ -120,16 +97,16 @@ const HostingSignup = () => {
                 required
               />
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  id="remember"
+                  id="showPassword"
                   checked={showPassword}
                   onChange={(e) => setShowPassword(e.target.checked)}
                   className="mr-2"
                 />
-                <label htmlFor="remember" className="text-sm text-gray-700">
+                <label htmlFor="showPassword" className="text-sm text-gray-700">
                   Show Password
                 </label>
               </div>
@@ -137,6 +114,7 @@ const HostingSignup = () => {
                 Forgot password?
               </a>
             </div>
+            <br />
             <button
               type="submit"
               className="w-full bg-teal-700 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300"
@@ -144,36 +122,21 @@ const HostingSignup = () => {
               Sign Up
             </button>
           </form>
-          <div className="mt-6 text-center text-gray-500">OR</div>
-          <div className="flex space-x-4 mt-4">
-            <button className="w-1/2 bg-teal-950 text-white py-2 rounded hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-300">
-              FACEBOOK
-            </button>
-            <button className="w-1/2 bg-teal-500 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300">
-              TWITTER
-            </button>
-          </div>
           {error && (
             <div className="text-red-500 text-center mt-4">{error}</div>
           )}
           {success && (
             <div className="text-green-500 text-center mt-4">{success}</div>
           )}
+
+          <div className="text-center text-sm text-gray-500 mt-4">
+            or sign in with
+          </div>
           <div className="mt-6 text-center">
             Already have an account?{" "}
             <a href="/host-login" className="text-teal-500">
               Sign In
             </a>
-          </div>
-        </div>
-
-        <div className="hidden lg:block w-1/2">
-          <div className="w-158 h-158">
-            <img
-              src="/api/placeholder/800/600"
-              alt="Signup Illustration"
-              className="w-full h-auto rounded-lg"
-            />
           </div>
         </div>
       </div>

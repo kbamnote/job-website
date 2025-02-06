@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const HeroSection = () => {
   const stats = [
@@ -43,9 +44,11 @@ const HeroSection = () => {
             Ultricies purus dolor viverra mi laoreet at cursus justo. Ultrices purus diam egestas amet faucibus tempor blandit. Elit velit mauris aliquam est diam. Leo sagittis consectetur diam morbi erat aenean. Vulputate praesent congue faucibus in euismod feugiat euismod volutpat...
           </p>
           <div className="flex gap-4">
-            <button className="bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition-colors">
+            <Link to="/jobs">
+            <button className="bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition-colors cursor-pointer">
               Search Job
             </button>
+            </Link>
             <button className="text-teal-500 hover:text-teal-600 transition-colors">
               Learn more
             </button>

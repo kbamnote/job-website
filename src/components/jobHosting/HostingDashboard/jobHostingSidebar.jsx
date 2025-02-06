@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   LogOut,
   User,
@@ -13,19 +13,15 @@ import {
 
 const JobHostingSidebar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const clearCookie = (name) => {
     document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;Secure;SameSite=Strict`;
   };
 
   const handleLogout = () => {
-    // Clear the authentication token
     clearCookie("token");
-
-    // Clear any user data if stored
     clearCookie("user");
-
-    // Navigate to home page
     navigate("/");
   };
 
@@ -33,29 +29,18 @@ const JobHostingSidebar = () => {
     {
       icon: <User className="w-4 h-4 lg:w-5 lg:h-5" />,
       label: "My Profile",
-      path: "/profile-hoster" // Add the appropriate path for profile
+      path: "/hosting-detail-form"
     },
     {
       icon: <Briefcase className="w-4 h-4 lg:w-5 lg:h-5" />,
       label: "My Jobs",
       path: "/jobs-hoster"
     },
-    {
-      icon: <MessageSquare className="w-4 h-4 lg:w-5 lg:h-5" />,
-      label: "Messages",
-      path: "/messages"
-    },
-    {
-      icon: <FileText className="w-4 h-4 lg:w-5 lg:h-5" />,
-      label: "Submit Job",
-      path: "/submit-job"
-    },
-    {
-      icon: <Bookmark className="w-4 h-4 lg:w-5 lg:h-5" />,
-      label: "Save Candidate",
-      path: "/save-candidate"
-    }
   ];
+
+  const isActiveRoute = (path) => {
+    return location.pathname === path;
+  };
 
   return (
     <aside className="h-screen flex flex-col bg-teal-900 p-4 lg:p-6 w-62 lg:w-80">
@@ -85,8 +70,10 @@ const JobHostingSidebar = () => {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto">
         <div className="space-y-1">
-          <Link to="/dashboard" className="block">
-            <div className="flex items-center space-x-3 p-2 lg:p-3 bg-teal-700 text-white rounded-lg">
+          <Link to="/hostingDashboard" className="block">
+            <div className={`flex items-center space-x-3 p-2 lg:p-3 ${
+              isActiveRoute('/hostingDashboard') ? 'bg-teal-700' : ''
+            } text-white hover:bg-teal-100 hover:text-black rounded-lg`}>
               <Users className="w-4 h-4 lg:w-5 lg:h-5" />
               <span className="text-sm lg:text-base">Dashboard</span>
             </div>
@@ -94,7 +81,9 @@ const JobHostingSidebar = () => {
 
           {navItems.map((item, index) => (
             <Link to={item.path} key={index} className="block">
-              <div className="flex items-center space-x-3 p-2 lg:p-3 text-white hover:bg-teal-100 hover:text-black rounded-lg cursor-pointer transition-colors duration-200">
+              <div className={`flex items-center space-x-3 p-2 lg:p-3 ${
+                isActiveRoute(item.path) ? 'bg-teal-700' : ''
+              } text-white hover:bg-teal-100 hover:text-black rounded-lg cursor-pointer transition-colors duration-200`}>
                 {item.icon}
                 <span className="text-sm lg:text-base">{item.label}</span>
               </div>

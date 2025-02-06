@@ -52,7 +52,7 @@ const NewsBlogSection = () => {
                 {post.title}
               </h3>
               <a 
-                href="#" 
+                href="https://economictimes.indiatimes.com/jobs" 
                 className="inline-flex items-center text-teal-500 hover:text-teal-600 transition-colors"
               >
                 Read more
