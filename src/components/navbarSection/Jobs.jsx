@@ -8,6 +8,8 @@ import { FaUserClock } from "react-icons/fa";
 import { GiWallet } from "react-icons/gi";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import Header from "../common/Header";
+import Footer from "../common/Footer";
 
 const JobFilters = ({
   filters,
@@ -17,16 +19,16 @@ const JobFilters = ({
   onApplyFilters,
 }) => {
   return (
-    <div className="sticky top-4 rounded-lg p-4 bg-white shadow-lg w-90">
-      <div className="mb-4 mt-4">
-        <label className="text-2xl font-bold text-center ml-8 text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text lg:ml-2">
+    <div className="sticky top-0 rounded-lg p-4 bg-white shadow-lg w-80">
+      <div className="mb-6">
+        <label className="block text-xl font-bold text-gray-800 mb-2">
           Search by Job Title
         </label>
         <div className="relative">
           <input
             type="text"
             placeholder="Job title or company"
-            className="w-full p-2 pr-8 border border-gray-300 rounded-md text-sm mt-5"
+            className="w-full p-2 border-2 border-gray-200 rounded-lg text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none"
             value={filters.title}
             onChange={(e) => onFilterChange("title", e.target.value)}
           />
@@ -34,13 +36,13 @@ const JobFilters = ({
       </div>
 
       <div className="mb-6">
-        <label className="text-2xl font-bold text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <label className="text-lg font-medium text-gray-800 mb-2">
           Categories
         </label>
         <select
           value={filters.categories}
           onChange={(e) => onFilterChange("categories", e.target.value)}
-          className="mt-5 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
         >
           <option value="">All Categories</option>
           <option value="IT & Networking">IT & Networking</option>
@@ -56,13 +58,13 @@ const JobFilters = ({
       </div>
 
       <div className="mb-6">
-        <label className="text-2xl font-bold text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <label className="text-lg font-medium text-gray-800 mb-2">
           Experience Level
         </label>
         <select
           value={filters.experience}
           onChange={(e) => onFilterChange("experience", e.target.value)}
-          className="mt-5 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
         >
           <option value="">All Experience Levels</option>
           <option value="fresher">Fresher</option>
@@ -73,13 +75,13 @@ const JobFilters = ({
       </div>
 
       <div className="mb-6">
-        <label className="text-2xl font-bold text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <label className="text-lg font-medium text-gray-800 mb-2">
           Job Type
         </label>
         <select
           value={filters.jobType}
           onChange={(e) => onFilterChange("jobType", e.target.value)}
-          className="mt-5 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
         >
           <option value="">All Types</option>
           <option value="Full-Time">Full Time</option>
@@ -88,13 +90,13 @@ const JobFilters = ({
       </div>
 
       <div className="mb-6">
-        <label className="text-2xl font-bold text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <label className="text-lg font-medium text-gray-800 mb-2">
           Work Type
         </label>
         <select
           value={filters.workType}
           onChange={(e) => onFilterChange("workType", e.target.value)}
-          className="mt-5 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
         >
           <option value="">All Work Types</option>
           <option value="Remote">Remote</option>
@@ -105,7 +107,7 @@ const JobFilters = ({
 
       <button
         onClick={onApplyFilters}
-        className="w-full h-12 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-md font-medium hover:opacity-90 transition-opacity"
+        className="w-full h-10 bg-teal-600 text-white rounded-md font-medium hover:bg-teal-700 transition-colors"
       >
         Apply Filters
       </button>
@@ -115,59 +117,60 @@ const JobFilters = ({
 
 const JobCard = ({ job }) => {
   return (
-    <div className="border rounded-lg p-6 flex flex-col justify-between items-start hover:shadow-lg transition-shadow bg-white">
-      <div className="flex w-full mb-4">
+    <div className="p-6 max-w-xl w-full bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+      <div className="flex w-full mb-8">
         <img
-          src={job.profileImg}
+          src="https://www.pngkey.com/png/full/191-1911374_company-building-png-office-building-png.png"
           alt={`${job.companyName} logo`}
-          className="w-24 h-24 rounded-lg object-cover mr-4"
+          className="w-14 h-14 rounded-lg object-cover mr-4 shadow-sm"
         />
         <div className="flex-1">
           <h3 className="font-semibold text-lg text-gray-800 mb-1">
             {job.title}
           </h3>
-          <p className="text-gray-500 font-semibold mb-1">{job.companyName}</p>
-          <span className="text-gray-500 font-semibold">
-            {new Date(job.dateCreated).toLocaleDateString()}
+          <p className="text-teal-600 font-semibold mb-1">{job.companyName}</p>
+          <span className="text-sm text-gray-500">
+            Posted on {new Date(job.dateCreated).toLocaleDateString()}
           </span>
         </div>
       </div>
 
-      <div className="bg-white w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div className="mt-4 space-y-3">
+        <div className="grid grid-cols-2 sm:grid-cols-2  gap-4">
           <div>
-            <div className="flex items-center mb-3">
-              <TbCategory className="w-6 h-6 text-pink-500 mr-3" />
+            <div className="flex items-center mb-4">
+              <TbCategory className="w-5 h-5 text-teal-500 mr-2" />
               <span className="text-gray-700 font-semibold">
                 {job.category?.title || "Uncategorized"}
               </span>
             </div>
-            <div className="flex items-center mb-3">
-              <FaUserClock className="w-6 h-6 text-pink-500 mr-3" />
+            <div className="flex items-center mb-4">
+              <FaUserClock className="w-5 h-5 text-teal-500 mr-2" />
               <span className="text-gray-700 font-semibold">{job.jobType}</span>
             </div>
-            <div className="flex items-center mb-3">
-              <GiWallet className="w-6 h-6 text-pink-500 mr-3" />
+            <div className="flex items-center mb-4">
+              <GiWallet className="w-5 h-5 text-teal-500 mr-2" />
               <span className="text-gray-700 font-semibold">
-                ${job.minPackage} - ${job.maxPackage}
+                {job.minPackage} - {job.maxPackage}
               </span>
             </div>
           </div>
+
           <div>
-            <div className="flex items-center mb-3">
-              <IoLocationOutline className="w-6 h-6 text-pink-500 mr-3" />
+            <div className="flex items-center mb-4">
+              <IoLocationOutline className="w-5 h-5 text-teal-500 mr-2" />
               <span className="text-gray-700 font-semibold">
                 {job.location}
               </span>
             </div>
-            <div className="flex items-center mb-3">
-              <GrUserWorker className="w-6 h-6 text-pink-500 mr-3" />
+            <div className="flex items-center mb-4">
+              <GrUserWorker className="w-5 h-5 text-teal-500 mr-2" />
               <span className="text-gray-700 font-semibold">
                 {job.experience}
               </span>
             </div>
-            <div className="flex items-center mb-3">
-              <BsPersonWorkspace className="w-6 h-6 text-pink-500 mr-3" />
+            <div className="flex items-center mb-4">
+              <BsPersonWorkspace className="w-5 h-5 text-teal-500 mr-2" />
               <span className="text-gray-700 font-semibold">
                 {job.workType}
               </span>
@@ -176,8 +179,8 @@ const JobCard = ({ job }) => {
         </div>
       </div>
 
-      <Link to={`/job-detials/${job._id}`} className="block w-full">
-        <button className="mt-4 w-60 h-10 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white rounded-lg text-base font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-pink-400 sm:h-12 md:h-14 lg:h-12">
+      <Link to={`/jobs/${job._id}`} className="block w-full mt-4">
+        <button className="w-full h-10 bg-teal-600 text-white rounded-lg text-base font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400">
           View Job Details
         </button>
       </Link>
@@ -274,13 +277,13 @@ const Jobs = () => {
       }
 
       const data = await response.json();
-      
+
       if (isLoadMore) {
-        setJobListings(prevJobs => [...prevJobs, ...data.jobs]);
+        setJobListings((prevJobs) => [...prevJobs, ...data.jobs]);
       } else {
         setJobListings(data.jobs || []);
       }
-      
+
       setTotalJobs(data.pagination.total);
       setTotalPages(data.pagination.totalPages);
     } catch (error) {
@@ -336,7 +339,7 @@ const Jobs = () => {
           </p>
           <Link
             to="/login"
-            className="inline-block bg-gradient-to-r from-pink-500 to-blue-500 text-white py-2 px-6 rounded-md hover:opacity-90"
+            className="inline-block bg-gradient-to-r from-teal-500 to-blue-500 text-white py-2 px-6 rounded-md hover:opacity-90"
           >
             Go to Login
           </Link>
@@ -346,115 +349,121 @@ const Jobs = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-col space-y-8">
-          <div className="flex gap-6">
-            <div>
-              <button
-                className="fixed top-16 left-4 z-50 p-2 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg lg:hidden"
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                {isOpen ? (
-                  <X className="h-5 w-6" />
-                ) : (
-                  <Menu className="h-5 w-6" />
-                )}
-              </button>
-
-              <div
-                className={`fixed top-4 left-0 h-full w-96 p-4 transition-transform duration-300 ease-in-out transform 
-                ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-                lg:relative lg:translate-x-0 lg:w-90 lg:flex-shrink-0`}
-              >
-                <JobFilters
-                  filters={pendingFilters}
-                  onFilterChange={handleFilterChange}
-                  categories={categories}
-                  isLoading={isLoading}
-                  onApplyFilters={handleApplyFilters}
-                />
-              </div>
-            </div>
-            <div className="flex-1 px-4 sm:px-6 lg:px-8">
-              {isLoading && jobListings.length === 0 ? (
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
-                  {[1, 2, 3, 4].map((n) => (
-                    <div
-                      key={n}
-                      className="border rounded-lg p-4 animate-pulse"
-                    >
-                      <div className="h-32 bg-gray-200 rounded-lg mb-4"></div>
-                      <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                      <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-                    </div>
-                  ))}
-                </div>
-              ) : error ? (
-                <div className="text-red-500 text-center py-8">
-                  <p className="text-xl font-semibold mb-2">Error</p>
-                  <p>{error}</p>
-                </div>
-              ) : jobListings.length === 0 ? (
-                <div className="text-gray-500 text-center py-8">
-                  <p className="text-xl font-semibold mb-2">No jobs found</p>
-                  <p className="text-gray-400">Try adjusting your filters</p>
-                </div>
+    
+<>
+  <Header />
+  <div className="min-h-screen bg-white">
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="flex flex-col space-y-8">
+        <div className="relative flex flex-col lg:flex-row gap-6">
+          <div className="lg:w-80">
+            <button
+              className="sticky top-0 left-4 z-50 p-2 bg-teal-600 text-white rounded-lg lg:hidden mt-2"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? (
+                <X className="h-5 w-6" />
               ) : (
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1">
-                  {jobListings.map((job) => (
-                    <JobCard key={job._id} job={job} />
-                  ))}
-                </div>
+                <Menu className="h-5 w-6" />
               )}
+            </button>
 
-              {/* Load More Button */}
-              {showLoadMore && !isLoading && jobListings.length > 0 && (
-                <div className="flex justify-center mt-8">
-                  <button
-                    onClick={handleLoadMore}
-                    className="w-60 h-10 bg-gradient-to-r from-purple-500 to-purple-800 text-white rounded-lg text-base font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-pink-400 sm:h-12 md:h-14 lg:h-12"
-                  >
-                    {isLoading ? (
-                      <span className="flex items-center justify-center">
-                        <svg
-                          className="animate-spin h-5 w-5 mr-3"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Loading...
-                      </span>
-                    ) : (
-                      "Load More"
-                    )}
-                  </button>
-                </div>
-              )}
-
-              {/* Loading indicator for load more */}
-              {isLoading && jobListings.length > 0 && (
-                <div className="flex justify-center mt-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
-                </div>
-              )}
+            <div
+              className={`fixed inset-0 bg-white z-40 overflow-y-auto p-4 transition-transform duration-300 ease-in-out transform
+              ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+              lg:relative lg:translate-x-0 lg:w-80 lg:flex-shrink-0 lg:inset-auto`}
+            >
+              <JobFilters
+                filters={pendingFilters}
+                onFilterChange={handleFilterChange}
+                categories={categories}
+                isLoading={isLoading}
+                onApplyFilters={handleApplyFilters}
+              />
             </div>
+          </div>
+          
+          <div className="flex-1">
+            {isLoading && jobListings.length === 0 ? (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                {[1, 2, 3, 4].map((n) => (
+                  <div
+                    key={n}
+                    className="border rounded-lg p-4 animate-pulse"
+                  >
+                    <div className="h-32 bg-gray-200 rounded-lg mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                  </div>
+                ))}
+              </div>
+            ) : error ? (
+              <div className="text-red-500 text-center py-8">
+                <p className="text-xl font-semibold mb-2">Error</p>
+                <p>{error}</p>
+              </div>
+            ) : jobListings.length === 0 ? (
+              <div className="text-gray-500 text-center py-8">
+                <p className="text-xl font-semibold mb-2">No jobs found</p>
+                <p className="text-gray-400">Try adjusting your filters</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                {jobListings.map((job) => (
+                  <JobCard key={job._id} job={job} />
+                ))}
+              </div>
+            )}
+
+            {/* Load More Button */}
+            {showLoadMore && !isLoading && jobListings.length > 0 && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={handleLoadMore}
+                  className="w-40 h-10 rounded-lg text-blue-800 hover:text-blue-800 hover:underline cursor-pointer font-semibold sm:h-12 md:h-14 lg:h-12"
+                >
+                  {isLoading ? (
+                    <span className="flex items-center justify-center">
+                      <svg
+                        className="animate-spin h-5 w-5 mr-3"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Loading...
+                    </span>
+                  ) : (
+                    "Load More..."
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Loading indicator for load more */}
+            {isLoading && jobListings.length > 0 && (
+              <div className="flex justify-center mt-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <Footer />
+</>
   );
 };
 

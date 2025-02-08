@@ -117,7 +117,7 @@ const HostingSignup = () => {
             <br />
             <button
               type="submit"
-              className="w-full bg-teal-700 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300"
+              className="w-full bg-teal-700\ text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300"
             >
               Sign Up
             </button>

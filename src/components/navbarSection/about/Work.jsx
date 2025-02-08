@@ -2,9 +2,9 @@ import React from "react";
 import { User, Upload, Search, Briefcase } from "lucide-react"; // Import Lucide icons
 
 const Work = () => (
-  <section className="container mx-auto py-12 px-6 lg:px-8 text-center">
+  <section className="py-12 px-[10%] text-center">
     <h2 className="text-3xl font-bold mb-4">How it works</h2>
-    <div className=" text-gray-600">
+    <div className="text-gray-600">
       <p className="text-lg mb-10">
         With our platform, you can easily navigate through each step of the job
         application process.

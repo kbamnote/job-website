@@ -149,123 +149,124 @@ const JobDetails = () => {
 
   return (
     <>
-      <Header />
-      <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          {/* Header Section */}
-          <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6 relative">
-            <div className="p-6 sm:p-8">
-              {/* Apply Button Positioned at Top Right */}
-              <div className="absolute top-6 right-6 sm:top-8 sm:right-8">
-                <button 
-                  onClick={handleApplyNow}
-                  disabled={hasApplied}
-                  className={`py-2 px-4 rounded-lg font-semibold shadow-sm transition-colors duration-200 
-                    ${hasApplied 
-                      ? "bg-gray-400 cursor-not-allowed text-white"
-                      : "bg-teal-600 text-white hover:bg-teal-700"
-                    }`}
-                >
-                  {hasApplied ? "Applied" : "Apply Now"}
-                </button>
-              </div>
+    <Header />
+    <div className="min-h-[80vh] bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl sm:max-w-3xl lg:max-w-5xl mx-auto">
+        {/* Header Section */}
+        <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6 relative">
+          <div className="p-6 sm:p-8">
+            {/* Apply Button Positioned at Top Right */}
+            <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
+              <button 
+                onClick={handleApplyNow}
+                disabled={hasApplied}
+                className={`py-2 px-4 rounded-lg font-semibold shadow-sm transition-colors duration-200 
+                  ${hasApplied 
+                    ? "bg-gray-400 cursor-not-allowed text-white"
+                    : "bg-teal-600 text-white hover:bg-teal-700"
+                  }`}
+              >
+                {hasApplied ? "Applied" : "Apply Now"}
+              </button>
+            </div>
 
-              <div className="flex items-start gap-6">
-                <img
-                  src= "https://www.pngkey.com/png/full/191-1911374_company-building-png-office-building-png.png"
-                  alt={job?.companyName}
-                  className="w-24 h-24 rounded-lg object-cover bg-gray-100"
-                />
-                <div className="flex-1">
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                    {job?.title}
-                  </h1>
-                  <p className="text-xl text-teal-600 font-semibold mb-4">
-                    {job?.companyName}
-                  </p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <KeyMetric
-                      icon={Wallet}
-                      label="Salary Range"
-                      value={
-                        job?.minPackage
-                          ? `${job.minPackage} - ${job.maxPackage}`
-                          : "Not disclosed"
-                      }
-                    />
-                    <KeyMetric
-                      icon={MapPin}
-                      label="Location"
-                      value={job?.location || "Remote"}
-                    />
-                    <KeyMetric
-                      icon={Clock}
-                      label="Job Type"
-                      value={job?.jobType || "Not specified"}
-                    />
-                  </div>
+            <div className="flex flex-col sm:flex-row items-start gap-6">
+              <img
+                src="https://www.pngkey.com/png/full/191-1911374_company-building-png-office-building-png.png"
+                alt={job?.companyName}
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg object-cover bg-gray-100"
+              />
+              <div className="flex-1">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                  {job?.title}
+                </h1>
+                <p className="text-lg sm:text-xl text-teal-600 font-semibold mb-4">
+                  {job?.companyName}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+                  <KeyMetric
+                    icon={Wallet}
+                    label="Salary Range"
+                    value={
+                      job?.minPackage
+                        ? `${job.minPackage} - ${job.maxPackage}`
+                        : "Not disclosed"
+                    }
+                  />
+                  <KeyMetric
+                    icon={MapPin}
+                    label="Location"
+                    value={job?.location || "Remote"}
+                  />
+                  <KeyMetric
+                    icon={Clock}
+                    label="Job Type"
+                    value={job?.jobType || "Not specified"}
+                  />
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Job Description */}
-              <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  Job Description
-                </h2>
-                <p className="text-gray-600 whitespace-pre-line">
-                  {job?.jobDescription}
-                </p>
-              </div>
-
-              {/* Requirements */}
-              <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  Requirements
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">
-                      Education
-                    </h3>
-                    <p className="text-gray-600">
-                      {job?.minEducation || "Not specified"}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">
-                      Experience
-                    </h3>
-                    <p className="text-gray-600">
-                      {job?.experience || "Not specified"}
-                    </p>
-                  </div>
-                  {job?.skills && (
-                    <div>
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">
-                        Required Skills
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {job.skills.map((skill, index) => (
-                          <span
-                            key={index}
-                            className="bg-teal-50 text-teal-600 px-3 py-1 rounded text-sm font-medium"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Job Description */}
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
+                Job Description
+              </h2>
+              <p className="text-gray-600 whitespace-pre-line">
+                {job?.jobDescription}
+              </p>
             </div>
 
-            <div className="space-y-6">
+            {/* Requirements */}
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
+                Requirements
+              </h2>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-md sm:text-lg font-medium text-gray-900 mb-2">
+                    Education
+                  </h3>
+                  <p className="text-gray-600">
+                    {job?.minEducation || "Not specified"}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-md sm:text-lg font-medium text-gray-900 mb-2">
+                    Experience
+                  </h3>
+                  <p className="text-gray-600">
+                    {job?.experience || "Not specified"}
+                  </p>
+                </div>
+                {job?.skills && (
+                  <div>
+                    <h3 className="text-md sm:text-lg font-medium text-gray-900 mb-2">
+                      Required Skills
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {job.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className="bg-teal-50 text-teal-600 px-3 py-1 rounded text-sm font-medium"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar with Company Info */}
+          <div className="space-y-6">
               {/* Company Info */}
               <div className="bg-white rounded-xl shadow-md p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -350,32 +351,32 @@ const JobDetails = () => {
                 </div>
               </div>
             </div>
-          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Modals Responsiveness */}
+    {showModal && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="bg-white p-6 sm:p-8 rounded-lg shadow-xl w-11/12 sm:w-96 mx-auto">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">
+            Application Status
+          </h2>
+          <p className="text-gray-600">
+            You have already submitted your application for this position.
+          </p>
+          <button
+            className="mt-6 w-full py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition-colors duration-200"
+            onClick={() => setShowModal(false)}
+          >
+            Close
+          </button>
         </div>
       </div>
 
-      {/* Already Applied Modal */}
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              Application Status
-            </h2>
-            <p className="text-gray-600">
-              You have already submitted your application for this position.
-            </p>
-            <button
-              className="mt-6 w-full py-2 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-700 transition-colors duration-200"
-              onClick={() => setShowModal(false)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+    )}
 
-      {/* Success Modal */}
-      {showSuccessModal && (
+{showSuccessModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
             <h2 className="text-xl font-bold text-gray-900 mb-4">
@@ -394,8 +395,9 @@ const JobDetails = () => {
         </div>
       )}
 
-      <Footer />
-    </>
+    <Footer />
+  </>
+
   );
 };
 

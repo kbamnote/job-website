@@ -1,73 +1,377 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { User, Mail, MapPin, GraduationCap, Briefcase } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
+import HostSidebar from "../jobHostingSidebar";
 
 const ApplicantProfile = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const applicant = location.state?.applicant;
+  const { id } = useParams();
+  const [application, setApplication] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = Cookies.get("token");
 
-  if (!applicant) {
+  useEffect(() => {
+    const fetchApplicant = async () => {
+      if (!token) {
+        setError("Authentication required");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://jobquick.onrender.com/applicants/${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch applicant");
+        }
+
+        const data = await response.json();
+        console.log("API Response:", data);
+        setApplication(data);
+      } catch (err) {
+        setError(err.message);
+        console.error("Fetch Error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (id) fetchApplicant();
+  }, [id, token]);
+
+  const handleShorlisted = async () => {
+    if (!application) return;
+    const shortListedApi = `https://jobquick.onrender.com/applicants/shortlisted/${id}`;
+    const updatedStatus = !application.shortListed;
+
+    try {
+      const response = await fetch(shortListedApi, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ shortListed: updatedStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update shortlist status");
+      }
+
+      setApplication((prev) => ({ ...prev, shortListed: updatedStatus }));
+    } catch (error) {
+      console.error("Error updating shortlist status:", error);
+    }
+  };
+
+  if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-red-500">No applicant data found.</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-blue-50">
+        <div className="text-center">
+          <div className="animate-spin w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-xl text-pink-700">Loading applicant details...</p>
+        </div>
       </div>
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-pink-50">
+        <div className="bg-white p-8 rounded-xl shadow-2xl text-center">
+          <p className="text-2xl text-red-500 mb-4">{error}</p>
+          <p className="text-gray-600">Please try again later</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!application || !application.applicantId) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-blue-50">
+        <div className="text-center py-12 bg-gray-50 rounded-lg">
+          <p className="text-xl text-gray-500">No applicant found</p>
+        </div>
+      </div>
+    );
+  }
+
+  const applicant = application.applicantId;
+  const job = application.jobId;
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
-          <User className="w-8 h-8" />
-          {applicant.fullName}
-        </h2>
-        <p className="text-gray-500">{applicant.summary || "No summary provided."}</p>
-
-        <div className="mt-6 space-y-4">
-          {/* Email & Phone */}
-          <div className="grid grid-cols-2 gap-6">
-            <div className="flex items-center gap-2">
-              <Mail className="w-5 h-5 text-teal-600" />
-              <span>{applicant.email}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-teal-600" />
-              <span>{applicant.city}, {applicant.state}, {applicant.country}</span>
-            </div>
+    <div className="flex min-h-screen">
+      <div className="fixed left-0 top-0 w-62 lg:w-80 h-screen">
+        <HostSidebar />
+      </div>
+      <div className="ml-62 lg:ml-80 flex-1 min-h-screen bg-gray-100 p-6 lg:p-8">
+        <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6">
+          <div className="rounded-2xl bg-gradient-to-r from-teal-800 to-teal-500 px-6 py-5 w-full flex justify-between items-center">
+            <h2 className="text-3xl font-bold text-white">Applicant Details</h2>
+            <button
+              onClick={handleShorlisted}
+              className={`cursor-pointer rounded-4xl bg-white text-black p-3 ${
+                application.shortListed ? "bg-teal-500 text-black" : ""
+              }`}
+            >
+              {application.shortListed ? "Shortlisted" : "Shortlist"}
+            </button>
           </div>
 
-          {/* Education */}
-          <div className="flex items-center gap-2">
-            <GraduationCap className="w-5 h-5 text-teal-600" />
-            <p>{applicant.eduDegree} in {applicant.eduSpecialisation} from {applicant.eduInstitution} ({applicant.eduStartYear} - {applicant.eduEndYear})</p>
-          </div>
+          <div className="p-6">
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              {/* Job Details */}
+              <div className="mb-8 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Applied Job Details
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div>
+                    <p className="text-gray-600">Company Name</p>
+                    <p className="font-semibold">{job?.companyName || "N/A"}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Company Email</p>
+                    <p className="font-semibold">
+                      {job?.companyEmail || "N/A"}
+                    </p>
+                  </div>
+                  {job?.companyURL && (
+                    <div>
+                      <p className="text-gray-600">Company Website</p>
+                      <a
+                        href={job.companyURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {job.companyURL}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-          {/* Experience */}
-          <div className="flex items-center gap-2">
-            <Briefcase className="w-5 h-5 text-teal-600" />
-            <p>{applicant.expPosition} at {applicant.expCompany} ({applicant.expStartYear} - {applicant.expEndYear})</p>
-          </div>
+              {/* Personal Information */}
+              <div className="mb-8 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Personal Information
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div>
+                    <p className="text-gray-600">Full Name</p>
+                    <p className="font-semibold">
+                      {applicant.fullName || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Email</p>
+                    <p className="font-semibold">{applicant.email || "N/A"}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Phone</p>
+                    <p className="font-semibold">
+                      {applicant.phoneNumber || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Gender</p>
+                    <p className="font-semibold">{applicant.gender || "N/A"}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Date of Birth</p>
+                    <p className="font-semibold">
+                      {applicant.dateOfBirth
+                        ? new Date(applicant.dateOfBirth).toLocaleDateString()
+                        : "N/A"}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-          {/* Skills */}
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800">Skills</h3>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {applicant.skills?.map((skill, index) => (
-                <span key={index} className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm">
-                  {skill}
-                </span>
-              ))}
+              {/* Address */}
+              <div className="mb-8 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Address
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div>
+                    <p className="text-gray-600">Street</p>
+                    <p className="font-semibold">
+                      {applicant.address || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">City</p>
+                    <p className="font-semibold">{applicant.city || "N/A"}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">State</p>
+                    <p className="font-semibold">{applicant.state || "N/A"}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Country</p>
+                    <p className="font-semibold">
+                      {applicant.country || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Pincode</p>
+                    <p className="font-semibold">
+                      {applicant.pincode || "N/A"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Education */}
+              <div className="mb-8 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Education
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div>
+                    <p className="text-gray-600">Degree</p>
+                    <p className="font-semibold">
+                      {applicant.eduDegree || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Specialization</p>
+                    <p className="font-semibold">
+                      {applicant.eduSpecialisation || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Institution</p>
+                    <p className="font-semibold">
+                      {applicant.eduInstitution || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Duration</p>
+                    <p className="font-semibold">
+                      {applicant.eduStartYear && applicant.eduEndYear
+                        ? `${new Date(
+                            applicant.eduStartYear
+                          ).getFullYear()} - ${new Date(
+                            applicant.eduEndYear
+                          ).getFullYear()}`
+                        : "N/A"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Experience */}
+              <div className="mb-8 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Experience
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div>
+                    <p className="text-gray-600">Position</p>
+                    <p className="font-semibold">
+                      {applicant.expPosition || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Company</p>
+                    <p className="font-semibold">
+                      {applicant.expCompany || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Duration</p>
+                    <p className="font-semibold">
+                      {applicant.expStartYear && applicant.expEndYear
+                        ? `${new Date(
+                            applicant.expStartYear
+                          ).getFullYear()} - ${new Date(
+                            applicant.expEndYear
+                          ).getFullYear()}`
+                        : "N/A"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Skills & Links */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-blue-50 p-6 rounded-xl">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                    Skills
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {Array.isArray(applicant.skills) &&
+                    applicant.skills.length > 0 ? (
+                      applicant.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-teal-100 text-teal-800 rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))
+                    ) : (
+                      <p className="text-gray-500">No skills listed</p>
+                    )}
+                  </div>
+                </div>
+                <div className="bg-indigo-50 p-6 rounded-xl">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                    Links
+                  </h3>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-gray-600">Project URL</p>
+                      {applicant.projectUrl ? (
+                        <a
+                          href={applicant.projectUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          {applicant.projectUrl}
+                        </a>
+                      ) : (
+                        <p className="text-gray-500">No project URL provided</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Summary */}
+              <div className="mt-8 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Summary
+                </h3>
+                <p className="text-gray-700">
+                  {applicant.summary || "No summary provided"}
+                </p>
+              </div>
+
+              {/* Application Status */}
+              <div className="mt-8 bg-blue-50 p-6 rounded-xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Application Status
+                </h3>
+                <p className="font-semibold text-green-600">
+                  {application.shortListed ? "Shortlisted" : "Under Review"}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-
-        <button
-          onClick={() => navigate(-1)}
-          className="mt-6 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-800"
-        >
-          Back
-        </button>
       </div>
     </div>
   );

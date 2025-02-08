@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import HeroSl from "../../../../assets/slider71.png";
-// import HeroS2 from "../../../../assets/slider72.jpg";
-// import HeroS3 from "../../../../assets/slider73.jpg";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Autoplay } from "swiper/modules";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -87,7 +82,7 @@ const UserDetails = () => {
 
   if (loading) {
     return (
-      <p className="text-center mt-5 text-5xl text-pink-500 font-semibold">
+      <p className="text-center mt-5 text-xl text-black font-semibold">
         Loading...
       </p>
     );
@@ -119,7 +114,7 @@ const UserDetails = () => {
       summary: summary,
       projectUrl: projectUrl,
       resume: resume,
-      address: address
+      address: address,
     };
 
     fetch(SeekApi, {
@@ -154,10 +149,10 @@ const UserDetails = () => {
   const renderuserDetailForm = () => (
     <>
       <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
-          User Detials
+        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text mb-6">
+          User Details
         </h2>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        {/* <label className="block text-sm font-medium text-gray-700 mb-2">
           Upload Image
         </label>
         <div className="mt-1 flex items-center space-x-4">
@@ -165,9 +160,9 @@ const UserDetails = () => {
             type="file"
             name="profileImg"
             accept="profileImg/*"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
-        </div>
+        </div> */}
         {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
 
         <div>
@@ -179,7 +174,7 @@ const UserDetails = () => {
             name="fullName"
             value={fullName}
             onChange={(e) => setfullName(e.target.value)}
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter your full name"
           />
         </div>
@@ -194,7 +189,7 @@ const UserDetails = () => {
               name="dateOfBirth"
               value={dateOfBirth}
               onChange={(e) => setdateOfBirth(e.target.value)}
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
           <div className="flex-1">
@@ -205,7 +200,7 @@ const UserDetails = () => {
               name="gender"
               value={gender}
               onChange={(e) => setgender(e.target.value)}
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             >
               <option value="">Select your gender</option>
               <option value="Male">Male</option>
@@ -214,8 +209,6 @@ const UserDetails = () => {
             </select>
           </div>
         </div>
-
-      
 
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -227,16 +220,14 @@ const UserDetails = () => {
             value={phoneNumber}
             onChange={(e) => setphoneNumber(e.target.value)}
             placeholder="Enter your phone number"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
-
-    
 
         <button
           type="button"
           onClick={handleNext}
-          className="w-full bg-gradient-to-r from-pink-500 to-blue-500 text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full bg-teal-500 text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Next
         </button>
@@ -247,7 +238,7 @@ const UserDetails = () => {
   const renderuserAboutForm = () => (
     <>
       <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text mb-6">
           About yourself
         </h2>
         <div>
@@ -261,7 +252,7 @@ const UserDetails = () => {
             onChange={(e) => setsummary(e.target.value)}
             rows="5"
             placeholder="Enter your Address"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -275,10 +266,10 @@ const UserDetails = () => {
             value={projectUrl}
             onChange={(e) => setprojectUrl(e.target.value)}
             placeholder="Enter your github link for projects"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
-
+{/* 
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Upload Resume
@@ -287,9 +278,9 @@ const UserDetails = () => {
             type="file"
             name="resume"
             accept="resume/*"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
-        </div>
+        </div> */}
 
         <div className="flex justify-between">
           <button
@@ -303,7 +294,7 @@ const UserDetails = () => {
           <button
             type="button"
             onClick={handleNext}
-            className="bg-gradient-to-r from-pink-500 to-blue-500 text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="bg-gradient-to-r from-teal-500 to-teal-500 text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Next
           </button>
@@ -315,7 +306,7 @@ const UserDetails = () => {
   const renderuserAddressForm = () => (
     <>
       <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text mb-6">
           User Location
         </h2>
         <div>
@@ -328,7 +319,7 @@ const UserDetails = () => {
             value={address}
             onChange={(e) => setaddress(e.target.value)}
             placeholder="Enter your Address"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
         <div className="space-y-4 sm:space-y-0 sm:flex sm:gap-4">
@@ -342,7 +333,7 @@ const UserDetails = () => {
               value={city}
               onChange={(e) => setcity(e.target.value)}
               placeholder="Enter your city"
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
           <div className="flex-1">
@@ -355,7 +346,7 @@ const UserDetails = () => {
               value={pincode}
               onChange={(e) => setpincode(e.target.value)}
               placeholder="Enter your pincode"
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
         </div>
@@ -370,7 +361,7 @@ const UserDetails = () => {
             value={country}
             onChange={(e) => setcountry(e.target.value)}
             placeholder="Enter your country"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -384,7 +375,7 @@ const UserDetails = () => {
             value={state}
             onChange={(e) => setstate(e.target.value)}
             placeholder="Enter your state"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -400,7 +391,7 @@ const UserDetails = () => {
           <button
             type="button"
             onClick={handleNext}
-            className="bg-gradient-to-r from-pink-500 to-blue-500 text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="bg-teal-500 text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
           >
             Next
           </button>
@@ -412,7 +403,7 @@ const UserDetails = () => {
   const renderuserEducationForm = () => (
     <>
       <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text mb-6">
           User Education
         </h2>
         <div>
@@ -425,7 +416,7 @@ const UserDetails = () => {
             value={eduDegree}
             onChange={(e) => seteduDegree(e.target.value)}
             placeholder="Enter the degree"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -439,7 +430,7 @@ const UserDetails = () => {
             value={eduInstitution}
             onChange={(e) => seteduInstitution(e.target.value)}
             placeholder="Enter the name of your university"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -453,7 +444,7 @@ const UserDetails = () => {
             value={eduSpecialisation}
             onChange={(e) => seteduSpecialisation(e.target.value)}
             placeholder="Enter the field"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -467,7 +458,7 @@ const UserDetails = () => {
               name="eduStartYear"
               value={eduStartYear}
               onChange={(e) => seteduStartYear(e.target.value)}
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
           <div className="flex-1">
@@ -479,7 +470,7 @@ const UserDetails = () => {
               name="eduEndYear"
               value={eduEndYear}
               onChange={(e) => seteduEndYear(e.target.value)}
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
         </div>
@@ -496,7 +487,7 @@ const UserDetails = () => {
           <button
             type="button"
             onClick={handleNext}
-            className="bg-gradient-to-r from-pink-500 to-blue-500 text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="bg-teal-500  text-white text-xl py-3 px-4 rounded-lg shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
           >
             Next
           </button>
@@ -507,7 +498,7 @@ const UserDetails = () => {
   const renderuserExperienceForm = () => (
     <>
       <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-center text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text mb-6">
+        <h2 className="text-3xl font-bold text-center text-transparent bg-teal-500 bg-clip-text mb-6">
           User Work Experience and Skills
         </h2>
 
@@ -521,7 +512,7 @@ const UserDetails = () => {
             value={expCompany}
             onChange={(e) => setexpCompany(e.target.value)}
             placeholder="Enter the company name"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -535,7 +526,7 @@ const UserDetails = () => {
             value={expPosition}
             onChange={(e) => setexpPosition(e.target.value)}
             placeholder="Enter the position you have been working"
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -549,7 +540,7 @@ const UserDetails = () => {
               name="expStartYear"
               value={expStartYear}
               onChange={(e) => setexpStartYear(e.target.value)}
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
           <div className="flex-1">
@@ -561,7 +552,7 @@ const UserDetails = () => {
               name="expEndYear"
               value={expEndYear}
               onChange={(e) => setexpEndYear(e.target.value)}
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
         </div>
@@ -571,19 +562,18 @@ const UserDetails = () => {
             Skills
           </label>
           <div className="relative">
-          <input
-            type="text"
-            name="skills"
-            value={skills}
-            onChange={(e) => setskills(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Type a skill and press Enter or comma to add"
-          />
-          <div className="mt-2 text-xs text-gray-500">
-            Press Enter or comma (,) to add a skill
+            <input
+              type="text"
+              name="skills"
+              value={skills}
+              onChange={(e) => setskills(e.target.value)}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              placeholder="Type a skill and press Enter or comma to add"
+            />
+            <div className="mt-2 text-xs text-gray-500">
+              Press Enter or comma (,) to add a skill
+            </div>
           </div>
-        </div>
-        
         </div>
 
         <div className="flex justify-between">
@@ -597,7 +587,7 @@ const UserDetails = () => {
 
           <button
             type="submit"
-            className="bg-gradient-to-r from-pink-500 to-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:opacity-90"
+            className="bg-teal-500 text-white py-2 px-4 rounded-lg shadow-md hover:opacity-90"
           >
             Submit
           </button>
@@ -609,50 +599,15 @@ const UserDetails = () => {
   return (
     <>
       <Header />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 py-4 flex flex-col lg:flex-row lg:items-center lg:space-x-10 space-y-6 lg:space-y-0">
+      <div
+        className="max-w-full h-screen mx-auto px-4 sm:px-6 lg:px-4 py-4 flex flex-col lg:flex-row lg:items-center lg:space-x-10 space-y-6 lg:space-y-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        }}
+      >
         <div className="w-full lg:w-1/2 flex justify-center items-center">
-          {/* <Swiper
-            modules={[Autoplay]}
-            spaceBetween={20}
-            slidesPerView={1}
-            loop={true}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 1 },
-              1024: { slidesPerView: 1 },
-            }}
-            className="w-full sm:w-4/5"
-          >
-            <SwiperSlide>
-              <img
-                src={HeroSl}
-                alt="Freelancer"
-                className="rounded-lg shadow-lg object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={HeroS2}
-                alt="Freelancer"
-                className="rounded-lg shadow-lg object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={HeroS3}
-                alt="Freelancer"
-                className="rounded-lg shadow-lg object-cover"
-              />
-            </SwiperSlide>
-          </Swiper> */}
-        </div>
-
-        <div className="w-full lg:w-1/2 flex justify-center items-center">
-          <div className="bg-white shadow-lg rounded-lg w-full max-w-lg sm:p-6 p-4">
+          <div className="bg-white shadow-lg rounded-lg w-full max-w-lg h-[90%] sm:p-6 p-4">
             <form onSubmit={handleSeekData}>
               {step === 1 && renderuserDetailForm()}
               {step === 2 && renderuserAboutForm()}
@@ -662,7 +617,10 @@ const UserDetails = () => {
             </form>
           </div>
         </div>
+
+        <div className="w-full lg:w-1/2 flex justify-center items-center"></div>
       </div>
+
       <Footer />
     </>
   );

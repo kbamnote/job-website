@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { Briefcase, Building, MapPin, Clock, Award, DollarSign, Code, Users } from "lucide-react";
 
 const ShowJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -15,16 +16,17 @@ const ShowJobs = () => {
     const userId = Cookies.get("userID");
     const userToken = Cookies.get("JwtToken");
 
-    const userJobs = `https://jobquick.onrender.com/applicants?applicantId=${userId}`;
     try {
-      const response = await fetch(userJobs, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const response = await fetch(
+        `https://jobquick.onrender.com/applicants?applicantId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
 
       const result = await response.json();
-      console.log("API Response:", result);
 
       if (!response.ok) {
         throw new Error(
@@ -34,7 +36,6 @@ const ShowJobs = () => {
         );
       }
 
-      // Extract just the jobId details from each application
       if (Array.isArray(result)) {
         const jobDetails = result.map((application) => application.jobId);
         setJobs(jobDetails);
@@ -51,65 +52,107 @@ const ShowJobs = () => {
   };
 
   const displayedJobs = showAllJobs ? jobs : jobs.slice(0, visibleJobs);
+
+  if (error) {
+    return (
+      <div className="p-6 bg-red-50 rounded-lg mt-8">
+        <p className="text-red-600 text-center">{error}</p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <div className="mt-8">
-        <h2 className="text-3xl font-bold text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text">
-          Jobs you've applied to
+    <div className="mt-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          Your Job Applications
+          <span className="block h-1 w-24 bg-teal-600 mx-auto mt-2"></span>
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-6xl mt-5">
+      </div>
+
+      {jobs.length === 0 ? (
+        <div className="text-center p-8 bg-white rounded-xl shadow-sm">
+          <Briefcase className="w-12 h-12 text-teal-600 mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">No job applications found</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {displayedJobs.map((job) => (
             <div
               key={job._id}
-              className="border p-4 rounded-lg shadow-lg bg-white hover:shadow-xl transition-all duration-300"
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100"
             >
-              <h2 className="text-xl mb-3 font-bold text-transparent bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text">
-                 {job.title}
-              </h2>
-              <p className="text-gray-500 font-semibold">
-                <span className="font-bold text-black">Company:</span>{" "}
-                {job.companyName}
-              </p>
-              <p className="text-gray-500 font-semibold">
-                <span className="font-bold text-black">Location:</span>{" "}
-                {job.location}
-              </p>
-              <p className="text-gray-500 font-semibold">
-                <span className="font-bold text-black">Type:</span>{" "}
-                {job.jobType}
-              </p>
-              <p className="text-gray-500 font-semibold">
-                <span className="font-bold text-black">Experience:</span>{" "}
-                {job.experience}
-              </p>
-              <p className="text-gray-500 font-semibold">
-                <span className="font-bold text-black">Package:</span>{" "}
-                {job.minPackage} - {job.maxPackage}
-              </p>
-              <p className="text-gray-500 font-semibold">
-                <span className="font-bold text-black">Skills:</span>{" "}
-                {job.skills?.length > 0 ? job.skills.join(", ") : "N/A"}
-              </p>
-              <p className="text-gray-500 font-semibold">
-                <span className="font-bold text-black">Openings:</span>{" "}
-                {job.noOfOpeaning}
-              </p>
+              <div className="p-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  {job.title}
+                </h2>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <Building className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                    <span className="text-gray-600">{job.companyName}</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                    <span className="text-gray-600">{job.location}</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                    <span className="text-gray-600">{job.jobType}</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Award className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                    <span className="text-gray-600">{job.experience}</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <DollarSign className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                    <span className="text-gray-600">
+                      {job.minPackage} - {job.maxPackage}
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Code className="w-5 h-5 text-teal-600 flex-shrink-0 mt-1" />
+                    <div className="flex flex-wrap gap-2">
+                      {job.skills?.map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm font-medium"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Users className="w-5 h-5 text-teal-600 flex-shrink-0" />
+                    <span className="text-gray-600">
+                      {job.noOfOpeaning} openings
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
+      )}
 
-        {jobs.length > visibleJobs && (
-          <div className="flex justify-center mt-6">
-            <button
-              onClick={handleSeeMoreJobs}
-              className="px-6 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-lg"
-            >
-              {showAllJobs ? "Show Less" : "See More Jobs"}
-            </button>
-          </div>
-        )}
-      </div>
-    </>
+      {jobs.length > visibleJobs && (
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={handleSeeMoreJobs}
+            className="px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          >
+            {showAllJobs ? "Show Less" : "See More Jobs"}
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
