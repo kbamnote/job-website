@@ -46,14 +46,7 @@ const HeroSection = () => {
           <p className="text-gray-600 mb-8">
             Happiness and Contentment: Feeling positive emotions, finding joy in
             daily activities, and having a sense of purpose. Well-being:
-            Physical, mental, and emotional health. A good life often involves
-            feeling healthy and secure. Meaningful Connections: Strong
-            relationships with family, friends, and colleagues. Feeling
-            connected and supported. Personal Growth: Opportunities for
-            learning, development, and self-improvement. Feeling like you are
-            progressing and reaching your potential. Balance: A healthy
-            equilibrium between work, personal life, and leisure. Not feeling
-            overwhelmed or stressed.
+            Physical, mental, and emotional health. 
           </p>
           <div className="flex gap-4">
             <Link to="/jobs">

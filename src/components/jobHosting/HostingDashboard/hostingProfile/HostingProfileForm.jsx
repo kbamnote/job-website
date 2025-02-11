@@ -56,68 +56,67 @@ const HostingProfileForm = () => {
   }
 
   return (
-    <div className="flex">
-      {/* Sidebar - Fixed on Left */}
-      <JobHostingSidebar />
-
-      {/* Profile Container - Right Side & Centered */}
-      <div className="w-3/4 ml-auto flex justify-center items-center min-h-screen">
-        <div className="w-9/10 bg-white shadow-xl rounded-2xl overflow-hidden p-6 sm:p-8 md:p-10 border border-gray-200 relative">
-          {/* Edit Profile Button with Icon at Top-Right */}
-          <div className="absolute top-4 right-4">
-            <button
-              onClick={() => navigate("/profile-hoster")}
-              className="flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-200 "
-            >
-              <Pencil size={18} /> {/* Pencil Icon */}
-              Edit Profile
-            </button>
+    <div className="flex flex-col lg:flex-row">
+    {/* Sidebar - Fixed on Left */}
+    <JobHostingSidebar />
+  
+    {/* Profile Container - Right Side & Centered */}
+    <div className="w-full lg:w-3/4 lg:ml-auto p-4 flex justify-center items-center min-h-screen">
+      <div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl overflow-hidden p-4 sm:p-6 md:p-8 border border-gray-200 relative">
+        {/* Edit Profile Button with Icon at Top-Right */}
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
+          <button
+            onClick={() => navigate("/profile-hoster")}
+            className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white text-sm sm:text-base font-semibold py-1.5 sm:py-2 px-4 sm:px-6 rounded-lg shadow-md transition duration-200"
+          >
+            <Pencil size={16} className="sm:w-[18px]" /> {/* Pencil Icon */}
+            Edit Profile
+          </button>
+        </div>
+  
+        {/* Profile Image & Info */}
+        <div className="flex flex-col items-center space-y-4 sm:flex-row sm:items-start sm:space-y-0 sm:space-x-6">
+          <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full border-4 border-teal-400 shadow-lg"
+            />
           </div>
-
-          {/* Profile Image & Info */}
-          <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-            <div className="relative w-28 h-28 sm:w-32 sm:h-32">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                alt="Profile"
-                className="w-full h-full object-cover rounded-full border-4 border-teal-400 shadow-lg"
-              />
-            </div>
-
-            <div className="text-center sm:text-left">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">
-                {hoster.fullName}
-              </h2>
-              <p className="text-gray-500 text-sm mt-1">Web Developer</p>
-            </div>
-          </div>
-
-          {/* Profile Details */}
-          <div className="mt-6 border-t border-gray-200 pt-6">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-800">
-              My Profile
+  
+          <div className="text-center sm:text-left">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">
+              {hoster.fullName}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-              {[
-                { label: "Full Name", value: hoster.fullName },
-                { label: "City", value: hoster.city },
-                { label: "State", value: hoster.state },
-                { label: "Address", value: hoster.address },
-                { label: "Phone Number", value: hoster.phoneNumber },
-
-                { label: "Gender", value: hoster.gender },
-                { label: "Pincode", value: hoster.pincode },
-              ].map(({ label, value }, index) => (
-                <div key={index}>
-                  <p className="text-sm font-semibold text-gray-600">{label}</p>
-                  <p className="text-base font-medium text-gray-800">{value}</p>
-                </div>
-              ))}
-            </div>
+            <p className="text-gray-500 text-sm mt-1">Web Developer</p>
+          </div>
+        </div>
+  
+        {/* Profile Details */}
+        <div className="mt-6 border-t border-gray-200 pt-6">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-800">
+            My Profile
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            {[
+              { label: "Full Name", value: hoster.fullName },
+              { label: "City", value: hoster.city },
+              { label: "State", value: hoster.state },
+              { label: "Address", value: hoster.address },
+              { label: "Phone Number", value: hoster.phoneNumber },
+              { label: "Gender", value: hoster.gender },
+              { label: "Pincode", value: hoster.pincode },
+            ].map(({ label, value }, index) => (
+              <div key={index} className="p-2">
+                <p className="text-sm font-semibold text-gray-600">{label}</p>
+                <p className="text-sm sm:text-base font-medium text-gray-800">{value}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

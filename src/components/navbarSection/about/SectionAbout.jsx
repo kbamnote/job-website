@@ -5,17 +5,20 @@ const SectionAbout = () => (
     <section className="w-auto h-60 bg-gray-900 text-white flex items-center justify-center">
       <h2 className="text-5xl font-bold">About Us</h2>
     </section>
-    <section className="container mx-auto py-12 px-6 lg:px-8">
+
+    <section className="py-12 px-[10%]">
       <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
         <div className="mb-8 lg:mb-0">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Et nunc ut tempus duis nisl sed massa
+            About the Job Comprehensive Description
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            Nunc sed a nisi purus, Nibh dis faucibus proin lacus tristique. Sit
-            congue non vitae odio sit erat in, Felis eu ultrices a sed massa.
-            Commodo fringilla sed tempor risus laoreet ultricies ipsum.
-            Habitasse morbi faucibus in iaculis lectus.
+            At Company Name, we are seeking a Job Title who is passionate about
+            industry and eager to contribute their skills to a dynamic,
+            fast-paced environment. This role is perfect for individuals who
+            thrive on key skills, e.g., problem-solving, creativity,
+            collaboration and are looking for an opportunity to grow
+            professionally.
           </p>
         </div>
         <div>

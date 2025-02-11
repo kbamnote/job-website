@@ -112,12 +112,12 @@ const Header = () => {
       ) : (
         <>
           <Link to="/login" className={isMobile ? "w-full" : ""}>
-            <button className="hover:text-teal-400 transition-colors w-full px-4 py-2">
+            <button className="hover:text-teal-400 transition-colors w-full px-4 py-2 cursor-pointer">
               Login
             </button>
           </Link>
           <Link to="/host-login" className={isMobile ? "w-full" : ""}>
-            <button className="bg-teal-500 hover:bg-teal-600 px-4 py-2 rounded transition-colors w-full">
+            <button className="bg-teal-500 cursor-pointer hover:bg-teal-600 px-4 py-2 rounded transition-colors w-full">
               Job Hosting
             </button>
           </Link>

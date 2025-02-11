@@ -598,31 +598,36 @@ const UserDetails = () => {
 
   return (
     <>
-      <Header />
-      <div
-        className="max-w-full h-screen mx-auto px-4 sm:px-6 lg:px-4 py-4 flex flex-col lg:flex-row lg:items-center lg:space-x-10 space-y-6 lg:space-y-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-        }}
-      >
-        <div className="w-full lg:w-1/2 flex justify-center items-center">
-          <div className="bg-white shadow-lg rounded-lg w-full max-w-lg h-[90%] sm:p-6 p-4">
-            <form onSubmit={handleSeekData}>
-              {step === 1 && renderuserDetailForm()}
-              {step === 2 && renderuserAboutForm()}
-              {step === 3 && renderuserAddressForm()}
-              {step === 4 && renderuserEducationForm()}
-              {step === 5 && renderuserExperienceForm()}
-            </form>
-          </div>
-        </div>
-
-        <div className="w-full lg:w-1/2 flex justify-center items-center"></div>
+  <Header />
+  <div
+    className="w-full min-h-screen flex flex-col lg:flex-row items-center justify-center px-4 sm:px-6 lg:px-8 py-6 bg-cover bg-center bg-no-repeat"
+    style={{
+      backgroundImage:
+        "url('https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+    }}
+  >
+    {/* Form Container */}
+    <div className="w-full lg:w-1/2 flex justify-center items-center">
+      <div className="bg-white shadow-lg rounded-lg w-full max-w-md sm:max-w-lg p-6">
+        <form onSubmit={handleSeekData}>
+          {step === 1 && renderuserDetailForm()}
+          {step === 2 && renderuserAboutForm()}
+          {step === 3 && renderuserAddressForm()}
+          {step === 4 && renderuserEducationForm()}
+          {step === 5 && renderuserExperienceForm()}
+        </form>
       </div>
+    </div>
 
-      <Footer />
-    </>
+    {/* Right Side (Can be used for illustration/text) */}
+    <div className="w-full lg:w-1/2 flex justify-center items-center">
+      {/* Optional Content (Add an image, illustration, or text here) */}
+    </div>
+  </div>
+
+  <Footer />
+</>
+
   );
 };
 

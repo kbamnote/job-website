@@ -62,7 +62,7 @@ const JobHostingSidebar = () => {
             </div>
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-teal-900 rounded-full"></div>
           </div>
-          <div className="ml-3 text-white text-base font-medium">John Singh</div>
+          <div className="ml-3 text-white text-base font-medium">Admin</div>
         </Link>
 
         {/* Navigation */}
@@ -90,6 +90,7 @@ const JobHostingSidebar = () => {
                   <span className="text-base">{item.label}</span>
                 </div>
               </Link>
+              
             ))}
           </div>
         </nav>

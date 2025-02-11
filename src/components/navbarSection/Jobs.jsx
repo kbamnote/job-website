@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 
+
 const JobFilters = ({
   filters,
   onFilterChange,
@@ -356,6 +357,7 @@ const Jobs = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex flex-col space-y-8">
         <div className="relative flex flex-col lg:flex-row gap-6">
+          {/* Sidebar / Filters */}
           <div className="lg:w-80">
             <button
               className="sticky top-0 left-4 z-50 p-2 bg-teal-600 text-white rounded-lg lg:hidden mt-2"
@@ -369,9 +371,9 @@ const Jobs = () => {
             </button>
 
             <div
-              className={`fixed inset-0 bg-white z-40 overflow-y-auto p-4 transition-transform duration-300 ease-in-out transform
+              className={`fixed inset-y-0 left-0 bg-white z-40 overflow-y-auto p-4 transition-transform duration-300 ease-in-out transform
               ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-              lg:relative lg:translate-x-0 lg:w-80 lg:flex-shrink-0 lg:inset-auto`}
+              lg:relative lg:translate-x-0 lg:w-80 lg:flex-shrink-0 lg:inset-auto lg:overflow-hidden`}
             >
               <JobFilters
                 filters={pendingFilters}
@@ -382,7 +384,8 @@ const Jobs = () => {
               />
             </div>
           </div>
-          
+
+          {/* Job Listings */}
           <div className="flex-1">
             {isLoading && jobListings.length === 0 ? (
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
@@ -451,7 +454,7 @@ const Jobs = () => {
               </div>
             )}
 
-            {/* Loading indicator for load more */}
+            {/* Loading Indicator for Load More */}
             {isLoading && jobListings.length > 0 && (
               <div className="flex justify-center mt-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
@@ -464,6 +467,7 @@ const Jobs = () => {
   </div>
   <Footer />
 </>
+
   );
 };
 

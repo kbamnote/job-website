@@ -14,14 +14,27 @@ const Signup = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-
+  
+    // Simple regex to validate email format
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      setSuccess(null);
+      return;
+    }
+  
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      setSuccess(null);
+      return;
+    }
+  
     const person = {
       email: email,
       password: password,
     };
-
+  
     fetch(signupApi, {
       method: "POST",
       headers: {
@@ -49,6 +62,7 @@ const Signup = () => {
         setSuccess(null);
       });
   };
+  
 
   return (
     <div

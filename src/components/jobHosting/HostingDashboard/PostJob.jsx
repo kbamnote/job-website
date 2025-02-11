@@ -178,7 +178,7 @@ const PostJob = () => {
       });
 
       if (response.data) {
-        navigate("/host-dashboard");
+        navigate("/hostingDashboard");
       }
     } catch (error) {
       console.error("Error posting job:", error);

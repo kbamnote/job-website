@@ -1,7 +1,7 @@
 import React from "react";
 
 const Question = () => (
-  <section className="container mx-auto py-12 px-6 lg:px-8">
+  <section className="py-12 px-[10%]">
     <h2 className="text-3xl font-bold text-center mb-8">
       Frequently Asked Questions
     </h2>

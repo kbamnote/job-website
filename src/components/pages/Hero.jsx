@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Hero = () => {
-  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/jobs?title=${encodeURIComponent(searchQuery)}`);
+  };
   
   const stats = [
     { icon: "💼", number: "25,850", label: "Jobs" },
@@ -57,10 +64,12 @@ const Hero = () => {
             </select>
             
             {/* Search Button */}
+            <Link to="/jobs">
             <button className="w-full sm:w-auto bg-teal-500 hover:bg-teal-600 text-white px-4 sm:px-8 py-2 rounded-md flex items-center justify-center space-x-2 transition-all duration-200 shadow-lg hover:shadow-xl">
               <Search className="w-4 h-4" />
               <span>Search Job</span>
             </button>
+            </Link>
           </div>
         </div>
 

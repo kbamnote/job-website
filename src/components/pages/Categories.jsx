@@ -8,7 +8,10 @@ import {
   Building2,
   GraduationCap,
   Wallet,
+
 } from "lucide-react";
+import { Link } from "react-router";
+
 
 const JobCategories = () => {
   const categories = [
@@ -28,9 +31,14 @@ const JobCategories = () => {
         <h1 className="text-4xl font-bold mb-4">Browse by Category</h1>
       </div>
 
+
+<Link to="/jobs">
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {categories.map((category) => (
-          <div
+         
+         
+         <div
             key={category.title}
             className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
           >
@@ -46,6 +54,7 @@ const JobCategories = () => {
           </div>
         ))}
       </div>
+      </Link>
     </div>
   );
 };
