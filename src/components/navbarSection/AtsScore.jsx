@@ -1,179 +1,277 @@
 import React, { useState } from "react";
-import Footer from "../common/Footer";
+import axios from "axios";
+import { useDropzone } from "react-dropzone";
 import Header from "../common/Header";
+import Footer from "../common/Footer";
+import {
+  ArrowUpCircle,
+  FileText,
+  CheckCircle,
+  Star,
+  Clock,
+  AlertCircle,
+  ChevronRight,
+  Target,
+  Award,
+} from "lucide-react";
 
-const AtsScore = () => {
-  const [resumeText, setResumeText] = useState("");
-  const [score, setScore] = useState(null);
-  const [suggestions, setSuggestions] = useState([]);
+const ATS_Score = () => {
+  const [file, setFile] = useState(null);
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      setLoading(true);
-      reader.onload = (event) => {
-        const text = event.target.result;
-        setResumeText(text);
-        analyzeResume(text);
-        setLoading(false);
-      };
-      reader.readAsText(file);
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: ".pdf",
+    onDrop: (acceptedFiles) => {
+      setFile(acceptedFiles[0]);
+    },
+  });
+
+  const handleUpload = async () => {
+    if (!file) return alert("Please upload a resume!");
+
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("resume", file);
+
+    try {
+      const response = await axios.post(
+        "https://ats-score-uv74.onrender.com/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      setResult({
+        ...response.data,
+        feedback: Array.isArray(response.data.feedback)
+          ? response.data.feedback
+          : [response.data.feedback],
+      });
+    } catch (error) {
+      alert("Error analyzing resume!");
     }
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      const reader = new FileReader();
-      setLoading(true);
-      reader.onload = (event) => {
-        const text = event.target.result;
-        setResumeText(text);
-        analyzeResume(text);
-        setLoading(false);
-      };
-      reader.readAsText(file);
-    }
-  };
-
-  const analyzeResume = (text) => {
-    let currentScore = 70;
-    const feedback = [];
-
-    if (!text.toLowerCase().includes("work history")) {
-      feedback.push("Your resume is missing a 'Work History' section.");
-      currentScore -= 10;
-    }
-    if (!text.toLowerCase().includes("skills")) {
-      feedback.push("Your resume is missing a 'Skills' section.");
-      currentScore -= 10;
-    }
-
-    const wordCount = text.split(/\s+/).length;
-    if (wordCount < 150) {
-      feedback.push("Your resume is too short. Aim for at least 150 words.");
-      currentScore -= 15;
-    } else if (wordCount > 400) {
-      feedback.push("Your resume is too long. Aim for a concise summary (under 400 words).");
-      currentScore -= 5;
-    }
-
-    const overusedWords = ["responsible for", "team player", "detail-oriented"];
-    overusedWords.forEach((word) => {
-      if (text.toLowerCase().includes(word)) {
-        feedback.push(`Avoid using generic phrases like '${word}'.`);
-        currentScore -= 5;
-      }
-    });
-
-    const randomAdjustment = Math.floor(Math.random() * 10) - 5;
-    currentScore += randomAdjustment;
-    currentScore = Math.max(0, Math.min(100, currentScore));
-
-    setScore(currentScore);
-    setSuggestions(feedback);
+    setLoading(false);
   };
 
   return (
     <>
       <Header />
-      <div className="w-full h-40 sm:h-60 bg-gray-900 text-white flex justify-center items-center px-4">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-center">
-          ATS Resume Checker
-        </h1>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 mt-8 md:mt-12">
-          {/* Upload Section */}
-          <section className="bg-gray-50 rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Upload Your Resume</h2>
-            <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Supported formats: DOC, DOCX, PDF, TXT.
+      <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          {/* Hero Section */}
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Optimize Your <span className="text-teal-600">Resume</span>
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Get instant feedback on your resume's ATS compatibility and expert
+              suggestions to improve your chances of landing your dream job.
             </p>
-            <div
-              className={`border-2 border-dashed ${
-                isDragging ? "border-teal-500 bg-teal-50" : "border-gray-300"
-              } rounded-lg p-6 sm:p-10 text-center`}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              <p className="text-gray-600 mb-4 text-sm sm:text-base">
-                Drag & Drop your resume here
-              </p>
-              <input
-                type="file"
-                accept=".txt,.doc,.docx,.pdf"
-                className="hidden"
-                id="fileUpload"
-                onChange={handleFileUpload}
-              />
-              <label
-                htmlFor="fileUpload"
-                className="inline-block bg-teal-600 text-white px-4 sm:px-6 py-2 rounded-md cursor-pointer hover:bg-teal-700 transition-colors text-sm sm:text-base"
-              >
-                Choose a File
-              </label>
-            </div>
-          </section>
+          </div>
 
-          {/* Results Section */}
-          <section className="bg-gray-50 rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow">
-            {loading ? (
-              <div className="min-h-[200px] flex items-center justify-center">
-                <p className="text-center text-gray-600 text-sm sm:text-base">
-                  Analyzing your resume...
-                </p>
-              </div>
-            ) : score !== null ? (
-              <>
-                <div className="mt-4 p-4 bg-teal-100 rounded-lg shadow-sm">
-                  <h3 className="text-3xl sm:text-4xl font-bold text-teal-600 text-center">
-                    {score}
-                  </h3>
-                  <p className="text-center text-gray-700 mt-2 text-sm sm:text-base">
-                    {score >= 80
-                      ? "Excellent! Your resume is highly competitive!"
-                      : "Your resume could use some improvement."}
+          {/* Stats Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-teal-100 rounded-xl">
+                  <Target className="w-6 h-6 text-teal-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">AI Analysis</h3>
+                  <p className="text-sm text-gray-500">
+                    Advanced resume scanning
                   </p>
                 </div>
-                {suggestions.length > 0 && (
-                  <div className="mt-6 p-4 bg-yellow-100 rounded-lg shadow-sm">
-                    <h4 className="text-base sm:text-lg font-bold text-yellow-700">
-                      Suggestions for Improvement
-                    </h4>
-                    <ul className="mt-4 list-disc ml-4 sm:ml-6 text-xs sm:text-sm text-yellow-800 space-y-2">
-                      {suggestions.map((suggestion, index) => (
-                        <li key={index}>{suggestion}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="min-h-[200px] flex items-center justify-center">
-                <p className="text-center text-gray-600 text-sm sm:text-base">
-                  Upload your resume to see your score and suggestions!
-                </p>
               </div>
-            )}
-          </section>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-teal-100 rounded-xl">
+                  <Award className="w-6 h-6 text-teal-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">
+                    Expert Insights
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    Professional recommendations
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-teal-100 rounded-xl">
+                  <Clock className="w-6 h-6 text-teal-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Quick Results</h3>
+                  <p className="text-sm text-gray-500">Instant feedback</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Upload Section */}
+            <section className="bg-white rounded-3xl p-8 shadow-xl border border-teal-100 hover:shadow-2xl transition-all duration-300">
+              <div className="bg-gradient-to-br from-teal-600 to-teal-700 -mt-12 -mx-8 mb-8 p-6 rounded-t-3xl">
+                <h2 className="text-2xl font-bold text-white text-center">
+                  Upload Your Resume
+                </h2>
+              </div>
+              <div
+                {...getRootProps()}
+                className="mt-4 border-3 border-dashed border-teal-200 rounded-2xl p-8 text-center hover:border-teal-400 transition-all duration-300 cursor-pointer bg-gradient-to-b from-white to-teal-50/30"
+              >
+                <input {...getInputProps()} />
+                <div className="flex flex-col items-center space-y-4">
+                  {file ? (
+                    <>
+                      <div className="p-4 bg-teal-100 rounded-full animate-pulse">
+                        <FileText className="w-12 h-12 text-teal-600" />
+                      </div>
+                      <p className="text-lg font-medium text-gray-700">
+                        {file.name}
+                      </p>
+                      <div className="flex items-center text-teal-600">
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        <p className="text-sm">File ready for analysis</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="p-4 bg-teal-100 rounded-full">
+                        <ArrowUpCircle className="w-12 h-12 text-teal-600 animate-bounce" />
+                      </div>
+                      <p className="text-lg font-medium text-gray-700">
+                        Drop your resume here
+                      </p>
+                      <div className="flex items-center text-teal-600">
+                        <AlertCircle className="w-4 h-4 mr-2" />
+                        <p className="text-sm">PDF format, max 5MB</p>
+                      </div>
+                    </>
+                  )}
+                  <button className="mt-6 px-8 py-3 bg-teal-600 text-white rounded-xl shadow-lg hover:bg-teal-700 transition-all duration-300 font-medium flex items-center">
+                    Select File
+                    <ChevronRight className="w-4 h-4 ml-2" />
+                  </button>
+                </div>
+              </div>
+              <button
+                onClick={handleUpload}
+                className="mt-6 w-full px-6 py-4 bg-teal-600 text-white rounded-xl shadow-lg hover:bg-teal-700 transition-all duration-300 font-medium flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    <span>Analyzing Resume...</span>
+                  </>
+                ) : (
+                  <span className="flex items-center">
+                    <Target className="w-5 h-5 mr-2" />
+                    Start Analysis
+                  </span>
+                )}
+              </button>
+            </section>
+
+            {/* Results Section */}
+            <section className="bg-white rounded-3xl p-8 shadow-xl border border-teal-100 hover:shadow-2xl transition-all duration-300">
+              {result !== null ? (
+                <div className="space-y-6">
+                  <div className="bg-gradient-to-br from-teal-600 to-teal-700 -mt-12 -mx-8 p-12 rounded-t-3xl text-center shadow-lg relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent)] pointer-events-none"></div>
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="p-3 bg-white/20 rounded-full">
+                          <CheckCircle className="w-8 h-8 text-white" />
+                        </div>
+                      </div>
+                      <p className="text-7xl font-bold text-white mb-2">
+                        {result.score}
+                      </p>
+                      <p className="text-teal-50 font-medium text-xl">
+                        {result.score >= 80
+                          ? "Outstanding Resume!"
+                          : "Room for Improvement"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {result.feedback.length > 0 && (
+                    <div className="mt-8 bg-gradient-to-br from-slate-50 to-white p-6 rounded-2xl shadow-lg border border-teal-100">
+                      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                        <Star className="w-5 h-5 text-teal-600 mr-2" />
+                        Personalized Suggestions
+                      </h3>
+                      <div className="space-y-4 max-h-64 overflow-y-auto pr-4 custom-scrollbar">
+                        {result.feedback.map((suggestion, index) => {
+                          const formattedSuggestion = suggestion
+                            .replace(
+                              /(?:\*\*)(.*?)(?:\*\*)/g,
+                              "<strong>$1</strong>"
+                            )
+                            .replace(/\*/g, "");
+
+                          return (
+                            <div
+                              key={index}
+                              className="p-4 bg-white rounded-xl shadow-sm border-l-4 border-teal-500 hover:shadow-md transition-all duration-300"
+                            >
+                              <p
+                                className="text-gray-700"
+                                dangerouslySetInnerHTML={{
+                                  __html: formattedSuggestion,
+                                }}
+                              ></p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center p-8">
+                  <div className="p-4 bg-teal-100 rounded-full mb-4">
+                    <Target className="w-12 h-12 text-teal-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    Ready for Analysis
+                  </h3>
+                  <p className="text-gray-600 max-w-md">
+                    Upload your resume to receive a detailed analysis and
+                    personalized recommendations to improve your chances of
+                    success.
+                  </p>
+                </div>
+              )}
+            </section>
+          </div>
         </div>
       </div>
       <Footer />
@@ -181,4 +279,4 @@ const AtsScore = () => {
   );
 };
 
-export default AtsScore;
+export default ATS_Score;

@@ -5,56 +5,55 @@ const HeroSection = () => {
   const stats = [
     {
       number: "12k+",
-      title: "Clients worldwide",
+      title: "Clients Worldwide",
       description:
-        "Clients worldwide is a phrase used to describe a business or service that has customers located in various countries across the globe. It signifies a broad reach and international presence, suggesting that the company isn't limited to a local or regional market.",
+        "We have successfully built a global network of satisfied clients, expanding our reach across multiple countries and industries.",
     },
     {
       number: "20k+",
-      title: "Active resume",
+      title: "Active Resumes",
       description:
-        "An active resume isn't a standard resume format, but the phrase suggests a resume that is dynamic, up-to-date, and readily available for job searching. It implies a proactive approach to job hunting and a resume that is more than just a static document.",
+        "Thousands of job seekers trust our platform to keep their resumes updated and ready for new opportunities.",
     },
     {
       number: "18k+",
-      title: "Companies",
+      title: "Partner Companies",
       description:
-        "Companies are fundamental building blocks of the modern economy. They are organizations formed by individuals or groups to engage in business activities, with the primary goal of generating profit.",
+        "We collaborate with top-tier companies to offer diverse job opportunities across various industries.",
     },
   ];
 
   return (
-    <div className="px-[10%] py-12">
-      <div className="flex flex-col lg:flex-row gap-12 mb-16">
+    <div className="px-6 md:px-[10%] py-12 bg-gray-50">
+      <div className="flex flex-col lg:flex-row gap-12 mb-16 items-center">
         {/* Left side - Image */}
         <div className="lg:w-1/2">
-          <div className="rounded-3xl overflow-hidden">
+          <div className="rounded-3xl overflow-hidden shadow-lg">
             <img
               src="https://plus.unsplash.com/premium_photo-1727730015669-aac64afb50ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Hero"
-              className="w-full h-full mx-auto"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
 
         {/* Right side - Content */}
-        <div className="lg:w-1/2 flex flex-col justify-center">
-          <h1 className="text-5xl font-bold leading-tight mb-12">
+        <div className="lg:w-1/2 flex flex-col justify-center text-center lg:text-left">
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
             Good Life Begins With
-            <br />A Good Company
+            <br className="hidden md:inline" /> A Good Company
           </h1>
-          <p className="text-gray-600 mb-8">
-            Happiness and Contentment: Feeling positive emotions, finding joy in
-            daily activities, and having a sense of purpose. Well-being:
-            Physical, mental, and emotional health. 
+          <p className="text-gray-600 mt-6 text-lg">
+            Unlock new opportunities and build a future where work and life
+            harmoniously blend to create success and fulfillment.
           </p>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center lg:justify-start">
             <Link to="/jobs">
-              <button className="bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition-colors cursor-pointer">
+              <button className="bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition-all">
                 Search Job
               </button>
             </Link>
-            <button className="text-teal-500 hover:text-teal-600 transition-colors">
+            <button className="text-teal-600 font-semibold hover:text-teal-700 transition-all">
               Learn more
             </button>
           </div>
@@ -62,14 +61,19 @@ const HeroSection = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
         {stats.map((stat, index) => (
-          <div key={index}>
-            <div className="text-4xl font-bold text-teal-500 mb-4">
+          <div
+            key={index}
+            className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div className="text-4xl font-bold text-teal-600 mb-4">
               {stat.number}
             </div>
-            <h3 className="text-xl font-bold mb-3">{stat.title}</h3>
-            <p className="text-gray-600">{stat.description}</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              {stat.title}
+            </h3>
+            <p className="text-gray-600 text-lg">{stat.description}</p>
           </div>
         ))}
       </div>
