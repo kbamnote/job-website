@@ -65,21 +65,20 @@ const Signup = () => {
   
 
   return (
-    <div
+    <div 
       className="min-h-screen bg-cover bg-center"
       style={{
-        backgroundImage: `url('https://plus.unsplash.com/premium_photo-1675448891100-3dbf439d2db3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+        backgroundImage: `url('https://plus.unsplash.com/premium_photo-1675448891100-3dbf439d2db3?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`
       }}
     >
-      <div className="flex justify-center items-center h-full w-full backdrop-blur-sm p-20">
-        <div className="bg-white p-12 rounded-lg shadow-lg max-w-lg w-full relative">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Create Account</h2>
+      <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen w-full p-4 md:p-8 lg:p-12 backdrop-blur-sm">
+        {/* Signup Form Container */}
+        <div className="w-full max-w-md bg-white p-6 md:p-8 lg:p-12 rounded-lg shadow-lg">
+          <h2 className="text-xl md:text-2xl font-semibold mb-6 text-center">Create Account</h2>
+          
           <form onSubmit={handleSignup} className="space-y-4">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-gray-700 text-sm font-medium mb-1"
-              >
+              <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-1">
                 Email
               </label>
               <input
@@ -90,11 +89,9 @@ const Signup = () => {
                 className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
+            
             <div>
-              <label
-                htmlFor="password"
-                className="block text-gray-700 text-sm font-medium mb-1"
-              >
+              <label htmlFor="password" className="block text-gray-700 text-sm font-medium mb-1">
                 Password
               </label>
               <input
@@ -105,7 +102,8 @@ const Signup = () => {
                 className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
-            <div className="flex justify-between items-center">
+            
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
               <div className="flex items-center">
                 <input
                   type="checkbox"
@@ -122,6 +120,7 @@ const Signup = () => {
                 Forgot password?
               </a>
             </div>
+            
             <button
               type="submit"
               className="w-full bg-teal-700 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300"
@@ -129,21 +128,21 @@ const Signup = () => {
               Sign Up
             </button>
           </form>
+          
           <div className="mt-6 text-center text-gray-500">OR</div>
-          <div className="flex space-x-4 mt-4">
-            <button className="w-1/2 bg-teal-950 text-white py-2 rounded hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-300">
+          
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4">
+            <button className="w-full bg-teal-950 text-white py-2 rounded hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-300">
               FACEBOOK
             </button>
-            <button className="w-1/2 bg-teal-500 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300">
+            <button className="w-full bg-teal-500 text-white py-2 rounded hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-300">
               TWITTER
             </button>
           </div>
-          {error && (
-            <div className="text-red-500 text-center mt-4">{error}</div>
-          )}
-          {success && (
-            <div className="text-green-500 text-center mt-4">{success}</div>
-          )}
+
+          {error && <div className="text-red-500 text-center mt-4">{error}</div>}
+          {success && <div className="text-green-500 text-center mt-4">{success}</div>}
+          
           <div className="mt-6 text-center">
             Already have an account?{" "}
             <a href="/login" className="text-teal-500">
@@ -152,30 +151,38 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className="hidden lg:block w-1/2 ml-16 text-black">
-          <h2 className="text-3xl font-bold mb-4">
-            Become the best you can be and have fun
-          </h2>
-          <p className="mb-4 text-teal-500">
-            Join the group of more than 300 clients that love us.
-          </p>
-          <div className="mb-4 flex items-center">
-            <div className="bg-white rounded-full flex items-center justify-center w-10 h-10 mr-4">
-              <BriefcaseBusiness className=" text-teal-500 flex items-center justify-center" />
+        {/* Right Side Content */}
+        <div className="hidden lg:block lg:w-1/2 lg:max-w-xl xl:max-w-2xl lg:ml-16 text-white">
+          <div className=" p-8 rounded-lg">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-black">
+              Become the best you can be and have fun
+            </h2>
+            <p className="mb-6 text-teal-500">
+              Join the group of more than 300 clients that love us.
+            </p>
+            
+            <div className="space-y-6">
+              <div className="flex items-center text-black">
+                <div className="bg-teal-50 rounded-full flex items-center justify-center w-12 h-12 mr-4 shrink-0">
+                  <BriefcaseBusiness className="text-teal-500" />
+                </div>
+                <p>Something about businesses that makes it special and different from everything else.</p>
+              </div>
+              
+              <div className="flex items-center text-black">
+                <div className="bg-teal-50 rounded-full flex items-center justify-center w-12 h-12 mr-4 shrink-0">
+                  <CalendarDays className="text-teal-500" />
+                </div>
+                <p>There is this saying about the business and entrepreneurship, but who remembers it anyway?</p>
+              </div>
+              
+              <div className="flex items-center text-black">
+                <div className="bg-teal-50 rounded-full flex items-center justify-center w-12 h-12 mr-4 shrink-0">
+                  <Trophy className="text-teal-500" />
+                </div>
+                <p>If only there was a template for all your needs, wait a second there is and it is called this!</p>
+              </div>
             </div>
-            Something about businesses that makes it special and different from everything else.
-          </div>
-          <div className="mb-4 flex items-center">
-            <div className="bg-white rounded-full flex items-center justify-center w-10 h-10 mr-4">
-              <CalendarDays className=" text-teal-500 flex items-center justify-center" />
-            </div>
-            There is this saying about the business and entrepreneurship, but who remembers it anyway?
-          </div>
-          <div className="mb-4 flex items-center">
-            <div className="bg-white rounded-full flex items-center justify-center w-10 h-10 mr-4">
-              <Trophy className=" text-teal-500 flex items-center justify-center" />
-            </div>
-            If only there was a template for all your needs, wait a second there is and it is called this!
           </div>
         </div>
       </div>

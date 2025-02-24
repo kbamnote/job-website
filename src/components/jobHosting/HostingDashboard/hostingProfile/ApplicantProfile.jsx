@@ -76,8 +76,8 @@ const ApplicantProfile = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-blue-50">
         <div className="text-center">
-          <div className="animate-spin w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-xl text-pink-700">Loading applicant details...</p>
+          <div className="animate-spin w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-xl text-teal-700">Loading applicant details...</p>
         </div>
       </div>
     );
@@ -109,13 +109,13 @@ const ApplicantProfile = () => {
 
   return (
     <div className="flex min-h-screen">
-      <div className="fixed left-0 top-0 w-62 lg:w-80 h-screen">
+      <div className="lg:w-1/4 w-0 h-screen fixed">
         <HostSidebar />
       </div>
-      <div className="ml-62 lg:ml-80 flex-1 min-h-screen bg-gray-100 p-6 lg:p-8">
-        <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6">
+      <div className="ml-0 lg:ml-80 flex-1 min-h-screen bg-gray-100 p-2 lg:p-8">
+        <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-2 lg:p-6">
           <div className="rounded-2xl bg-gradient-to-r from-teal-800 to-teal-500 px-6 py-5 w-full flex justify-between items-center">
-            <h2 className="text-3xl font-bold text-white">Applicant Details</h2>
+            <h2 className="lg:text-3xl text-lg font-bold text-white">Applicant Details</h2>
             <button
               onClick={handleShorlisted}
               className={`cursor-pointer rounded-4xl bg-white text-black p-3 ${
@@ -126,8 +126,8 @@ const ApplicantProfile = () => {
             </button>
           </div>
 
-          <div className="p-6">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="lg:p-6 p-2">
+            <div className="bg-white rounded-2xl shadow-lg lg:p-6 p-2">
               {/* Job Details */}
               <div className="mb-8 bg-blue-50 p-6 rounded-xl">
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">

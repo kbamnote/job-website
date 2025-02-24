@@ -44,8 +44,7 @@ const HeroSection = () => {
             <br className="hidden md:inline" /> A Good Company
           </h1>
           <p className="text-gray-600 mt-6 text-lg">
-            Unlock new opportunities and build a future where work and life
-            harmoniously blend to create success and fulfillment.
+          A good company provides more than just opportunities; it empowers individuals to reach their potential, fosters creativity, and encourages growth. By surrounding yourself with positive, like-minded people, you're not just building a career you're shaping a better future.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center lg:justify-start">
             <Link to="/jobs">

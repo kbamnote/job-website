@@ -81,6 +81,13 @@ const Header = () => {
             <Link to="/ai-resume-builder">
               <li className="px-4 py-2 hover:bg-gray-700">AI Resume Builder</li>
             </Link>
+
+            <Link to="/mock" className={isMobile ? "w-full" : ""}>
+              <li className="px-4 py-2 hover:bg-gray-700">
+                {" "}
+                Ai Mock Interview
+              </li>
+            </Link>
           </ul>
         )}
       </li>

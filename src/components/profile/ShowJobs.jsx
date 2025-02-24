@@ -4,21 +4,23 @@ import { Briefcase, Building, MapPin, Clock, Award, DollarSign, Code, Users } fr
 
 const ShowJobs = () => {
   const [jobs, setJobs] = useState([]);
-  const [showAllJobs, setShowAllJobs] = useState(false);
-  const [visibleJobs, setVisibleJobs] = useState(2);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     showJobs();
   }, []);
 
-  const showJobs = async () => {
+  const showJobs = async (pageNumber = 1) => {
     const userId = Cookies.get("userID");
     const userToken = Cookies.get("JwtToken");
+    setLoading(true);
 
     try {
       const response = await fetch(
-        `https://jobquick.onrender.com/applicants?applicantId=${userId}`,
+        `https://jobquick.onrender.com/applicants?applicantId=${userId}&page=${pageNumber}&limit=2`,
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -36,22 +38,32 @@ const ShowJobs = () => {
         );
       }
 
-      if (Array.isArray(result)) {
-        const jobDetails = result.map((application) => application.jobId);
-        setJobs(jobDetails);
+      if (result.success) {
+        const jobDetails = result.applicants.map((application) => application.jobId);
+        
+        if (pageNumber === 1) {
+          setJobs(jobDetails);
+        } else {
+          setJobs((prevJobs) => [...prevJobs, ...jobDetails]);
+        }
+        
+        setHasMore(result.pagination.hasNextPage);
       } else {
         setJobs([]);
+        setHasMore(false);
       }
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSeeMoreJobs = () => {
-    setShowAllJobs(!showAllJobs);
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    showJobs(nextPage);
   };
-
-  const displayedJobs = showAllJobs ? jobs : jobs.slice(0, visibleJobs);
 
   if (error) {
     return (
@@ -77,7 +89,7 @@ const ShowJobs = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {displayedJobs.map((job) => (
+          {jobs.map((job) => (
             <div
               key={job._id}
               className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100"
@@ -142,13 +154,14 @@ const ShowJobs = () => {
         </div>
       )}
 
-      {jobs.length > visibleJobs && (
+      {hasMore && (
         <div className="flex justify-center mt-8">
           <button
-            onClick={handleSeeMoreJobs}
-            className="px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            onClick={handleLoadMore}
+            disabled={loading}
+            className="px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {showAllJobs ? "Show Less" : "See More Jobs"}
+            {loading ? "Loading..." : "Load More Jobs"}
           </button>
         </div>
       )}

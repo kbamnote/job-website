@@ -8,7 +8,7 @@ import Hero from '../pages/Hero'
 import NewsBlog from '../pages/NewsBlog'
 import RecentJobs from '../pages/RecentJobs'
 import Testimonials from '../pages/Testimonials'
-
+import TopCompany from '../pages/TopCompany'
 
 function Home() {
   
@@ -20,6 +20,7 @@ function Home() {
      <CompanyLogos/>
      <RecentJobs/>
      <Categories/>
+     <TopCompany/>
      <About/>
      <Testimonials/>
      <NewsBlog/>
@@ -31,4 +32,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;

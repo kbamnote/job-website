@@ -38,10 +38,17 @@ const LineChart = ({ jobs }) => {
   };
 
   useEffect(() => {
+    if (jobs.length > 0 && !selectedJob) {
+      setSelectedJob(jobs[0]._id);
+    }
+  }, [jobs]);
+  
+  useEffect(() => {
     if (selectedJob) {
       fetchGraphData(selectedJob);
     }
   }, [selectedJob]);
+  
 
   const fetchGraphData = async (jobId) => {
     setIsLoading(true);
@@ -50,12 +57,15 @@ const LineChart = ({ jobs }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
+console.log(data);
 
       if (data.success && data.data) {
         const orderedDays = getOrderedDays();
         const dataPoints = orderedDays.map(day => {
           const dayData = data.data.find(d => d.day === day);
           return dayData ? dayData.applicants : 0;
+          
+          
         });
 
         setGraphData({ labels: orderedDays, dataPoints });
@@ -194,7 +204,7 @@ const LineChart = ({ jobs }) => {
           </div>
         </div>
 
-        <div className="relative w-full h-[250px] bg-white rounded-lg">
+        <div className=" w-full h-[250px] bg-white rounded-lg">
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="flex flex-col items-center space-y-2">

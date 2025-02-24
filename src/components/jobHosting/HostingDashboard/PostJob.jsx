@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Header from "../../common/Header";
-import Footer from "../../common/Footer";
+import HostSidebar from "./jobHostingSidebar";
 import JobHostingSidebar from "./jobHostingSidebar";
 
 const PostJob = () => {
@@ -14,6 +13,7 @@ const PostJob = () => {
   const [error, setError] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [skillInput, setSkillInput] = useState("");
+  const [availableSubcategories, setAvailableSubcategories] = useState([]);
   const [formData, setFormData] = useState({
     profileImg: null,
     fullName: "",
@@ -35,6 +35,7 @@ const PostJob = () => {
     skills: [],
     noOfOpeaning: "",
     location: "",
+    subcategories: [],
     categoryTitle: "",
     createdBy: JobId,
   });
@@ -57,6 +58,7 @@ const PostJob = () => {
 
         let processedCategories = [];
         const data = response.data;
+        console.log(data);
 
         if (data.categories) {
           processedCategories = data.categories;
@@ -98,18 +100,15 @@ const PostJob = () => {
     if (type === "file") {
       const file = files[0];
       if (file) {
-        // Check file type
         if (!file.type.startsWith("image/")) {
           setError("Please upload an image file");
           return;
         }
-        // Check file size (e.g., 5MB limit)
         if (file.size > 5 * 1024 * 1024) {
           setError("File size should be less than 5MB");
           return;
         }
 
-        // Create preview URL
         const previewUrl = URL.createObjectURL(file);
         setImagePreview(previewUrl);
         setFormData((prev) => ({ ...prev, [name]: file }));
@@ -117,6 +116,27 @@ const PostJob = () => {
       return;
     } else if (name === "skills") {
       setSkillInput(value);
+    } else if (name === "categoryTitle") {
+      // Find the selected category
+      const selectedCategory = categories.find((cat) => cat.title === value);
+
+      // Check if subcategories exist and are not empty
+      const subcategories = selectedCategory?.subcategories || [];
+
+      if (subcategories.length === 0) {
+        setError("No subcategories available for this category");
+      } else {
+        setError(null);
+      }
+
+      setAvailableSubcategories(subcategories);
+
+      // Reset form data for category-related fields
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+        subcategories: "", // Reset subcategory selection
+      }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -129,7 +149,7 @@ const PostJob = () => {
         addSkill(skillInput);
         setSkillInput(""); // Clear input after adding
       }
-    } else if (e.key === "," || e.key === " ") {
+    } else if (e.key === ",") {
       e.preventDefault();
       if (skillInput.trim()) {
         addSkill(skillInput);
@@ -177,6 +197,8 @@ const PostJob = () => {
         },
       });
 
+      console.log(response.data);
+
       if (response.data) {
         navigate("/hostingDashboard");
       }
@@ -200,31 +222,10 @@ const PostJob = () => {
 
   const renderCompanyForm = () => (
     <>
-      {/* <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Upload Company Logo
-        </label>
-        <div className="mt-1 flex items-center space-x-4">
-          <input
-            type="file"
-            name="profileImg"
-            accept="image/*"
-            onChange={handleInputChange}
-            className="block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 text-sm"
-          />
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="h-20 w-20 object-cover rounded-lg"
-            />
-          )}
-        </div>
-        {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
-      </div> */}
+      <div>{error && <p className="mt-1 text-sm text-red-600">{error}</p>}</div>
 
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Company Name
           </label>
@@ -233,11 +234,11 @@ const PostJob = () => {
             name="companyName"
             value={formData.companyName}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter company name"
           />
         </div>
-        <div className="flex-1">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Provider Name
           </label>
@@ -246,14 +247,14 @@ const PostJob = () => {
             name="fullName"
             value={formData.fullName}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter your full name"
           />
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Company Email
           </label>
@@ -262,11 +263,11 @@ const PostJob = () => {
             name="companyEmail"
             value={formData.companyEmail}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter company email"
           />
         </div>
-        <div className="flex-1">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Phone Number
           </label>
@@ -275,14 +276,14 @@ const PostJob = () => {
             name="phoneNo"
             value={formData.phoneNo}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter phone number"
           />
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Company URL
           </label>
@@ -291,11 +292,11 @@ const PostJob = () => {
             name="companyURL"
             value={formData.companyURL}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter company website"
           />
         </div>
-        <div className="flex-1">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Number of Employees
           </label>
@@ -304,7 +305,7 @@ const PostJob = () => {
             name="numOfEmployee"
             value={formData.numOfEmployee}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter employee count"
           />
         </div>
@@ -319,18 +320,20 @@ const PostJob = () => {
           value={formData.companyDescription}
           onChange={handleInputChange}
           rows="5"
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           placeholder="Describe your company"
         ></textarea>
       </div>
 
-      <button
-        type="button"
-        onClick={handleNext}
-        className="w-28 bg-gradient-to-r from-teal-500 to-teal-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
-      >
-        Next
-      </button>
+      <div className="w-full flex justify-end">
+        <button
+          type="button"
+          onClick={handleNext}
+          className="w-1/3 bg-teal-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+        >
+          Next
+        </button>
+      </div>
     </>
   );
 
@@ -345,7 +348,7 @@ const PostJob = () => {
           name="title"
           value={formData.title}
           onChange={handleInputChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           placeholder="Enter job title"
         />
       </div>
@@ -359,38 +362,64 @@ const PostJob = () => {
           name="noOfOpeaning"
           value={formData.noOfOpeaning}
           onChange={handleInputChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           placeholder="Enter number of positions"
         />
       </div>
 
-      <div className="flex-1">
-        <label className="block text-sm font-medium text-gray-700">
-          Category
-        </label>
-        {isLoading ? (
-          <div className="mt-1 block w-full h-10 bg-gray-100 animate-pulse rounded-md" />
-        ) : error ? (
-          <div className="mt-1 text-red-500 text-sm">{error}</div>
-        ) : (
-          <select
-            name="categoryTitle"
-            value={formData.categoryTitle}
-            onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          >
-            <option value="" disabled>
-              Select Category
-            </option>
-            {categories.map((category) => (
-              <option
-                key={category._id || category.id || Math.random().toString(36)}
-                value={category.title || category.name || ""}
-              >
-                {category.title || category.name || "Unnamed Category"}
-              </option>
-            ))}
-          </select>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="flex-1">
+          <label className="block text-sm font-medium text-gray-700">
+            Category
+          </label>
+          {isLoading ? (
+            <div className="mt-1 block w-full h-10 bg-gray-100 animate-pulse rounded-md" />
+          ) : error ? (
+            <div className="mt-1 text-red-500 text-sm">{error}</div>
+          ) : (
+            <select
+              name="categoryTitle"
+              value={formData.categoryTitle}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            >
+              <option value="">Select Category</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.title}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+
+        {formData.categoryTitle && availableSubcategories.length > 0 && (
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-gray-700">
+              Subcategory
+            </label>
+            <select
+              name="subcategories"
+              value={formData.subcategories}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            >
+              <option value="">Select Subcategory</option>
+              {availableSubcategories.map((subcat, index) => (
+                <option key={index} value={subcat.title}>
+                  {subcat.title}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {formData.categoryTitle && availableSubcategories.length === 0 && (
+          <div className="flex-1">
+            <div className="mt-6 text-sm text-red-500">
+              No subcategories available for this category
+            </div>
+          </div>
         )}
       </div>
 
@@ -402,7 +431,7 @@ const PostJob = () => {
           name="jobType"
           value={formData.jobType}
           onChange={handleInputChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
         >
           <option value="">Select Job Type</option>
           <option value="Full-Time">Full Time</option>
@@ -419,7 +448,7 @@ const PostJob = () => {
           name="location"
           value={formData.location}
           onChange={handleInputChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           placeholder="Enter job location"
         />
       </div>
@@ -445,8 +474,8 @@ const PostJob = () => {
 
   const renderRequirementsForm = () => (
     <>
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Minimum Package
           </label>
@@ -459,7 +488,7 @@ const PostJob = () => {
             placeholder="Enter minimum package eg: 3LPA"
           />
         </div>
-        <div className="flex-1">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Maximum Package
           </label>
@@ -474,8 +503,8 @@ const PostJob = () => {
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Interview Type
           </label>
@@ -483,14 +512,14 @@ const PostJob = () => {
             name="interviewType"
             value={formData.interviewType}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           >
             <option value="">Select Interview Type</option>
             <option value="Online">Online</option>
             <option value="Walk-In">Walk In</option>
           </select>
         </div>
-        <div className="flex-1">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Experience Level
           </label>
@@ -498,7 +527,7 @@ const PostJob = () => {
             name="experience"
             value={formData.experience}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           >
             <option value="">Select experience level</option>
             <option value="Fresher">Fresher</option>
@@ -509,8 +538,8 @@ const PostJob = () => {
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Work Type
           </label>
@@ -518,7 +547,7 @@ const PostJob = () => {
             name="workType"
             value={formData.workType}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           >
             <option value="">Select Work Type</option>
             <option value="Remote">Remote</option>
@@ -526,7 +555,7 @@ const PostJob = () => {
             <option value="Hybrid">Hybrid</option>
           </select>
         </div>
-        <div className="flex-1">
+        <div>
           <label className="block text-sm font-medium text-gray-700">
             Minimum Education
           </label>
@@ -535,24 +564,24 @@ const PostJob = () => {
             name="minEducation"
             value={formData.minEducation}
             onChange={handleInputChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Enter minimum education required"
           />
         </div>
       </div>
 
-      <div className="flex-1">
+      <div>
         <label className="block text-sm font-medium text-gray-700">
           Required Skills
         </label>
-        <div className="relative">
+        <div className="">
           <input
             type="text"
             name="skills"
             value={skillInput}
             onChange={handleInputChange}
             onKeyDown={handleSkillInputKeyDown}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             placeholder="Type a skill and press Enter or comma to add"
           />
           <div className="mt-2 text-xs text-gray-500">
@@ -589,22 +618,22 @@ const PostJob = () => {
           value={formData.jobDescription}
           onChange={handleInputChange}
           rows="5"
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           placeholder="Describe the job responsibilities and requirements"
         ></textarea>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex sm:flex-row justify-between gap-4 mt-4">
         <button
           type="button"
           onClick={handlePrevious}
-          className="w-1/3 bg-gradient-to-r from-teal-700 to-teal-700 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+          className="w-full sm:w-1/3 bg-teal-700 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
         >
           Previous
         </button>
         <button
           type="submit"
-          className="w-1/2 bg-gradient-to-r from-teal-500 to-teal-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
+          className="w-full sm:w-1/2 bg-teal-500 text-white py-3 px-4 rounded-md hover:opacity-90 font-semibold"
         >
           Submit
         </button>
@@ -613,27 +642,14 @@ const PostJob = () => {
   );
 
   return (
-    <>
-      {/* <Header /> */}
-      <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <div className="w-1/4 fixed left-0 top-0 h-screen">
+    <div className="min-h-screen flex">
+      <div className="lg:w-1/4 w-0 fixed left-0 top-0 h-screen">
         <JobHostingSidebar />
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 ml-[22%] flex  items-center justify-center flex-col md:flex-row">
-        {/* Left Section - Image */}
-        {/* <div className="w-full md:w-1/2 p-8 flex items-center justify-center">
-          <img
-            src="https://images.unsplash.com/photo-1605169935945-4b54e1373e6a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Job Posting"
-            className="rounded-lg shadow-lg w-full h-[600px] object-cover object-top"
-          />
-        </div> */}
-
+      <div className="flex-1 lg:ml-[22%] ml-0 flex  items-center justify-center flex-col md:flex-row">
         {/* Right Section - Form */}
-        <div className="w-full md:w-1/2 p-8 flex items-center justify-center">
+        <div className="w-full lg:w-1/2 p-8 flex items-center justify-center">
           <div className="w-full max-w-xl bg-white rounded-lg shadow-2xl p-8">
             <h2 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text text-transparent">
               Post Job
@@ -656,8 +672,6 @@ const PostJob = () => {
         </div>
       </div>
     </div>
-      {/* <Footer /> */}
-    </>
   );
 };
 

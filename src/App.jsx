@@ -23,6 +23,8 @@ import JobDetails from "./components/jobDetails.jsx/JobDetails";
 import ViewApplicant from "./components/jobHosting/HostingDashboard/ViewApplicant";
 import UserDetails from "./components/profile/UserDetails";
 import ApplicantProfile from "./components/jobHosting/HostingDashboard/hostingProfile/ApplicantProfile";
+import AiMockTest from "./components/navbarSection/AiMockTest";
+import QuestionComponent from "./components/navbarSection/QuestionComponent";
 
 function App() {
   return (
@@ -64,6 +66,23 @@ function App() {
           <Route path="/salaries" element={<ProtectedRoute><Salaries /></ProtectedRoute>} />
           <Route path="/job-login" element={<ProtectedRoute><HostingLogin /></ProtectedRoute>} />
           <Route path="/user-profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                  
+<Route
+            path="/mock"
+            element={
+              <ProtectedRoute>
+                <AiMockTest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/questions/:category/:subcategory"
+            element={
+              <ProtectedRoute>
+                <QuestionComponent />
+              </ProtectedRoute>
+            }
+          /> 
         </Routes>
       </BrowserRouter>
     </>

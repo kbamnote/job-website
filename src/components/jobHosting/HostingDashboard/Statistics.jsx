@@ -2,6 +2,8 @@ import React from "react";
 import { FaBriefcase, FaUsers, FaUserCheck } from "react-icons/fa";
 
 const Statistics = ({ stats }) => {
+  console.log("Stats data:", stats);
+
   if (!stats) {
     return <p className="text-center text-gray-600">Loading statistics...</p>;
   }
