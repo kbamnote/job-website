@@ -30,7 +30,7 @@ const JobCategories = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-[10%] py-16">
+    <div className="min-h-screen bg-gray-50 px-[10%] lg:py-16">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-800 mb-4">
           Browse by Category

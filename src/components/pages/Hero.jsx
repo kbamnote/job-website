@@ -129,22 +129,24 @@ const Hero = () => {
         </form>
 
         {/* Animated Statistics Section */}
-        <div className="mt-12 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 px-4">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="text-center transform transition duration-200 cursor-pointer bg-black/20 rounded-lg p-6"
-            >
-              <span className="inline-block p-4 bg-teal-500 rounded-full mb-4 shadow-lg hover:shadow-xl transition-shadow">
-                <span className="text-2xl">{stat.icon}</span>
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                {animationStarted && <NumberTicker endValue={stat.number} />}
-              </h3>
-              <p className="text-gray-300">{stat.label}</p>
-            </div>
-          ))}
-        </div>
+       {/* Animated Statistics Section */}
+<div className="mt-12 sm:mt-20 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 px-4">
+  {stats.map((stat, index) => (
+    <div
+      key={index}
+      className="text-center transform transition duration-200 cursor-pointer bg-black/20 rounded-lg p-6"
+    >
+      <span className="inline-block p-4 bg-teal-500 rounded-full mb-4 shadow-lg hover:shadow-xl transition-shadow">
+        <span className="text-2xl">{stat.icon}</span>
+      </span>
+      <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+        {animationStarted && <NumberTicker endValue={stat.number} />}
+      </h3>
+      <p className="text-gray-300">{stat.label}</p>
+    </div>
+  ))}
+</div>
+
       </div>
     </div>
   );

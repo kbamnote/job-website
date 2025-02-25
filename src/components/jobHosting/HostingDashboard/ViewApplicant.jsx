@@ -94,7 +94,7 @@ const ViewApplicant = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="bg-white p-8 rounded-xl shadow-md text-center max-w-md">
-          <p className="text-red-500 text-lg font-semibold mb-2">{error}</p>
+          <p className="text-teal-500 text-lg font-semibold mb-2">{error}</p>
           <p className="text-gray-500">Please try again later</p>
         </div>
       </div>

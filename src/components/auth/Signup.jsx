@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BriefcaseBusiness, CalendarDays, Trophy } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -145,9 +146,9 @@ const Signup = () => {
           
           <div className="mt-6 text-center">
             Already have an account?{" "}
-            <a href="/login" className="text-teal-500">
+            <Link to="/login" className="text-teal-500">
               Sign In
-            </a>
+              </Link>
           </div>
         </div>
 

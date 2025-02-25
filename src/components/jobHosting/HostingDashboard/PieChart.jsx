@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { PieChart as PieChartIcon,  CirclePlus } from "lucide-react";
+import { PieChartIcon, CirclePlus } from "lucide-react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 
@@ -62,22 +62,6 @@ const PieChart = ({ jobs }) => {
 
   const colors = generateColors(chartData.length);
 
-  const customLegendCallback = (chart) => {
-    const { data } = chart;
-    let legendHTML = '<ul class="flex flex-wrap justify-center gap-2">';
-    data.labels.forEach((label, index) => {
-      const color = data.datasets[0].backgroundColor[index];
-      const bullet = `<span class="inline-block w-3 h-3 rounded-full mr-1" style="background-color: ${color};"></span>`;
-      legendHTML += `<li class="flex items-center text-xs">${bullet}${label}</li>`;
-
-      if ((index + 1) % 2 === 0) {
-        legendHTML += "<br>";
-      }
-    });
-    legendHTML += "</ul>";
-    return legendHTML;
-  };
-
   const pieChartData = {
     labels: chartData.map((item) => item.name),
     datasets: [
@@ -121,86 +105,82 @@ const PieChart = ({ jobs }) => {
 
   // Empty state component
   const EmptyState = () => (
-    <div className="h-[170px] flex flex-col items-center justify-center bg-gray-50 rounded-lg">
-      <PieChartIcon className="w-12 h-12 text-gray-300 mb-2" />
+    <div className="h-full flex flex-col items-center justify-center bg-gray-50 rounded-lg p-4">
+      <PieChartIcon className="w-10 h-10 md:w-12 md:h-12 text-gray-300 mb-2" />
       <p className="text-sm font-medium text-gray-500">No Applications Yet</p>
-      <p className="text-xs text-gray-400 text-center mt-1 max-w-[200px]">
+      <p className="text-xs text-gray-400 text-center mt-1 max-w-xs">
         Data will appear here once candidates apply for your jobs
       </p>
-      <br />
-      <Link to="/post-job">
-            <button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md border border-teal-700 transition duration-300 flex items-center gap-2">
-              <CirclePlus className="w-3 h-3" />
-              <span>Post Your First Job</span>
-            </button>
-          </Link>
+      <div className="mt-4">
+        <Link to="/post-job">
+          <button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-4 py-2 text-xs md:text-sm rounded-lg shadow-md border border-teal-700 transition duration-300 flex items-center gap-1">
+            <CirclePlus className="w-3 h-3" />
+            <span>Post Your First Job</span>
+          </button>
+        </Link>
+      </div>
     </div>
   );
 
   return (
-    <div className="w-full bg-white rounded-xl lg:p-2 h-auto sm:h-[300px]">
-      <div className="space-y-2">
-        <div className="w-full h-[200px] ">
-          {isLoading ? (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex flex-col items-center space-y-2">
-                <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                <p className="text-xs text-gray-500">Loading chart data...</p>
-              </div>
-            </div>
-          ) : totalApplicants === 0 ? (
-            <EmptyState />
-          ) : (
-            <Pie data={pieChartData} options={options} />
-          )}
-        </div>
-
-        {/* Custom Legend - only show if there's data */}
-        {totalApplicants > 0 && (
-          <div
-            className="text-center text-xs mt-2"
-            dangerouslySetInnerHTML={{
-              __html: customLegendCallback({ data: pieChartData }),
-            }}
-          />
-        )}
-
-        {/* Stats Grid - only show if there's data */}
-        {totalApplicants > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 space-x-20">
-            {/* <div className="p-2 bg-blue-50 rounded-md">
-              <p className="text-xs text-gray-600">Total Applicants</p>
-              <p className="text-lg font-semibold text-blue-600">
-                {totalApplicants}
-              </p>
-            </div> */}
-            {/* <div className="p-2 bg-green-50 rounded-md">
-              <p className="text-xs text-gray-600">Companies Shown</p>
-              <p className="text-lg font-semibold text-green-600">
-                {chartData.length}
-              </p>
-            </div> */}
-            
-            <div className="p-2 bg-purple-50 rounded-md mt-6">
-              <p className="text-xs text-gray-600">Average/Company</p>
-              <p className="text-lg font-semibold text-purple-600">
-                {(totalApplicants / chartData.length).toFixed(1)}
-              </p>
-            </div>
-            <div className="p-2 bg-orange-50 rounded-md mt-6">
-              <p className="text-xs text-gray-600">Top Company</p>
-              <p className="text-sm font-semibold text-orange-600">
-                {chartData.length > 0
-                  ? chartData.reduce((max, item) =>
-                      item.applicants > max.applicants ? item : max
-                    ).name
-                  : "N/A"}
-              </p>
-           
+    <div className="w-full h-full flex flex-col">
+      {/* Chart area with fixed proportion */}
+      <div className="w-full" style={{ height: "200px" }}>
+        {isLoading ? (
+          <div className="h-full flex items-center justify-center">
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+              <p className="text-xs text-gray-500">Loading chart data...</p>
             </div>
           </div>
+        ) : totalApplicants === 0 ? (
+          <EmptyState />
+        ) : (
+          <Pie data={pieChartData} options={options} />
         )}
       </div>
+
+      {/* Company Legend - Horizontal Scrollable Row for medium screens */}
+      {totalApplicants > 0 && (
+        <div className="mt-4 w-full">
+          <div className="flex flex-wrap gap-3 overflow-x-auto overflow-y-hidden pb-2 max-h-32">
+            {chartData.map((item, index) => (
+              <div 
+                key={index} 
+                className="flex items-center gap-2 text-xs whitespace-nowrap px-2 py-1 rounded-full bg-gray-50"
+              >
+                <span
+                  className="w-3 h-3 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: colors[index] }}
+                ></span>
+                <span>{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Stats Grid - Fixed layout that matches screenshot */}
+      {totalApplicants > 0 && (
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="bg-purple-50 p-2 rounded-lg">
+            <p className="text-xs text-gray-600">Average</p>
+            <p className="text-xl font-semibold text-purple-600">
+              {(totalApplicants / chartData.length).toFixed(1)}
+            </p>
+          </div>
+          <div className="bg-orange-50 p-2 rounded-lg">
+            <p className="text-xs text-gray-600">Top Company</p>
+            <p className="text-sm font-semibold text-orange-600 truncate">
+              {chartData.length > 0
+                ? chartData.reduce((max, item) =>
+                    item.applicants > max.applicants ? item : max
+                  ).name
+                : "N/A"}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

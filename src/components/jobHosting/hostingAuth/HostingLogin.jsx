@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const HostingLogin = () => {
   const [email, setEmail] = useState("");
@@ -141,12 +142,12 @@ const HostingLogin = () => {
           </div>
           <div className="mt-6 text-center text-sm">
             No account yet?{" "}
-            <a
-              href="/host-signup"
+            <Link
+              to="/host-signup"
               className="text-teal-600 hover:text-teal-500"
             >
               Signup.
-            </a>
+              </Link>
           </div>
         </div>
       </div>

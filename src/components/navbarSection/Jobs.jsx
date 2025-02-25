@@ -228,99 +228,97 @@ const Jobs = () => {
   }
 
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex flex-col space-y-8">
-            <div className="relative flex flex-col lg:flex-row gap-6">
-              <div className="lg:w-80">
-              <button
-  className="fixed top-4 left-4 z-50 p-2 bg-teal-600 text-white rounded-lg lg:hidden"
-  onClick={() => setIsOpen(!isOpen)}
->
-  {isOpen ? (
-    <X className="h-5 w-6" />
-  ) : (
-    <Menu className="h-5 w-6" />
-  )}
-</button>
-
-<div
-  className={`fixed inset-y-0 left-0 bg-white z-40 overflow-y-auto p-4 transition-transform duration-300 ease-in-out transform
-    ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-    w-full h-screen
-    lg:relative lg:translate-x-0 lg:w-80 lg:flex-shrink-0 lg:inset-auto lg:overflow-hidden`}
->
-  <JobFilters
-    filters={pendingFilters}
-    onFilterChange={handleFilterChange}
-    categories={categories}
-    isLoading={isLoading}
-    onApplyFilters={handleApplyFilters}
-    selectedCategory={selectedCategory}
-    selectedSubcategory={selectedSubcategory}
-    handleCategoryChange={handleCategoryChange}
-    handleSubcategoryChange={handleSubcategoryChange}
-  />
-</div>
-              </div>
-
-              <div className="flex-1">
-                {isLoading && jobListings.length === 0 ? (
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
-                    {[1, 2, 3, 4].map((n) => (
-                      <div
-                        key={n}
-                        className="border rounded-lg p-4 animate-pulse"
-                      >
-                        <div className="h-32 bg-gray-200 rounded-lg mb-4"></div>
-                        <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-                      </div>
-                    ))}
-                  </div>
-                ) : error ? (
-                  <div className="text-red-500 text-center py-8">
-                    <p className="text-xl font-semibold mb-2">Error</p>
-                    <p>{error}</p>
-                  </div>
-                ) : jobListings.length === 0 ? (
-                  <div className="text-gray-500 text-center py-8">
-                    <p className="text-xl font-semibold mb-2">No jobs found</p>
-                    <p className="text-gray-400">Try adjusting your filters</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
-                    {jobListings.map((job) => (
-                      <JobCard key={job._id} job={job} />
-                    ))}
-                  </div>
-                )}
-
-                {currentPage < totalPages && !isLoading && jobListings.length > 0 && (
-                  <div className="flex justify-center mt-8">
-                    <button
-                      onClick={handleLoadMore}
-                      className="w-40 h-10 rounded-lg text-blue-800 hover:text-blue-800 hover:underline cursor-pointer font-semibold sm:h-12 md:h-14 lg:h-12"
-                    >
-                      Load More...
-                    </button>
-                  </div>
-                )}
-
-                {isLoading && (
-                  <div className="flex justify-center mt-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
-                  </div>
-                )}
-              </div>
-            </div>
+<>
+  <Header />
+  <div className="min-h-screen bg-gray-50">
+    <div className="container mx-auto px-4 py-6">
+      <div className="flex flex-col lg:flex-row gap-4">
+        {/* Filter Section */}
+        <aside className="w-full lg:w-74 lg:flex-shrink-0 mb-4 lg:mb-0">
+          <div className="flex justify-between items-center mb-3 lg:hidden">
+            <h2 className="font-semibold text-lg">Filters</h2>
+            <button
+              className="p-2 rounded-lg"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle filters"
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
-        </div>
+  
+          <div
+            className={`w-full shadow rounded-lg bg-white ${
+              isOpen ? 'block' : 'hidden lg:block'
+            }`}
+          >
+            <JobFilters
+              filters={pendingFilters}
+              onFilterChange={handleFilterChange}
+              categories={categories}
+              isLoading={isLoading}
+              onApplyFilters={handleApplyFilters}
+              selectedCategory={selectedCategory}
+              selectedSubcategory={selectedSubcategory}
+              handleCategoryChange={handleCategoryChange}
+              handleSubcategoryChange={handleSubcategoryChange}
+            />
+          </div>
+        </aside>
+  
+        {/* Job Listings Section */}
+        <main className="flex-1">
+          {isLoading && jobListings.length === 0 ? (
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="border rounded-lg p-4 animate-pulse w-full bg-white">
+                  <div className="h-24 bg-gray-200 rounded-lg mb-3"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                </div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="text-red-500 text-center py-6 bg-white rounded-lg shadow">
+              <p className="text-xl font-semibold mb-2">Error</p>
+              <p>{error}</p>
+            </div>
+          ) : jobListings.length === 0 ? (
+            <div className="text-gray-500 text-center py-6 bg-white rounded-lg shadow">
+              <p className="text-xl font-semibold mb-2">No jobs found</p>
+              <p className="text-gray-400">Try adjusting your filters</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2">
+              {jobListings.map((job) => (
+                <div key={job._id} className="w-full ">
+                  <JobCard job={job} />
+                </div>
+              ))}
+            </div>
+          )}
+  
+          {currentPage < totalPages && !isLoading && jobListings.length > 0 && (
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={handleLoadMore}
+                className="px-6 py-2 bg-blue-50 text-blue-700 rounded-md hover:bg-blue-100 font-medium transition-colors duration-200"
+              >
+                Load More Jobs
+              </button>
+            </div>
+          )}
+  
+          {isLoading && jobListings.length > 0 && (
+            <div className="flex justify-center mt-6">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+            </div>
+          )}
+        </main>
       </div>
-      <Footer />
-    </>
+    </div>
+  </div>
+  <Footer />
+</>
   );
 };
 

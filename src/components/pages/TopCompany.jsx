@@ -43,7 +43,7 @@ const TopCompany = () => {
         category: "Data Science",
         applyUrl: "https://amazon.jobs",
         rating: 4.6,
-        reviewCount: 9872,
+      
         workType: "OnSite",
         experience: "more than 5 years",
         description:
@@ -65,7 +65,7 @@ const TopCompany = () => {
         category: "Data Science",
         applyUrl: "https://careers.microsoft.com",
         rating: 4.7,
-        reviewCount: 8934,
+        
         workType: "Remote",
         experience: "3 to 5 years",
         description:
@@ -87,7 +87,7 @@ const TopCompany = () => {
         category: "Data Science",
         applyUrl: "https://apple.com/careers",
         rating: 4.9,
-        reviewCount: 10234,
+        
         workType: "OnSite",
         experience: "1 to 3 years",
         description: "Join Apple to work on cutting-edge iOS applications and contribute to our growing ecosystem.",
@@ -108,7 +108,7 @@ const TopCompany = () => {
         category: "IT & Networking",
         applyUrl: "https://meta.com/careers",
         rating: 4.5,
-        reviewCount: 7823,
+       
         workType: "Hybrid",
         experience: "3 to 5 years",
         description:
@@ -130,7 +130,7 @@ const TopCompany = () => {
         category: "Data Science",
         applyUrl: "https://netflix.com/careers",
         rating: 4.7,
-        reviewCount: 6543,
+       
         workType: "Remote",
         experience: "more than 5 years",
         description:
@@ -212,9 +212,9 @@ const TopCompany = () => {
                           />
                         ))}
                       </div>
-                      <span className="text-sm text-gray-500">
+                      {/* <span className="text-sm text-gray-500">
                         ({job.reviewCount.toLocaleString()} reviews)
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>

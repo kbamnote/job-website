@@ -82,13 +82,13 @@ const Footer = () => {
             <p className="text-gray-400 mb-4">
               Subscribe to stay updated on the latest job opportunities.
             </p>
-            <div className="relative">
+            <div className="flex flex-col sm:flex-row w-full space-y-2 sm:space-y-0 sm:space-x-2">
               <input
                 type="email"
                 placeholder="Enter your email"
                 className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
               />
-              <button className="absolute right-2 top-2 bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition">
+              <button className="bg-teal-500 text-white px-4 py-3 rounded-lg hover:bg-teal-600 transition sm:w-auto w-full">
                 Subscribe
               </button>
             </div>

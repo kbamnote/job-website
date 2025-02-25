@@ -222,7 +222,7 @@ const PostJob = () => {
 
   const renderCompanyForm = () => (
     <>
-      <div>{error && <p className="mt-1 text-sm text-red-600">{error}</p>}</div>
+      <div>{error && <p className="mt-1 text-sm text-teal-600">{error}</p>}</div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
@@ -642,36 +642,38 @@ const PostJob = () => {
   );
 
   return (
-    <div className="min-h-screen flex">
-      <div className="lg:w-1/4 w-0 fixed left-0 top-0 h-screen">
-        <JobHostingSidebar />
-      </div>
-
-      <div className="flex-1 lg:ml-[22%] ml-0 flex  items-center justify-center flex-col md:flex-row">
-        {/* Right Section - Form */}
-        <div className="w-full lg:w-1/2 p-8 flex items-center justify-center">
-          <div className="w-full max-w-xl bg-white rounded-lg shadow-2xl p-8">
-            <h2 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text text-transparent">
-              Post Job
-            </h2>
-
-            {/* Loading Overlay */}
-            {isLoading && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
-              </div>
-            )}
-
-            {/* Form Content */}
-            <form className="space-y-6" onSubmit={handlePostJob}>
-              {step === 1 && renderCompanyForm()}
-              {step === 2 && renderJobDetailsForm()}
-              {step === 3 && renderRequirementsForm()}
-            </form>
+    <div className="min-h-screen flex bg-gray-50">
+    {/* Sidebar */}
+    <div className="lg:w-1/4 w-0 fixed left-0 top-0 h-screen">
+      <JobHostingSidebar />
+    </div>
+  
+    {/* Main Content */}
+    <div className="flex-1 flex justify-center lg:ml-80 items-center xl:ml-[22%] w-full min-h-screen p-4 sm:p-6 md:p-8">
+      <div className=" max-w-[95%] md:max-w-[85%] w-full xl:max-w-[900px] bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8 lg:p-10">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent">
+          Post Job
+        </h2>
+  
+        {/* Loading Overlay */}
+        {isLoading && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
           </div>
+        )}
+  
+        {/* Form Content */}
+        <div className="max-w-full mx-auto">
+          <form className="space-y-6 sm:space-y-8" onSubmit={handlePostJob}>
+            {step === 1 && renderCompanyForm()}
+            {step === 2 && renderJobDetailsForm()}
+            {step === 3 && renderRequirementsForm()}
+          </form>
         </div>
       </div>
     </div>
+  </div>
+  
   );
 };
 

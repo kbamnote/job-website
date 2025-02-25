@@ -85,7 +85,11 @@ const RecentJobs = () => {
 
   // Function to handle job card click
   const handleJobClick = (job) => {
-    navigate(`/jobs?title=${encodeURIComponent(job.title)}&company=${encodeURIComponent(job.company)}`);
+    navigate(
+      `/jobs?title=${encodeURIComponent(
+        job.title
+      )}&company=${encodeURIComponent(job.company)}`
+    );
   };
 
   return (
@@ -130,19 +134,17 @@ const RecentJobs = () => {
         >
           {jobs.map((job) => (
             <SwiperSlide key={job.id}>
-              <div 
+              <div
                 className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col min-h-[25rem] p-8 hover:-translate-y-1 cursor-pointer"
                 onClick={() => handleJobClick(job)}
               >
                 <div className="flex items-start gap-6 relative">
-                  <button 
+                  <button
                     className="absolute right-0 top-0 text-gray-300 hover:text-teal-600 transition-colors duration-200"
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent card click when clicking bookmark
                     }}
-                  >
-                    <Bookmark className="w-6 h-6" />
-                  </button>
+                  ></button>
                   <div className="relative">
                     <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
                       <img
@@ -189,7 +191,7 @@ const RecentJobs = () => {
                 </div>
 
                 <div className="mt-auto pt-3">
-                  <button 
+                  <button
                     className="w-full px-8 py-4 text-base font-medium text-white bg-teal-600 rounded-xl hover:bg-teal-700 transition-all duration-200 shadow-sm"
                     onClick={(e) => {
                       e.stopPropagation();

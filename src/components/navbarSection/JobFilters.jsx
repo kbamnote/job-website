@@ -12,7 +12,7 @@ const JobFilters = ({
   handleSubcategoryChange,
 }) => {
   return (
-    <div className="sticky top-0 rounded-lg p-4 bg-white shadow-lg w-80">
+    <div className="w-full sticky top-0 rounded-lg p-4 shadow-lg:w-80">
       <div className="mb-6">
         <label className="block text-xl font-bold text-gray-800 mb-2">
           Search Jobs

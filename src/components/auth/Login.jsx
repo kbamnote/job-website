@@ -6,6 +6,7 @@ import {
   CalendarDays,
   Trophy,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -135,9 +136,9 @@ const Login = () => {
           
           <div className="mt-6 text-center">
             Don't have an account?{" "}
-            <a href="/register" className="text-teal-500">
+            <Link to="/register" className="text-teal-500">
               Sign Up
-            </a>
+              </Link>
           </div>
         </div>
 

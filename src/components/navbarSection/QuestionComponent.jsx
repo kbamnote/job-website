@@ -274,82 +274,85 @@ const QuestionComponent = () => {
   if (showResults) {
     return (
       <>
-        <Header />
-        <div className="min-h-screen bg-gray-50 p-4">
-          <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-4xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
-              <button
-                onClick={handleGoBack}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-              >
-                <ArrowLeft size={16} />
-                Go Back
-              </button>
-              <h2 className="text-2xl font-bold text-gray-800">Test Results</h2>
-              <button
-                onClick={resetQuiz}
-                className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-              >
-                <RefreshCcw size={16} />
-                Reset Quiz
-              </button>
-            </div>
+      <Header />
+      <div className="min-h-screen bg-gray-50 p-2 sm:p-4">
+        <div className="bg-white shadow-xl rounded-lg p-4 sm:p-8 w-full max-w-4xl mx-auto">
+          {/* Header Section */}
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+            <button
+              onClick={handleGoBack}
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm sm:text-base w-full sm:w-auto"
+            >
+              <ArrowLeft size={16} />
+              Go Back
+            </button>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 text-center">Test Results</h2>
+            <button
+              onClick={resetQuiz}
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm sm:text-base w-full sm:w-auto"
+            >
+              <RefreshCcw size={16} />
+              Reset Quiz
+            </button>
+          </div>
 
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <div className="text-center mb-4">
-                <div className="text-4xl font-bold text-gray-800 mb-2">
-                  {score}%
-                </div>
-                <div className="text-gray-600">
-                  Time Taken: {getTimeTaken()}
-                </div>
+          {/* Score Section */}
+          <div className="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+            <div className="text-center mb-4">
+              <div className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
+                {score}%
               </div>
-              <Progress value={parseFloat(score)} />
+              <div className="text-sm sm:text-base text-gray-600">
+                Time Taken: {getTimeTaken()}
+              </div>
             </div>
+            <Progress value={parseFloat(score)} />
+          </div>
 
-            <div className="space-y-6">
-              {questions.map((question, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-50 rounded-lg p-6 transition-all"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="mt-1">
-                      {userAnswers[index] === question.correctAnswer ? (
-                        <CheckCircle className="text-green-500" size={24} />
-                      ) : (
-                        <XCircle className="text-red-500" size={24} />
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-lg font-medium text-gray-800 mb-4">
-                        {index + 1}. {question.question}
-                      </p>
-                      <div className="space-y-3">
-                        {question.options.map((option) => (
-                          <div
-                            key={option.letter}
-                            className={`p-3 rounded-lg transition-colors ${
-                              option.letter === question.correctAnswer
-                                ? "bg-green-100 border-2 border-green-500"
-                                : option.letter === userAnswers[index]
-                                ? "bg-red-100 border-2 border-red-500"
-                                : "bg-white border-2 border-gray-200"
-                            }`}
-                          >
-                            {option.letter.toUpperCase()}) {option.text}
-                          </div>
-                        ))}
-                      </div>
+          {/* Questions Section */}
+          <div className="space-y-4 sm:space-y-6">
+            {questions.map((question, index) => (
+              <div
+                key={index}
+                className="bg-gray-50 rounded-lg p-4 sm:p-6 transition-all"
+              >
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="mt-1 flex-shrink-0">
+                    {userAnswers[index] === question.correctAnswer ? (
+                      <CheckCircle className="text-green-500" size={20} />
+                    ) : (
+                      <XCircle className="text-red-500" size={20} />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-base sm:text-lg font-medium text-gray-800 mb-3 sm:mb-4">
+                      {index + 1}. {question.question}
+                    </p>
+                    <div className="space-y-2 sm:space-y-3">
+                      {question.options.map((option) => (
+                        <div
+                          key={option.letter}
+                          className={`p-2 sm:p-3 rounded-lg transition-colors text-sm sm:text-base ${
+                            option.letter === question.correctAnswer
+                              ? "bg-green-100 border-2 border-green-500"
+                              : option.letter === userAnswers[index]
+                              ? "bg-red-100 border-2 border-red-500"
+                              : "bg-white border-2 border-gray-200"
+                          }`}
+                        >
+                          {option.letter.toUpperCase()}) {option.text}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
-        <Footer />
-      </>
+      </div>
+      <Footer />
+    </>
     );
   }
 
@@ -357,111 +360,121 @@ const QuestionComponent = () => {
 
   return (
     <>
-      <Header />
-      <div className="min-h-screen bg-gray-50 p-4">
-        <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-3xl mx-auto">
-          {currentQuestion && (
-            <div>
-              <div className="flex justify-between items-center mb-8">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-gray-800">
-                    Question {currentQuestionIndex + 1}
-                  </h2>
-                  <Progress
-                    value={((currentQuestionIndex + 1) / questions.length) * 100}
-                    className="w-32"
-                  />
-                </div>
-                <div className="flex items-center gap-4">
-                  <div
-                    className={`flex items-center gap-2 text-lg font-medium ${
-                      timeLeft < 10 ? "text-red-500" : "text-gray-600"
-                    }`}
-                  >
-                    <Clock size={24} />
-                    {formatTime(timeLeft)}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {userAnswers[currentQuestionIndex] ? (
-                    <CheckCircle size={20} className="text-green-500" />
-                  ) : (
-                    <HelpCircle size={20} className="text-gray-400" />
-                  )}
-                  <span className="text-gray-600">
-                    {userAnswers[currentQuestionIndex]
-                      ? "Answered"
-                      : "Not answered"}
-                  </span>
-                </div>
+    <Header />
+    <div className="min-h-screen bg-gray-50 p-2 sm:p-4">
+      <div className="bg-white shadow-xl rounded-lg p-4 sm:p-8 w-full max-w-3xl mx-auto">
+        {currentQuestion && (
+          <div>
+            {/* Header Section */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-8 mb-6 sm:mb-8">
+              {/* Question Progress */}
+              <div className="w-full sm:w-auto space-y-2">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+                  Question {currentQuestionIndex + 1}
+                </h2>
+                <Progress
+                  value={((currentQuestionIndex + 1) / questions.length) * 100}
+                  className="w-full sm:w-32"
+                />
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                <p className="text-lg font-medium text-gray-800">
-                  {currentQuestion.question}
-                </p>
-              </div>
-              <div className="space-y-4">
-                {currentQuestion.options.map((option) => (
-                  <label
-                    key={option.letter}
-                    className={`block p-4 rounded-lg cursor-pointer transition-all transform hover:scale-101 ${
-                      userAnswers[currentQuestionIndex] === option.letter
-                        ? "bg-teal-50 border-2 border-teal-500"
-                        : "bg-white border-2 border-gray-200 hover:border-teal-300"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name={`question-${currentQuestionIndex}`}
-                        value={option.letter}
-                        checked={userAnswers[currentQuestionIndex] === option.letter}
-                        onChange={() => handleAnswerSelection(option.letter)}
-                        className="w-4 h-4 text-teal-500"
-                      />
-                      <span className="text-gray-800">
-                        {option.letter.toUpperCase()}) {option.text}
-                      </span>
-                    </div>
-                  </label>
-                ))}
-              </div>
-
-              <div className="mt-8 flex justify-between">
-                <button
-                  onClick={handlePrevious}
-                  disabled={currentQuestionIndex === 0}
-                  className={`px-6 py-3 rounded-lg transition-colors ${
-                    currentQuestionIndex === 0
-                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                      : "bg-teal-500 hover:bg-teal-600 text-white"
+              {/* Timer */}
+              <div className="flex items-center gap-4 order-3 sm:order-2">
+                <div
+                  className={`flex items-center gap-2 text-base sm:text-lg font-medium ${
+                    timeLeft < 10 ? "text-red-500" : "text-gray-600"
                   }`}
                 >
-                  Previous
-                </button>
-                {currentQuestionIndex === questions.length - 1 ? (
-                  <button
-                    onClick={handleTestComplete}
-                    className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                  >
-                    Submit Test
-                  </button>
+                  <Clock size={20} className="sm:w-6 sm:h-6" />
+                  {formatTime(timeLeft)}
+                </div>
+              </div>
+
+              {/* Answer Status */}
+              <div className="flex items-center gap-2 order-2 sm:order-3">
+                {userAnswers[currentQuestionIndex] ? (
+                  <CheckCircle size={18} className="text-green-500" />
                 ) : (
-                  <button
-                    onClick={handleNext}
-                    className="px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-                  >
-                    Next
-                  </button>
+                  <HelpCircle size={18} className="text-gray-400" />
                 )}
+                <span className="text-sm sm:text-base text-gray-600">
+                  {userAnswers[currentQuestionIndex]
+                    ? "Answered"
+                    : "Not answered"}
+                </span>
               </div>
             </div>
-          )}
-        </div>
+
+            {/* Question Content */}
+            <div className="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+              <p className="text-base sm:text-lg font-medium text-gray-800">
+                {currentQuestion.question}
+              </p>
+            </div>
+
+            {/* Options */}
+            <div className="space-y-3 sm:space-y-4">
+              {currentQuestion.options.map((option) => (
+                <label
+                  key={option.letter}
+                  className={`block p-3 sm:p-4 rounded-lg cursor-pointer transition-all ${
+                    userAnswers[currentQuestionIndex] === option.letter
+                      ? "bg-teal-50 border-2 border-teal-500"
+                      : "bg-white border-2 border-gray-200 hover:border-teal-300"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name={`question-${currentQuestionIndex}`}
+                      value={option.letter}
+                      checked={userAnswers[currentQuestionIndex] === option.letter}
+                      onChange={() => handleAnswerSelection(option.letter)}
+                      className="w-4 h-4 text-teal-500"
+                    />
+                    <span className="text-sm sm:text-base text-gray-800">
+                      {option.letter.toUpperCase()}) {option.text}
+                    </span>
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between">
+              <button
+                onClick={handlePrevious}
+                disabled={currentQuestionIndex === 0}
+                className={`w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-colors text-sm sm:text-base ${
+                  currentQuestionIndex === 0
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    : "bg-teal-500 hover:bg-teal-600 text-white"
+                }`}
+              >
+                Previous
+              </button>
+              {currentQuestionIndex === questions.length - 1 ? (
+                <button
+                  onClick={handleTestComplete}
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm sm:text-base"
+                >
+                  Submit Test
+                </button>
+              ) : (
+                <button
+                  onClick={handleNext}
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm sm:text-base"
+                >
+                  Next
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
-      <Footer />
-    </>
+    </div>
+    <Footer />
+  </>
   );
 };
 

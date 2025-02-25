@@ -43,11 +43,19 @@ const ATS_Score = () => {
         }
       );
 
+      let feedbackArray = response.data.feedback;
+      if (typeof feedbackArray === "string") {
+        feedbackArray = feedbackArray
+          .split('\n')
+          .map(item => item.trim())
+          .filter(item => item.length > 0);
+      } else if (!Array.isArray(feedbackArray)) {
+        feedbackArray = [feedbackArray];
+      }
+
       setResult({
         ...response.data,
-        feedback: Array.isArray(response.data.feedback)
-          ? response.data.feedback
-          : [response.data.feedback],
+        feedback: feedbackArray
       });
     } catch (error) {
       alert("Error analyzing resume!");
@@ -80,9 +88,7 @@ const ATS_Score = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">AI Analysis</h3>
-                  <p className="text-sm text-gray-500">
-                    Advanced resume scanning
-                  </p>
+                  <p className="text-sm text-gray-500">Advanced resume scanning</p>
                 </div>
               </div>
             </div>
@@ -92,12 +98,8 @@ const ATS_Score = () => {
                   <Award className="w-6 h-6 text-teal-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Expert Insights
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    Professional recommendations
-                  </p>
+                  <h3 className="font-semibold text-gray-900">Expert Insights</h3>
+                  <p className="text-sm text-gray-500">Professional recommendations</p>
                 </div>
               </div>
             </div>
@@ -116,7 +118,7 @@ const ATS_Score = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Upload Section */}
-            <section className="bg-white rounded-3xl p-8 shadow-xl border border-teal-100 hover:shadow-2xl transition-all duration-300">
+            <section className="bg-white rounded-3xl p-8 shadow-xl border border-teal-100 hover:shadow-2xl transition-all duration-300 h-[600px] flex flex-col">
               <div className="bg-gradient-to-br from-teal-600 to-teal-700 -mt-12 -mx-8 mb-8 p-6 rounded-t-3xl">
                 <h2 className="text-2xl font-bold text-white text-center">
                   Upload Your Resume
@@ -124,7 +126,7 @@ const ATS_Score = () => {
               </div>
               <div
                 {...getRootProps()}
-                className="mt-4 border-3 border-dashed border-teal-200 rounded-2xl p-8 text-center hover:border-teal-400 transition-all duration-300 cursor-pointer bg-gradient-to-b from-white to-teal-50/30"
+                className="flex-1 mt-4 border-3 border-dashed border-teal-200 rounded-2xl p-8 text-center hover:border-teal-400 transition-all duration-300 cursor-pointer bg-gradient-to-b from-white to-teal-50/30 flex flex-col items-center justify-center"
               >
                 <input {...getInputProps()} />
                 <div className="flex flex-col items-center space-y-4">
@@ -200,21 +202,21 @@ const ATS_Score = () => {
             </section>
 
             {/* Results Section */}
-            <section className="bg-white rounded-3xl p-8 shadow-xl border border-teal-100 hover:shadow-2xl transition-all duration-300">
+            <section className="bg-white rounded-3xl p-8 shadow-xl border border-teal-100 hover:shadow-2xl transition-all duration-300 h-[600px] flex flex-col">
               {result !== null ? (
-                <div className="space-y-6">
-                  <div className="bg-gradient-to-br from-teal-600 to-teal-700 -mt-12 -mx-8 p-12 rounded-t-3xl text-center shadow-lg relative overflow-hidden">
+                <div className="flex flex-col h-full">
+                  <div className="bg-gradient-to-br from-teal-600 to-teal-700 -mt-12 -mx-8 p-8 rounded-t-3xl text-center shadow-lg relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent)] pointer-events-none"></div>
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-center mb-4">
-                        <div className="p-3 bg-white/20 rounded-full">
-                          <CheckCircle className="w-8 h-8 text-white" />
+                    <div className="z-10">
+                      <div className="flex items-center justify-center mb-2">
+                        <div className="p-2 bg-white/20 rounded-full">
+                          <CheckCircle className="w-6 h-6 text-white" />
                         </div>
                       </div>
-                      <p className="text-7xl font-bold text-white mb-2">
+                      <p className="text-6xl font-bold text-white mb-1">
                         {result.score}
                       </p>
-                      <p className="text-teal-50 font-medium text-xl">
+                      <p className="text-teal-50 font-medium text-lg">
                         {result.score >= 80
                           ? "Outstanding Resume!"
                           : "Room for Improvement"}
@@ -223,34 +225,23 @@ const ATS_Score = () => {
                   </div>
 
                   {result.feedback.length > 0 && (
-                    <div className="mt-8 bg-gradient-to-br from-slate-50 to-white p-6 rounded-2xl shadow-lg border border-teal-100">
+                    <div className="flex-1 mt-6 overflow-hidden flex flex-col">
                       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
                         <Star className="w-5 h-5 text-teal-600 mr-2" />
-                        Personalized Suggestions
+                        Key Suggestions
                       </h3>
-                      <div className="space-y-4 max-h-64 overflow-y-auto pr-4 custom-scrollbar">
-                        {result.feedback.map((suggestion, index) => {
-                          const formattedSuggestion = suggestion
-                            .replace(
-                              /(?:\*\*)(.*?)(?:\*\*)/g,
-                              "<strong>$1</strong>"
-                            )
-                            .replace(/\*/g, "");
-
-                          return (
-                            <div
-                              key={index}
-                              className="p-4 bg-white rounded-xl shadow-sm border-l-4 border-teal-500 hover:shadow-md transition-all duration-300"
-                            >
-                              <p
-                                className="text-gray-700"
-                                dangerouslySetInnerHTML={{
-                                  __html: formattedSuggestion,
-                                }}
-                              ></p>
-                            </div>
-                          );
-                        })}
+                      <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                        <div className="bg-teal-50/50 rounded-lg p-6">
+                          <ul className="list-disc pl-6 space-y-3 text-gray-700">
+                            {result.feedback.map((suggestion, index) => (
+                              <li key={index} className="leading-relaxed">
+                                <span dangerouslySetInnerHTML={{
+                                  __html: suggestion.replace(/(?:\*\*)(.*?)(?:\*\*)/g, "<strong>$1</strong>")
+                                }}></span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -265,8 +256,7 @@ const ATS_Score = () => {
                   </h3>
                   <p className="text-gray-600 max-w-md">
                     Upload your resume to receive a detailed analysis and
-                    personalized recommendations to improve your chances of
-                    success.
+                    personalized recommendations to improve your chances of success.
                   </p>
                 </div>
               )}

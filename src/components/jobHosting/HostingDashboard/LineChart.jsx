@@ -179,7 +179,7 @@ console.log(data);
   };
 
   return (
-    <div className="w-full bg-white rounded-xl shadow-sm p-3">
+    <div className="lg:h-[450px] w-full rounded-xl p-2">
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <h2 className="text-lg font-semibold text-teal-800">
@@ -204,7 +204,7 @@ console.log(data);
           </div>
         </div>
 
-        <div className=" w-full h-[250px] bg-white rounded-lg">
+        <div className=" w-full h-[250px] rounded-lg">
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="flex flex-col items-center space-y-2">
@@ -218,7 +218,7 @@ console.log(data);
         </div>
 
         {selectedJob && graphData && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="lg:mt-[45px] grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-2 bg-teal-50 rounded-lg">
               <p className="text-xs text-teal-600">Total Applicants</p>
               <p className="text-lg font-semibold text-teal-700">

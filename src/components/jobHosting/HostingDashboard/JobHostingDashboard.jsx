@@ -71,38 +71,33 @@ const JobHostingDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      {/* Mobile Sidebar Toggle */}
-
-      
-     
-      {/* Sidebar */}
+    <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50">
+    {/* Sidebar */}
+    <div className="w-[10px] lg:w-1/4 h-screen fixed top-0 left-0 z-50">
+      <HostSidebar />
+    </div>
+  
+    {/* Overlay for mobile sidebar */}
+    {isSidebarOpen && (
       <div
-        className="lg:w-1/4 w-0 h-screen fixed"
-      >
-        <HostSidebar />
-      </div>
-
-      {/* Overlay for mobile sidebar */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
-      {/* Main Content */}
-      <div className="w-full lg:w-[80%] lg:ml-[22%] p-4 sm:p-6 lg:p-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 w-full lg:w-1/2 text-center lg:text-left">Dashboard</h1>
+        className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+        onClick={() => setIsSidebarOpen(false)}
+      />
+    )}
+  
+    {/* Main Content */}
+    <main className="w-full lg:ml-80 xl:ml-80 p-3 sm:p-4 lg:p-6 xl:p-4 overflow-y-auto">
+      <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6">
+          <h1 className="text-2xl text-center lg:text-left w-full sm:text-3xl lg:text-4xl font-bold text-gray-800">Dashboard</h1>
           <Link to="/post-job">
-            <button className="hidden w-full sm:w-auto bg-teal-600 hover:bg-teal-700 text-white font-semibold px-4 sm:px-6 py-2 rounded-lg shadow-md border border-teal-700 transition duration-300 lg:flex items-center justify-center gap-2">
+            <button className="hidden lg:w-[178px] sm:w-auto bg-teal-600 hover:bg-teal-700 text-white font-semibold px-2 sm:px-6 py-2 rounded-lg shadow-md border border-teal-700 transition duration-300 lg:flex items-center justify-center gap-2">
               <CirclePlus className="w-5 h-5" />
               <span>Post New Job</span>
             </button>
           </Link>
         </div>
-
+  
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           {/* Total Jobs */}
@@ -117,7 +112,7 @@ const JobHostingDashboard = () => {
               </div>
             </div>
           </div>
-
+  
           {/* Total Applicants */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
             <div className="flex items-center space-x-3">
@@ -130,7 +125,7 @@ const JobHostingDashboard = () => {
               </div>
             </div>
           </div>
-
+  
           {/* Shortlisted */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
             <div className="flex items-center space-x-3">
@@ -144,34 +139,34 @@ const JobHostingDashboard = () => {
             </div>
           </div>
         </div>
-
+  
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-          {/* Line Chart */}
-          <div className="lg:col-span-8">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 h-[600px] sm:h-[500px]">
-              <div className="p-4 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900">Applications Trend</h2>
-              </div>
-              <div className="p-4 h-[420px] sm:h-[520px]">
-                <LineChart jobs={jobs} />
-              </div>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 mb-6">
+  {/* Line Chart */}
+  <div className="lg:col-span-8">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 h-auto lg:h-[550px] flex flex-col">
+      <div className="p-3 md:p-4 border-b border-gray-100">
+        <h2 className="text-base md:text-lg font-semibold text-gray-900">Applications Trend</h2>
+      </div>
+      <div className="p-3 md:p-4 flex-grow">
+        <LineChart jobs={jobs} />
+      </div>
+    </div>
+  </div>
 
-          {/* Pie Chart */}
-          <div className="lg:col-span-4">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 h-[450px] sm:h-[500px]">
-              <div className="p-4 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900">Applications by Company</h2>
-              </div>
-              <div className="p-4 h-[420px] sm:h-[520px]">
-                <PieChart jobs={jobs} />
-              </div>
-            </div>
-          </div>
-        </div>
-
+  {/* Pie Chart */}
+  <div className="lg:col-span-4">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 h-auto lg:h-[550px] flex flex-col">
+      <div className="p-3 md:p-4 border-b border-gray-100">
+        <h2 className="text-base md:text-lg font-semibold text-gray-900">Applications by Company</h2>
+      </div>
+      <div className="p-3 md:p-4 flex-grow">
+        <PieChart jobs={jobs} />
+      </div>
+    </div>
+  </div>
+</div>
+  
         {/* Recent Jobs */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
           <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -216,11 +211,12 @@ const JobHostingDashboard = () => {
             )}
           </div>
         </div>
-
+  
         {/* Job Applications */}
         <JobApplications />
       </div>
-    </div>
+    </main>
+  </div>
   );
 };
 
