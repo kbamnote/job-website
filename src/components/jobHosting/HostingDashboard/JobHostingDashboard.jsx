@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import LineChart from "./LineChart";
-import PieChart from "./PieChart";
-import JobApplications from "./JobApplications";
-import HostSidebar from "./jobHostingSidebar";
+import LineChart from "./graphs/LineChart";
+import PieChart from "./graphs/PieChart";
+import JobApplications from "./table/JobApplications";
+import HostSidebar from "../commonHost/jobHostingSidebar";
 import {
   Building2,
   Users,
