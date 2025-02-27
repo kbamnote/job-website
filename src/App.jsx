@@ -38,7 +38,6 @@ function App() {
         <Route path="/job/:id/applicants" element={<ViewApplicant/>} />
         <Route path="/host-signup" element={<HostingSignup />} />
         <Route path="/host-login" element={<HostingLogin />} />
-        <Route path="/hostingDashboard" element={<JobHostingDashboard />} />
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/hosting-detail-form" element={<HostingProfileForm />} />
             
@@ -47,6 +46,14 @@ function App() {
         <Route path="/*" element={<NotFoundPage />} />
         <Route path="/jobs/:id/applicants" element={<ViewApplicant/>} />
         <Route path="/applicant/:id" element={<ApplicantProfile/>} />
+        <Route
+          path="/hostingDashboard"
+          element={
+            <ProtectedRoute>
+              <JobHostingDashboard />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/jobs"
