@@ -11,19 +11,20 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const DyCategories = () => {
+const DyCategories = ({categories}) => {
+  console.log("Browse Category",categories);
   const navigate = useNavigate();
 
-  const categories = [
-    { icon: MonitorCheck, title: "IT & Networking", jobs: 1254 },
-    { icon: ShoppingBag, title: "Sales & Marketing", jobs: 816 },
-    { icon: DatabaseZap, title: "Data Science", jobs: 2082 },
-    { icon: UserSearch, title: "Customer Service", jobs: 1520 },
-    { icon: Building2, title: "Digital Marketing", jobs: 1022 },
-    { icon: GraduationCap, title: "Human Resource", jobs: 1496 },
-    { icon: Wallet, title: "Project Manager", jobs: 1529 },
-    { icon: WalletCards, title: "Accounting", jobs: 1244 },
-  ];
+  // const categories = [
+  //   { icon: MonitorCheck, title: "IT & Networking", jobs: 1254 },
+  //   { icon: ShoppingBag, title: "Sales & Marketing", jobs: 816 },
+  //   { icon: DatabaseZap, title: "Data Science", jobs: 2082 },
+  //   { icon: UserSearch, title: "Customer Service", jobs: 1520 },
+  //   { icon: Building2, title: "Digital Marketing", jobs: 1022 },
+  //   { icon: GraduationCap, title: "Human Resource", jobs: 1496 },
+  //   { icon: Wallet, title: "Project Manager", jobs: 1529 },
+  //   { icon: WalletCards, title: "Accounting", jobs: 1244 },
+  // ];
 
   const handleCategoryClick = (categoryName) => {
     navigate(`/jobs?category=${encodeURIComponent(categoryName)}`);
@@ -39,7 +40,7 @@ const DyCategories = () => {
           Find your dream job in your preferred industry.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {categories.map((category) => (
           <div
             key={category.title}
@@ -59,7 +60,7 @@ const DyCategories = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
