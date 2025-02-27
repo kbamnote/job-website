@@ -10,10 +10,7 @@ import {
   Users,
   UserCheck,
   CirclePlus,
-  TrendingUp,
-  PieChartIcon,
   Search,
-  Menu,
 } from "lucide-react";
 
 const JobHostingDashboard = () => {
