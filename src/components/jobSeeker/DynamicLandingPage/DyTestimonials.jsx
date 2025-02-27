@@ -1,36 +1,37 @@
 import React from "react";
 import { Star, Quote } from "lucide-react";
 
-const DyTestimonials = () => {
-  const testimonials = [
-    {
-      rating: 5,
-      title: "Amazing services",
-      content:
-        "I was struggling to find a job in my field, but this website made the process so much easier. The search filters are great, and I was able to find relevant openings quickly. I landed my dream job within a month! Thank you! - Sarah J., Marketing Professional",
-      author: "Marco Kihn",
-      role: "Happy Client",
-      image: "/src/assets/Avatar.png",
-    },
-    {
-      rating: 5,
-      title: "Everything simple",
-      content:
-        "The resume builder tool was a lifesaver! It helped me create a professional resume that highlighted my skills and experience. I received so much more interest from employers after using it. - David L., Software Engineer",
-      author: "Kristin Hester",
-      role: "Happy Client",
-      image: "/src/assets/Avatar.png",
-    },
-    {
-      rating: 5,
-      title: "Awesome, thank you!",
-      content:
-        "The resources and articles on the site were incredibly helpful. I learned so much about interview techniques and job search strategies. It gave me the confidence I needed to succeed. - John K., Recent Graduate",
-      author: "Zion Cisneros",
-      role: "Happy Client",
-      image: "/src/assets/Avatar.png",
-    },
-  ];
+const DyTestimonials = ({testimonials}) => {
+  console.log("Feedback",testimonials)
+  // const testimonials = [
+  //   {
+  //     rating: 5,
+  //     title: "Amazing services",
+  //     content:
+  //       "I was struggling to find a job in my field, but this website made the process so much easier. The search filters are great, and I was able to find relevant openings quickly. I landed my dream job within a month! Thank you! - Sarah J., Marketing Professional",
+  //     author: "Marco Kihn",
+  //     role: "Happy Client",
+  //     image: "/src/assets/Avatar.png",
+  //   },
+  //   {
+  //     rating: 5,
+  //     title: "Everything simple",
+  //     content:
+  //       "The resume builder tool was a lifesaver! It helped me create a professional resume that highlighted my skills and experience. I received so much more interest from employers after using it. - David L., Software Engineer",
+  //     author: "Kristin Hester",
+  //     role: "Happy Client",
+  //     image: "/src/assets/Avatar.png",
+  //   },
+  //   {
+  //     rating: 5,
+  //     title: "Awesome, thank you!",
+  //     content:
+  //       "The resources and articles on the site were incredibly helpful. I learned so much about interview techniques and job search strategies. It gave me the confidence I needed to succeed. - John K., Recent Graduate",
+  //     author: "Zion Cisneros",
+  //     role: "Happy Client",
+  //     image: "/src/assets/Avatar.png",
+  //   },
+  // ];
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
