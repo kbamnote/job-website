@@ -221,42 +221,17 @@ const ContactUs = () => {
         </div>
 
         {/* Map */}
-        <div className="h-96 w-full mb-12 rounded-lg overflow-hidden shadow-lg">
+        <div className="w-full h-96 overflow-hidden shadow-lg">
           <iframe
-            title="Location Map" // Important for accessibility
-            src={mapUrl}
-            width="100%" // Make map responsive
+           title="Google Map Location"
+           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6561.210993309147!2d79.05923680865642!3d21.13999799798919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c060d6a8983b%3A0x6e9678ae12e13fd4!2sDharampeth%20Tower!5e0!3m2!1sen!2sin!4v1739422850317!5m2!1sen!2sin"
+           width="100%"
             height="450"
             style={{ border: 0 }}
             allowFullScreen=""
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-
-        {/* Footer Logos */}
-        <div className="flex justify-between items-center py-8 border-t flex-wrap gap-8">
-          <img
-            src="src/assets/zoom.png"
-            alt="zoom"
-            className="h-8 opacity-50"
-          />
-          <img
-            src="src/assets/tinder.png"
-            alt="tinder"
-            className="h-8 opacity-50"
-          />
-          <img
-            src="src/assets/dribble.png"
-            alt="dribbble"
-            className="h-8 opacity-50"
-          />
-          <img
-            src="src/assets/asana1.png"
-            alt="asana"
-            className="h-8 opacity-50"
-          />
-        </div>
+            referrerPolicy="no-referrer-when-downgrade"></iframe>   
+        </div> 
       </div>
       <Footer />
     </>

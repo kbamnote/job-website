@@ -95,7 +95,7 @@ const Header = () => {
                       <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">AI Resume Builder</li>
                     </Link>
                     <Link to="/mock">
-                      <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">AI Mock Interview</li>
+                      <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">AI Mock Test</li>
                     </Link>
                   </ul>
                 </div>
