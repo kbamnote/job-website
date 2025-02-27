@@ -23,18 +23,22 @@ import JobDetails from "./components/jobSeeker/navbarSection/jobCategories/JobDe
 import ViewApplicant from "./components/jobHosting/myJobs/ViewApplicant";
 import UserDetails from "./components/jobSeeker/seekerProfile/UserDetails";
 import ApplicantProfile from "./components/jobHosting/myJobs/ApplicantProfile";
+import Homepage from "./components/jobSeeker/Homepage/Homepage";
+import Testimonial from "./components/jobSeeker/commonSeeker/Testimonial_form";
+
+
 import AiMockTest from "./components/jobSeeker/navbarSection/aiSection/mocktest/AiMockTest";
 import QuestionComponent from "./components/jobSeeker/navbarSection/aiSection/mocktest/QuestionComponent";
-import Testimonial from "./components/jobSeeker/commonSeeker/Testimonial_form";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Homepage/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/user-detail" element={<UserDetails/>} />
+       
         
         <Route path="/job/:id/applicants" element={<ViewApplicant/>} />
         <Route path="/host-signup" element={<HostingSignup />} />
