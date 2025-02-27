@@ -25,15 +25,18 @@ import UserDetails from "./components/jobSeeker/seekerProfile/UserDetails";
 import ApplicantProfile from "./components/jobHosting/myJobs/ApplicantProfile";
 import AiMockTest from "./components/jobSeeker/navbarSection/aiSection/mocktest/AiMockTest";
 import QuestionComponent from "./components/jobSeeker/navbarSection/aiSection/mocktest/QuestionComponent";
+import Homepage from "./components/jobSeeker/Homepage/Homepage";
+import DyHome from "./components/jobSeeker/DynamicLandingPage/DyHome";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Homepage/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/user-detail" element={<UserDetails/>} />
+        <Route path="/DyHome" element={<DyHome/>} />
         
         <Route path="/job/:id/applicants" element={<ViewApplicant/>} />
         <Route path="/host-signup" element={<HostingSignup />} />

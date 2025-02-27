@@ -18,6 +18,8 @@ const Login = () => {
   const navigate = useNavigate();
   const loginApi = "https://jobquick.onrender.com/seekuser/login";
 
+  const isAuthenticated = Cookies.get("JwtToken");
+
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log("Email:", email);
@@ -40,6 +42,12 @@ const Login = () => {
       if (data.token && data.userId) {
         Cookies.set("JwtToken", data.token, { expires: 1 });
         Cookies.set("userID", data.userId, { expires: 1 });
+
+
+
+   
+        
+    
   
         setSuccess("Login successful!");
         setError(null);
@@ -52,6 +60,22 @@ const Login = () => {
       setError("Login failed. Please try again.");
       setSuccess(null);
     }
+
+
+
+    const Check = () => {
+      
+    
+if(!isAuthenticated){
+  navigate("/");
+}
+else{
+  navigate("/DyHome");
+}
+  }
+
+
+
   };
   
 
