@@ -25,6 +25,7 @@ import UserDetails from "./components/jobSeeker/seekerProfile/UserDetails";
 import ApplicantProfile from "./components/jobHosting/myJobs/ApplicantProfile";
 import AiMockTest from "./components/jobSeeker/navbarSection/aiSection/mocktest/AiMockTest";
 import QuestionComponent from "./components/jobSeeker/navbarSection/aiSection/mocktest/QuestionComponent";
+import Testimonial from "./components/jobSeeker/commonSeeker/Testimonial_form";
 
 function App() {
   return (
@@ -40,12 +41,14 @@ function App() {
         <Route path="/host-login" element={<HostingLogin />} />
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/hosting-detail-form" element={<HostingProfileForm />} />
+        <Route path="/Feedback" element={<Testimonial />} />
             
         <Route path="/profile-hoster" element={<HostingProfileDetail />} />
         <Route path="/jobs-hoster" element={<MyJobs />} />
         <Route path="/*" element={<NotFoundPage />} />
         <Route path="/jobs/:id/applicants" element={<ViewApplicant/>} />
         <Route path="/applicant/:id" element={<ApplicantProfile/>} />
+      ;
         <Route
           path="/hostingDashboard"
           element={

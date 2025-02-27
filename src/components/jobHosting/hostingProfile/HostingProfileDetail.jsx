@@ -28,6 +28,7 @@ const HostingProfileDetail = () => {
     fetch(getHostDetailApi, {
       headers: { Authorization: `Bearer ${HostToken}` },
     })
+    
       .then((res) => res.json())
       .then((data) => {
         setFullName(data.fullName || "");
