@@ -21,75 +21,12 @@ const DyRecentJobs = ({jobs}) => {
   console.log("Recent Jobs", jobs)
   const navigate = useNavigate();
 
-  // const jobs = [
-  //   {
-  //     id: 1,
-  //     title: "DevOps Engineer",
-  //     company: "DevOps Edge Solutions",
-  //     category: "IT & Networking",
-  //     type: "Full time",
-  //     salary: "8 LPA - 10 LPA",
-  //     location: "Seattle, USA",
-  //     worktype: "Hybrid",
-  //     experience: "1 to 3 year",
-  //     logo: "https://builtin.com/sites/www.builtin.com/files/2022-08/devops-engineer.png",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Frontend Developer",
-  //     company: "TechVerse Solution",
-  //     category: "IT & Networking",
-  //     type: " Fulltime",
-  //     salary: "5LPA - 13LPA",
-  //     location: "Bengaluru",
-  //     worktype: "Hybrid",
-  //     experience: "1 to 3 year",
-  //     logo: "https://cdn4.vectorstock.com/i/1000x1000/32/78/white-web-design-and-front-end-development-icon-vector-36723278.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Data Analyst",
-  //     company: "Data Insight Ltd.",
-  //     category: "Data Science",
-  //     type: "Fulltime",
-  //     salary: "11LPA - 12LPA",
-  //     location: "Chicago, USA",
-  //     worktype: "Hybrid",
-  //     experience: "1 to 3 year",
-  //     logo: "https://cdn-icons-png.flaticon.com/512/1643/1643996.png",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Tax Analyst",
-  //     company: " TaxMaster Consultants",
-  //     category: "Accounting ",
-  //     type: "Fulltime",
-  //     salary: "5LPA - 12LPA",
-  //     location: "New Delhi, India",
-  //     worktype: "Hybrid",
-  //     experience: "1 to 3 year",
-  //     logo: "https://img.freepik.com/premium-vector/concept-tax-payment-data-analysis-paperwork-financial-research-report-calculation-tax-return-payment-debt-government-state-taxes-vector-illustration-flat-style_662353-803.jpg",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "B2B Sales Manager",
-  //     company: " GrowthHive Marketing",
-  //     category: "Sales & Marketing",
-  //     type: "Fulltime",
-  //     salary: "7LPA - 14LPA",
-  //     location: "Mumbai",
-  //     worktype: "Hybrid",
-  //     experience: "1 to 3 year",
-  //     logo: "https://png.pngtree.com/png-vector/20220819/ourmid/pngtree-b2b-or-business-to-business-marketing-vector-illustration-png-image_6039137.png",
-  //   },
-  // ];
+
 
   // Function to handle job card click
   const handleJobClick = (job) => {
     navigate(
-      `/jobs?title=${encodeURIComponent(
-        job.title
-      )}&company=${encodeURIComponent(job.company)}`
+      `/jobs/${job._id}`
     );
   };
 
@@ -160,26 +97,33 @@ const DyRecentJobs = ({jobs}) => {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-teal-600 transition-colors duration-200">
                       {job.title}
                     </h3>
-                    <p className="text-gray-500 text-base">{job.company}</p>
+                    <p className="text-gray-500 text-base">{job.companyName}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-6 mt-12 text-gray-600 text-base">
                   <div className="flex items-center gap-3">
                     <TbCategory className="w-5 h-5 text-teal-600" />
-                    <span className="truncate">{job.category}</span>
+                    <span className="truncate">{job.category.title}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <GiWallet className="w-5 h-5 text-teal-600" />
-                    <span className="truncate">{job.salary}</span>
+                    <span className="truncate">{job.minPackage }- {job.maxPackage}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Clock className="w-5 h-5 text-teal-600" />
-                    <span className="truncate">{job.type}</span>
+                    <span className="truncate">{job.jobType}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Laptop className="w-5 h-5 text-teal-600" />
-                    <span className="truncate">{job.worktype}</span>
+                    <span className="truncate">
+  {new Date(job.dateCreated).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })}
+</span>
+
                   </div>
                   <div className="flex items-center gap-3">
                     <UserCheck className="w-5 h-5 text-teal-600" />

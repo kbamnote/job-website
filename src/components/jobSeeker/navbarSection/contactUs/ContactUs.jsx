@@ -1,9 +1,7 @@
 import React from "react";
 import Header from "../../../jobSeeker/commonSeeker/Header";
 import Footer from "../../../jobSeeker/commonSeeker/Footer";
-const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
-  location
-)}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+
 
 const ContactUs = () => {
   const handleSubmit = (e) => {
@@ -225,7 +223,7 @@ const ContactUs = () => {
        
       </div>
          {/* Map */}
-         <div className="w-full h-96 overflow-hidden p-6 mb-4">
+         <div className="w-full h-[480px] overflow-hidden p-6 mb-4">
           <iframe
            title="Google Map Location"
            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6561.210993309147!2d79.05923680865642!3d21.13999799798919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c060d6a8983b%3A0x6e9678ae12e13fd4!2sDharampeth%20Tower!5e0!3m2!1sen!2sin!4v1739422850317!5m2!1sen!2sin"

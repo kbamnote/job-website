@@ -29,6 +29,12 @@ const JobDetails = () => {
   const [profile, setProfile] = useState(null);
   const [modalMessage, setModalMessage] = useState("");
 
+  const queryParams = new URLSearchParams(location.search);
+  const searchTitle = queryParams.get("title") || "";
+
+console.log("akash",searchTitle);
+
+
   // Use the same cookie names as in code 1
   const token = Cookies.get("Token") || Cookies.get("JwtToken");
   const userId = Cookies.get("Id") || Cookies.get("userID");
