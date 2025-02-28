@@ -30,7 +30,7 @@ function DyHome() {
     const token = Cookies.get("JwtToken");
     if (!token) {
       setError("Token is missing or invalid");
-      setLoading(false);
+      // setLoading(false);
       return;
     }
 
@@ -43,7 +43,7 @@ function DyHome() {
 
       if (response.status !== 200) {
         setError(`Error ${response.status}: ${response.statusText}`);
-        setLoading(false);
+        // setLoading(false);
         return;
       }
 
@@ -55,16 +55,16 @@ function DyHome() {
         testimonials: response.data.data.feedbackList || []
       });
       
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       setError(`Error: ${error.message}`);
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>; // Simple loading state
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Simple loading state
+  // }
 
   return (
     <>
